@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
-import Footer from './components/Footer';
 import Sidebar from './components/Sidebar';
 import SessionList from './components/SessionList';
 import ChartsUsage from './components/ChartsUsage';
@@ -54,7 +53,6 @@ class App extends Component {
           <Route exact path="/" render={() => <SessionList />} />
           <Route path="/charts-usage" render={() => <ChartsUsage />} />
         </Switch>
-        <Footer />
       </div>
     );
   }
