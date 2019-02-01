@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
-import Footer from './components/Footer';
 import Sidebar from './components/Sidebar';
 import SessionList from './components/SessionList';
 import ChartsUsage from './components/ChartsUsage';
@@ -15,7 +14,7 @@ const userData = {
       "user__username": "jade@stylesage.co",
       "max_timestamp": "2019-01-28T17:32:49.570Z",
       "user__job_title": "",
-      "min_timestamp": "2019-01-28T15:20:34.682Z",
+      "min_timestamp": "2019-12-28T15:02:34.682Z",
       "duration_sec": 7934.888322,
       "user": 17,
       "request_count": 50,
@@ -26,7 +25,7 @@ const userData = {
       "max_timestamp": "2019-01-22T15:34:32.548Z",
       "user__job_title": "",
       "min_timestamp": "2019-01-22T15:33:26.764Z",
-      "duration_sec": 65.783448,
+      "duration_sec": 49.783448,
       "user": 17,
       "request_count": 19,
       "session_key": "dieyd3xze1ovzq4zdgexyt3rqeg4uq6p"
@@ -51,10 +50,9 @@ class App extends Component {
         <Header />
         <Sidebar />
         <Switch>
-          <Route exact path="/" render={() => <SessionList />} />
+          <Route exact path="/" render={props => <SessionList match={props.match} userData={userData} />} />
           <Route path="/charts-usage" render={() => <ChartsUsage />} />
         </Switch>
-        <Footer />
       </div>
     );
   }
