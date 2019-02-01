@@ -2,9 +2,15 @@ import React, { Component } from "react";
 
 class SessionList extends Component {
 
+    constructor(props) {
+        super(props);
+
+        this.mapResults = this.mapResults.bind(this);
+    }
+
     renderTime(timestamp) {
         const sessionStart = new Date(timestamp);
-        
+
         const year = sessionStart.getFullYear();
         let month = (sessionStart.getMonth() + 1).toString();
         let day = sessionStart.getDate().toString();
@@ -32,14 +38,14 @@ class SessionList extends Component {
         )
     };
 
-    renderDuration(duration){
-        const seconds = parseInt(duration%60);
-        const totalMins = parseInt(duration/60);
-        const mins = parseInt(totalMins%60);
-        const hours = parseInt(totalMins/60);
+    renderDuration(duration) {
+        const seconds = parseInt(duration % 60);
+        const totalMins = parseInt(duration / 60);
+        const mins = parseInt(totalMins % 60);
+        const hours = parseInt(totalMins / 60);
 
         let durationString;
-         
+
         if (hours !== 0) {
             durationString = hours + 'h' + mins + 'm' + seconds + 's';
         } else if (mins !== 0) {
@@ -51,20 +57,27 @@ class SessionList extends Component {
         return durationString;
     };
 
+    mapResults(sessionsList) {
+        sessionsList.map((item, index) => {
+            return (
+                <ul key={index}>
+                    <p> Username: {item.user__username}</p>
+                    <p>Time Started (local TZ): {this.renderTime(item.min_timestamp)}</p>
+                    <p>Duration: {this.renderDuration(item.duration_sec)}</p>
+                    <p>Request Count: {item.request_count}</p>
+                </ul>
+            );
+        })
+    }
+
 
     render() {
+        const { sessions } = this.props.userData;
+        const sessionsList = sessions.slice();
+
         return (
             <li>
-                {this.props.userData.sessions.map((item, index) => {
-                    return (
-                        <ul key={index}>
-                            <p> Username: {item.user__username}</p>
-                            <p>Time Started (local TZ): {this.renderTime(item.min_timestamp)}</p>
-                            <p>Duration: {this.renderDuration(item.duration_sec)}</p>
-                            <p>Request Count: {item.request_count}</p>
-                        </ul>
-                    );
-                })}
+                {this.mapResults(sessionsList)}
             </li>);
     }
 }
