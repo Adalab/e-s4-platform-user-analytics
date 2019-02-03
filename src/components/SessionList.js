@@ -1,27 +1,51 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import Pagination from "react-js-pagination"; 
 import UserFilter from './UserFilter';
 
 class SessionList extends Component {
+    constructor(props) {
+        super(props)
+    
+        this.state = {
+          activePage: 15
+           
+        }
+        this.handlePageChange = this.handlePageChange.bind(this);
+    }
+
+    handlePageChange(pageNumber) {
+        console.log(`active page is ${pageNumber}`);
+          this.setState({
+            activePage: pageNumber
+          });
+      }
+
+
     render() {
         return (
-            <div className="main__container">
-                <div className="">
-                    <nav className="">
-                        <Link to="">Overview</Link>
-                        <Link to="">Sessions</Link>
-                    </nav>
-                </div>
-                <div className="data__container">
-                    <i></i>
-                    <h2 className="data__results--title">Sessions between *DATA</h2>
-                </div>
-                <div className="data__filter">
-                    <UserFilter />
-                </div>
-                <div className="data__results****">
-                    <div className="data__table--container">
-                        <table className="table table-striped">
+            <React.Fragment>
+                <header className="app__header">Header</header>
+                <main className="app__main">
+                    <div className="breadcrumb__container">
+                        <ul className="breadcrumb__container--list">
+                            <li className="breadcrumb__container--item">
+                                <Link to="/">Overview</Link>
+                            </li>>
+                            <li className="breadcrumb__container--item">
+                                <Link to="/">Sessions</Link>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="panel__session">
+                        <i></i>
+                        <h2 className="panel__session--title">Sessions between *DATA</h2>
+                    </div>
+                    <div className="username__filter">
+                        <UserFilter />
+                    </div>
+                    <div className="table__container">
+                        <table className="table__container--results">
                             <thead>
                                 <tr>
                                     <th scope="col">Username</th>
@@ -39,30 +63,38 @@ class SessionList extends Component {
                                 </tr>
                             </tbody>
                         </table>
+                    </div> 
+                </main>
+                <footer className="app__footer--session">
+                    <div className="options__numberspage">
+                        <p> 
+                        Show
+                            <select className="select__entries">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                            </select>
+                        entries per page
+                        </p>
                     </div>
                     <div className="options__pagination">
-                        <div className="select__entries">
-                            <p> Show
-                                <select className="select">
-                                    <option value="5">5</option>
-                                    <option value="10">10</option>
-                                    <option value="15">15</option>
-                                    <option value="20">20</option>
-                                </select>
-                                entries per page
-                            </p>
-                        </div>
-                        <div className="pagination">
-                            <nav className="pagination__nav">
-                                <Link className="pagination__nav--item" to="/">First</Link>
-                                <Link className="pagination__nav--item" to="/">Previous</Link>
-                                <Link className="pagination__nav--item" to="/">Next</Link>
-                                <Link className="pagination__nav--item" to="/">Last</Link>
-                            </nav>
-                        </div>
+                        <Pagination
+                        innerClassName={<ul className="pagination__list"></ul>}
+                        activeClassName={<li className="pagination__list--item"></li>}
+                        firstPageText={<li className="pagination__list--item">First</li>}
+                        prevPageText={<li className="pagination__list--item">Previous</li>}
+                        nextPageText={<li className="pagination__list--item">Next</li>}
+                        lastPageText={<li className="pagination__list--item">Last</li>}
+                        activePage={this.state.activePage}
+                        itemsCountPerPage={10}
+                        totalItemsCount={450}
+                        pageRangeDisplayed={5}
+                        onChange={this.handlePageChange}
+                        />
                     </div>
-                </div>
-            </div>
+                </footer>
+            </React.Fragment>
         );
     }
 }
