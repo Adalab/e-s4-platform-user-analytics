@@ -11,7 +11,7 @@ const userData = {
   "to_date": "2019-01-31T12:18:31.240Z",
   "sessions": [
     {
-      "user__username": "jade@stylesage.co",
+      "user__username": "yedi@stylesage.co",
       "max_timestamp": "2019-01-28T17:32:49.570Z",
       "user__job_title": "",
       "min_timestamp": "2019-12-28T15:02:34.682Z",
@@ -21,7 +21,7 @@ const userData = {
       "session_key": "4d3z5dnb34rlojytunofjzma0j8nggyq"
     },
     {
-      "user__username": "jade@stylesage.co",
+      "user__username": "auron@stylesage.co",
       "max_timestamp": "2019-01-22T15:34:32.548Z",
       "user__job_title": "",
       "min_timestamp": "2019-01-22T15:33:26.764Z",
