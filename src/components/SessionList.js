@@ -95,7 +95,6 @@ class SessionList extends Component {
         return mappedSessions;
     }
 
-
     render() {
         const { sessions } = this.props.userData;
         const sessionsList = sessions.slice();
