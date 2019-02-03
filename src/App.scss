@@ -1,62 +1,98 @@
 //component App
-.page__wrapper{
+.page__wrapper {
   display:flex;
 }
 
 //component aside
-.aside__sidebar{
+.aside__sidebar {
   width: 200px;
   background-color: lightgreen;
 }
 
 //component sessionList
-.app__container{
-  display:flex;
+.app__container {
+  display: flex;
   flex-direction: column;
   width: 100%;
 }
-.app__main{
-background-color: pink;
 
+.app__main {
+background-color: pink;
 }
-.breadcrumb__container{
+
+.breadcrumb__container {
   text-align: center;
 }
-.breadcrumb__container--list{
+
+.breadcrumb__container-list {
   display: flex;
   flex-direction: row;
   list-style: none;
 }
 
-// breadcrumb__container--item
-// panel__session
-// panel__session--title
+// breadcrumb__container-item
+.panel__session {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  font-size: 32px;
+}
+
+// panel__session-title
 // username__filter
 
 //>ESTILOS DE LA TABLA
-.table__container{
-  display:flex;
+.table__container {
+  display: flex;
 }
-.username__list{
+
+.table__head {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: lightsalmon;
+}
+
+.arrow__container {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+.username__list {
   border: 2px solid black;
   list-style: none;
 }
+
 //>ESTILOS DEL FOOTER
-.app__footer--session{
+.app__footer-session {
   background-color: lightblue;
   display: flex;
   justify-content: space-between;
 }
+
 // options__numberspage
 // select__entries
 
-.options__pagination{
+.options__pagination {
   background-color: lightblue;
 }
-.pagination{
+
+.pagination {
   list-style: none;
-  display:flex;
+  display: flex;
   flex-direction: row;
   justify-content: center;
 }
-// pagination__list--item
+
+// pagination__list-item
+
+
+// ESTILOS DEL USERNAME FILTER
+
+.username__filter {
+  display: flex;
+  align-items: center;
+}
