@@ -48,11 +48,13 @@ class App extends Component {
     return (
       <div className="app">
         <Header />
-        <Sidebar />
+        <div className="page__wrapper">
+          <Sidebar />
         <Switch>
           <Route exact path="/" render={() => <SessionList />} />
           <Route path="/charts-usage" render={() => <ChartsUsage />} />
         </Switch>
+        </div>
       </div>
     );
   }

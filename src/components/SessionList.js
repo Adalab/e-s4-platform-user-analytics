@@ -58,8 +58,7 @@ class SessionList extends Component {
 
     render() {
         return (
-            <React.Fragment>
-                <header className="app__header">Header</header>
+            <div className="app__container">
                 <main className="app__main">
                     <div className="breadcrumb__container">
                         <ul className="breadcrumb__container--list">
@@ -79,7 +78,49 @@ class SessionList extends Component {
                         <UserFilter />
                     </div>
                     <div className="table__container">
-                        <ul className="username__list">UserName
+                    <thead>
+                            <tr>
+                                <th>UserName</th>
+                                <th>Time</th>
+                                <th>Duration</th>
+                                <th>Request Count</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr className="">
+                                {this.state.userData.map((item,index) => {
+                                return(
+                                <td key={index}>{item.user__username}</td>
+                                )
+                                })}
+                            </tr>
+                            <tr className="">
+                                {this.state.userData.map((item,index) => {
+                                return(
+                                <td key={index}>{item.min_timestamp}</td>
+                                )
+                            })}
+                            </tr>
+                            <tr className="">
+                                {this.state.userData.map((item,index) => {
+                                return(
+                                <td key={index}>{item.duration_sec}</td>
+                                )
+                            })}
+                            </tr>
+                            <tr className="">
+                                {this.state.userData.map((item,index) => {
+                                return(
+                                <td key={index}>{item.request_count}</td>
+                                )
+                            })}
+                            </tr>
+                        </tbody>
+                       
+
+
+
+                        {/* <ul className="username__list">UserName
                             {this.state.userData.map((item,index) => {
                             return(
                             <li key={index}>{item.user__username}</li>
@@ -106,7 +147,7 @@ class SessionList extends Component {
                             <li key={index}>{item.request_count}</li>
                             )
                          })}
-                        </ul>
+                        </ul> */}
                     </div> 
                 </main>
                 <footer className="app__footer--session">
@@ -138,7 +179,7 @@ class SessionList extends Component {
                         />
                     </div>
                 </footer>
-            </React.Fragment>
+            </div>
         );
     }
 }
