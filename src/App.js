@@ -4,65 +4,57 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import SessionList from './components/SessionList';
 import ChartsUsage from './components/ChartsUsage';
+import { requestSessions } from './services/SessionsService';
 import './App.scss';
+
 
 class App extends Component {
   constructor(props) {
-    super(props)
-    this.state = {
-        activePage: 15,
-        userData: [
-            {
-                "user__username": "jade@stylesage.co",
-                "max_timestamp": "2019-01-28T17:32:49.570Z",
-                "user__job_title": "",
-                "min_timestamp": "2019-01-28T15:20:34.682Z",
-                "duration_sec": 7934.888322,
-                "user": 17,
-                "request_count": 50,
-                "session_key": "4d3z5dnb34rlojytunofjzma0j8nggyq"
-            },
-            {
-                "user__username": "jade@stylesage.co",
-                "max_timestamp": "2019-01-22T15:34:32.548Z",
-                "user__job_title": "",
-                "min_timestamp": "2019-01-22T15:33:26.764Z",
-                "duration_sec": 65.783448,
-                "user": 17,
-                "request_count": 19,
-                "session_key": "dieyd3xze1ovzq4zdgexyt3rqeg4uq6p"
-            },
-            {
-                "user__username": "jade@stylesage.co",
-                "max_timestamp": "2019-01-09T15:08:27.590Z",
-                "user__job_title": "",
-                "min_timestamp": "2019-01-09T14:40:17.034Z",
-                "duration_sec": 1690.556118,
-                "user": 17,
-                "request_count": 106,
-                "session_key": "eiqk9g55mpkg3hq29q1mu5ozkck13ka6"
-            }
-        ]
-    }
-    this.handlePageChange = this.handlePageChange.bind(this);
-}
+    super(props);
 
-handlePageChange(pageNumber) {
-    console.log(`active page is ${pageNumber}`);
+    this.state = {
+      userData: [],
+      activePetition: false,
+      activePage: 15
+    }
+
+    this.fetchSessions = this.fetchSessions.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
+  }
+
+  componentDidMount() {
+    this.fetchSessions();
+  }
+
+  fetchSessions() {
+    requestSessions()
+      .then(data => {
+        this.setState({
+          userData: data,
+          activePetition: true
+        });
+      })
+  }
+
+  handlePageChange(pageNumber) {
     this.setState({
-        activePage: pageNumber
+      activePage: pageNumber
     });
-}
+  }
+
   render() {
+
+    const { userData, activePetition } = this.state;
+
     return (
       <div className="app">
         <Header />
         <div className="page__wrapper">
           <Sidebar />
-        <Switch>
-          <Route exact path="/" render={() => <SessionList activePage={this.state.activePage} handlePageChange={this.handlePageChange} userData={this.state.userData} />} />
-          <Route path="/charts-usage" render={() => <ChartsUsage />} />
-        </Switch>
+          {(activePetition) ? (<Switch>
+            <Route exact path="/" render={props => <SessionList match={props.match} userData={userData} activePage={this.state.activePage} handlePageChange={this.handlePageChange} />} />
+            <Route path="/charts-usage" render={() => <ChartsUsage />} />
+          </Switch>) : (<p>Looking for data...</p>)}
         </div>
       </div>
     );

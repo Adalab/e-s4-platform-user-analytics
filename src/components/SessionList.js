@@ -6,8 +6,106 @@ import TableSessionList from "./TableSessionList";
 
 
 class SessionList extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            queryUsername: "",
+            sessionsList: [],
+            duplicatedArray: false
+        }
+
+        this.getQueryUsername = this.getQueryUsername.bind(this);
+    }
+
+    componentDidMount() {
+        const { sessions } = this.props.userData;
+        const sessionsList = sessions.slice();
+
+        this.setState({
+            sessionsList: sessionsList,
+            duplicatedArray: true
+        });
+    }
+
+    getQueryUsername(e) {
+        const userName = e.currentTarget.value;
+
+        this.filterUserame(userName);
+
+        this.setState({
+            queryUsername: userName
+        })
+    }
+
+    filterUserame(userName) {
+        const originalList = this.props.userData.sessions;
+
+        const filteredList = originalList.filter(item => {
+            return item.user__username.includes(userName);
+        });
+
+        this.setState({
+            sessionsList: filteredList
+        });
+    }
+
+    sortName(items) {
+        items.sort(function (a, b) {
+            const nameA = a.user__username.toUpperCase();
+            const nameB = b.user__username.toUpperCase();
+
+            if (nameA < nameB) {
+                return -1;
+
+            } else if (nameA > nameB) {
+                return 1;
+
+            } else {
+                return 0;
+            }
+        });
+    }
+
+    orderResultsUserName(list) {
+        const sortedList = this.sortName(list);
+
+        return sortedList;
+    }
+
+    orderResultsTimeStarted(list) {
+        const sortedList = list.sort((a, b) => {
+            const timeA = new Date(a.min_timestamp);
+            const timeB = new Date(b.min_timestamp);
+            return (timeB - timeA);
+        });
+
+        return sortedList;
+    }
+
+    orderResultsDuration(list) {
+        const sortedList = list.sort((a, b) => {
+            return b.duration_sec - a.duration_sec;
+        });
+
+        return sortedList;
+    }
+
+    orderResultsRequestCount(list) {
+        const sortedList = list.sort((a, b) => {
+            return b.request_count - a.request_count;
+        });
+
+        return sortedList;
+    }
+
     render() {
-        const {userData, handlePageChange, activePage} = this.props;
+        // this.orderResultsUserName(this.state.sessionsList);
+        // this.orderResultsTimeStarted(this.state.sessionsList);
+        // this.orderResultsDuration(this.state.sessionsList);
+        // this.orderResultsRequestCount(this.state.sessionsList);
+        const { userData, handlePageChange, activePage } = this.props;
         return (
             <div className="app__container">
                 <main className="app__main">
@@ -25,9 +123,10 @@ class SessionList extends Component {
                         <i className="zmdi zmdi-format-list-bulleted icon"></i>
                         <h2 className="panel__session-title">Sessions between *DATA</h2>
                     </div>
-                    <UserFilter />
+                    <UserFilter getQueryUserName={this.getQueryUsername} />
                     <div className="table__container">
-                        <TableSessionList activePage={activePage} handlePageChange={handlePageChange} userData={userData} />
+                        {(this.state.duplicatedArray.length !== 0) ? (<TableSessionList activePage={activePage} handlePageChange={handlePageChange} userData={userData}>
+                        </TableSessionList>) : (<p>Looking for data...</p>)}
                     </div>
                 </main>
                 <footer className="app__footer-session">
