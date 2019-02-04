@@ -10,10 +10,9 @@ class SessionList extends Component {
             sessionsList: []
         }
 
-        this.renderTime = this.renderTime.bind(this);
-        this.orderRequestCount = this.orderRequestCount.bind(this);
         this.getQueryUserName = this.getQueryUserName.bind(this);
         this.searchUsername = this.searchUsername.bind(this);
+        this.orderResultsRequestCount = this.orderResultsRequestCount.bind(this);
     }
 
     componentDidMount() {
@@ -22,7 +21,15 @@ class SessionList extends Component {
 
         this.setState({
             sessionsList: sessionsList
-        })
+        });
+    }
+
+    addZero(par) {
+        if (par.length < 2) {
+            par = '0' + par;
+        }
+
+        return par;
     }
 
     renderTime(timestamp) {
@@ -36,14 +43,7 @@ class SessionList extends Component {
 
         return (
             year + '-' + month + '-' + day + ',' + hour + ':' + minutes
-        )
-    }
-
-    addZero(par) {
-        if (par.length < 2) {
-            par = '0' + par;
-        }
-        return par;
+        );
     }
 
     renderDuration(duration) {
@@ -61,62 +61,8 @@ class SessionList extends Component {
         } else {
             durationString = seconds + 's';
         }
+
         return durationString;
-    }
-
-    orderResultsDuration(list) {
-        const sortedList = list.sort((a, b) => {
-            return b.duration_sec - a.duration_sec;
-        });
-        return sortedList;
-    }
-
-    orderResultsTimeStarted(list) {
-        const sortedList = list.sort((a, b) => {
-            const timeA = new Date(a.min_timestamp);
-            const timeB = new Date(b.min_timestamp);
-            return (timeB - timeA);
-        });
-        return sortedList;
-    }
-
-    sortName(items) {
-        items.sort(function (a, b) {
-            var nameA = a.user__username.toUpperCase();
-            var nameB = b.user__username.toUpperCase();
-            if (nameA < nameB) {
-                return -1;
-            }
-            if (nameA > nameB) {
-                return 1;
-            }
-        })
-    }
-
-    orderResultsUserName(list) {
-        const sortedList = list.sort(this.sortName(list));
-        return sortedList;
-    }
-
-    orderRequestCount(list) {
-        const sortedList = list.sort((a, b) => {
-            return b.request_count - a.request_count;
-        });
-        return sortedList;
-    }
-
-    mapResults(list) {
-        const mappedSessions = list.map((item, index) => {
-            return (
-                <li key={index}>
-                    <p> Username: {item.user__username}</p>
-                    <p>Time Started (local TZ): {this.renderTime(item.min_timestamp)}</p>
-                    <p>Duration: {this.renderDuration(item.duration_sec)}</p>
-                    <p>Request Count: {item.request_count}</p>
-                </li>
-            );
-        })
-        return mappedSessions;
     }
 
     getQueryUserName(e) {
@@ -143,8 +89,71 @@ class SessionList extends Component {
         });
     }
 
+    sortName(items) {
+        items.sort(function (a, b) {
+            const nameA = a.user__username.toUpperCase();
+            const nameB = b.user__username.toUpperCase();
+
+            if (nameA < nameB) {
+                return -1;
+            } else if (nameA > nameB) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
+    }
+
+    orderResultsUserName(list) {
+        const sortedList = this.sortName(list);
+
+        return sortedList;
+    }
+
+    orderResultsTimeStarted(list) {
+        const sortedList = list.sort((a, b) => {
+            const timeA = new Date(a.min_timestamp);
+            const timeB = new Date(b.min_timestamp);
+            return (timeB - timeA);
+        });
+        return sortedList;
+    }
+
+    orderResultsDuration(list) {
+        const sortedList = list.sort((a, b) => {
+            return b.duration_sec - a.duration_sec;
+        });
+
+        return sortedList;
+    }
+
+    orderResultsRequestCount(list) {
+        const sortedList = list.sort((a, b) => {
+            return b.request_count - a.request_count;
+        });
+
+        return sortedList;
+    }
+
+    mapResults(list) {
+        const mappedSessions = list.map((item, index) => {
+            return (
+                <li key={index}>
+                    <p> Username: {item.user__username}</p>
+                    <p>Time Started (local TZ): {this.renderTime(item.min_timestamp)}</p>
+                    <p>Duration: {this.renderDuration(item.duration_sec)}</p>
+                    <p>Request Count: {item.request_count}</p>
+                </li>
+            );
+        });
+
+        return mappedSessions;
+    }
+
+
+
     render() {
-        this.orderRequestCount(this.state.sessionsList);
+        this.orderResultsRequestCount(this.state.sessionsList);
         return (
             <React.Fragment>
                 <input onKeyUp={this.getQueryUserName}></input>
