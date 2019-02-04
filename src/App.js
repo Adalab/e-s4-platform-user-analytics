@@ -14,10 +14,12 @@ class App extends Component {
 
     this.state = {
       userData: [],
-      activePetition: false
+      activePetition: false,
+      activePage: 15
     }
 
     this.fetchSessions = this.fetchSessions.bind(this);
+    this.handlePageChange = this.handlePageChange.bind(this);
   }
 
   componentDidMount() {
@@ -27,12 +29,17 @@ class App extends Component {
   fetchSessions() {
     requestSessions()
       .then(data => {
-        console.log(data);
         this.setState({
           userData: data,
           activePetition: true
         });
       })
+  }
+
+  handlePageChange(pageNumber) {
+    this.setState({
+      activePage: pageNumber
+    });
   }
 
   render() {
@@ -42,11 +49,13 @@ class App extends Component {
     return (
       <div className="app">
         <Header />
-        <Sidebar />
-        {(activePetition) ? (<Switch>
-          <Route exact path="/" render={props => <SessionList match={props.match} userData={userData} />} />
-          <Route path="/charts-usage" render={() => <ChartsUsage />} />
-        </Switch>) : (<p>Looking for data...</p>)}
+        <div className="page__wrapper">
+          <Sidebar />
+          {(activePetition) ? (<Switch>
+            <Route exact path="/" render={props => <SessionList match={props.match} userData={userData} activePage={this.state.activePage} handlePageChange={this.handlePageChange} />} />
+            <Route path="/charts-usage" render={() => <ChartsUsage />} />
+          </Switch>) : (<p>Looking for data...</p>)}
+        </div>
       </div>
     );
   }

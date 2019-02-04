@@ -1,4 +1,9 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
+import Pagination from "react-js-pagination";
+import UserFilter from './UserFilter';
+import TableSessionList from "./TableSessionList";
+
 
 class SessionList extends Component {
 
@@ -7,7 +12,8 @@ class SessionList extends Component {
 
         this.state = {
             queryUsername: "",
-            sessionsList: []
+            sessionsList: [],
+            duplicatedArray: false
         }
 
         this.getQueryUsername = this.getQueryUsername.bind(this);
@@ -18,49 +24,9 @@ class SessionList extends Component {
         const sessionsList = sessions.slice();
 
         this.setState({
-            sessionsList: sessionsList
+            sessionsList: sessionsList,
+            duplicatedArray: true
         });
-    }
-
-    addZero(par) {
-        if (par.length < 2) {
-            par = '0' + par;
-        }
-
-        return par;
-    }
-
-    renderTime(timestamp) {
-        const sessionStart = new Date(timestamp);
-
-        const year = sessionStart.getFullYear();
-        const month = this.addZero((sessionStart.getMonth() + 1).toString());
-        const day = this.addZero(sessionStart.getDate().toString());
-        const hour = this.addZero(sessionStart.getHours().toString());
-        const minutes = this.addZero(sessionStart.getMinutes().toString());
-
-        return (
-            year + '-' + month + '-' + day + ',' + hour + ':' + minutes
-        );
-    }
-
-    renderDuration(duration) {
-        const seconds = parseInt(duration % 60);
-        const totalMins = parseInt(duration / 60);
-        const mins = parseInt(totalMins % 60);
-        const hours = parseInt(totalMins / 60);
-
-        let durationString;
-
-        if (hours !== 0) {
-            durationString = hours + 'h' + mins + 'm' + seconds + 's';
-        } else if (mins !== 0) {
-            durationString = mins + 'm' + seconds + 's';
-        } else {
-            durationString = seconds + 's';
-        }
-
-        return durationString;
     }
 
     getQueryUsername(e) {
@@ -92,8 +58,10 @@ class SessionList extends Component {
 
             if (nameA < nameB) {
                 return -1;
+
             } else if (nameA > nameB) {
                 return 1;
+
             } else {
                 return 0;
             }
@@ -112,6 +80,7 @@ class SessionList extends Component {
             const timeB = new Date(b.min_timestamp);
             return (timeB - timeA);
         });
+
         return sortedList;
     }
 
@@ -131,34 +100,65 @@ class SessionList extends Component {
         return sortedList;
     }
 
-    mapResults(list) {
-        const mappedSessions = list.map((item, index) => {
-            return (
-                <li key={index}>
-                    <p> Username: {item.user__username}</p>
-                    <p>Time Started (local TZ): {this.renderTime(item.min_timestamp)}</p>
-                    <p>Duration: {this.renderDuration(item.duration_sec)}</p>
-                    <p>Request Count: {item.request_count}</p>
-                </li>
-            );
-        });
-
-        return mappedSessions;
-    }
-
     render() {
-        //this.orderResultsUserName(this.state.sessionsList);
-        this.orderResultsTimeStarted(this.state.sessionsList);
+        // this.orderResultsUserName(this.state.sessionsList);
+        // this.orderResultsTimeStarted(this.state.sessionsList);
         // this.orderResultsDuration(this.state.sessionsList);
         // this.orderResultsRequestCount(this.state.sessionsList);
-
+        const { userData, handlePageChange, activePage } = this.props;
         return (
-            <React.Fragment>
-                <input onKeyUp={this.getQueryUsername}></input>
-                <ul>
-                    {this.mapResults(this.state.sessionsList)}
-                </ul>
-            </React.Fragment>
+            <div className="app__container">
+                <main className="app__main">
+                    <div className="breadcrumb__container">
+                        <ul className="breadcrumb__container-list">
+                            <li className="breadcrumb__container-item">
+                                <Link to="/">Overview</Link>
+                            </li>>
+                            <li className="breadcrumb__container-item">
+                                <Link to="/">Sessions</Link>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="panel__session">
+                        <i className="zmdi zmdi-format-list-bulleted icon"></i>
+                        <h2 className="panel__session-title">Sessions between *DATA</h2>
+                    </div>
+                    <UserFilter getQueryUserName={this.getQueryUsername} />
+                    <div className="table__container">
+                        {(this.state.duplicatedArray.length !== 0) ? (<TableSessionList activePage={activePage} handlePageChange={handlePageChange} userData={userData}>
+                        </TableSessionList>) : (<p>Looking for data...</p>)}
+                    </div>
+                </main>
+                <footer className="app__footer-session">
+                    <div className="entries__container">
+                        <p>
+                            Show
+                            <select className="entries__select">
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                            </select>
+                            entries per page
+                        </p>
+                    </div>
+                    <div className="pagination__container">
+                        <Pagination
+                            innerClassName={<ul className="pagination">f</ul>}
+                            activeClassName={<li className="pagination__list-item"></li>}
+                            firstPageText={<li className="pagination__list-item">First</li>}
+                            prevPageText={<li className="pagination__list-item">Previous</li>}
+                            nextPageText={<li className="pagination__list-item">Next</li>}
+                            lastPageText={<li className="pagination__list-item">Last</li>}
+                            activePage={activePage}
+                            itemsCountPerPage={10}
+                            totalItemsCount={450}
+                            pageRangeDisplayed={5}
+                            onChange={handlePageChange}
+                        />
+                    </div>
+                </footer>
+            </div>
         );
     }
 }
