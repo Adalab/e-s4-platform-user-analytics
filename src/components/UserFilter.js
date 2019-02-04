@@ -3,12 +3,12 @@ import React, { Component } from "react";
 class UserFilter extends Component {
     render() {
         return (
-            <div className="username__filter">
-                <div className="username__filter-search">
+            <div className="search__container">
+                <div className="search__input-container">
                     <label htmlFor="username"></label>
-                    <input type="text" id="username" className="username__filter-field" placeholder="search" name="username" />
+                    <input type="text" id="username" className="search__input" placeholder="search" name="username" />
                 </div>
-                <p className="username__results-number">Showing **1124/1124** entries</p>
+                <p className="search__info-total">Showing **1124/1124** entries</p>
             </div>
         );
     }

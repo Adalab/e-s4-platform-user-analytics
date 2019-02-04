@@ -48,22 +48,17 @@ background-color: pink;
   display: flex;
 }
 
-.table__head {
+.table__content {
   display: flex;
   flex-direction: row;
   align-items: center;
   background-color: lightsalmon;
 }
 
-.arrow__container {
+.table__icons {
   display: flex;
   flex-direction: column;
   background-color: white;
-}
-
-.username__list {
-  border: 2px solid black;
-  list-style: none;
 }
 
 //>ESTILOS DEL FOOTER

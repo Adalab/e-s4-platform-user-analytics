@@ -2,19 +2,12 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import Pagination from "react-js-pagination";
 import UserFilter from './UserFilter';
+import TableSessionList from "./TableSessionList";
 
 
 class SessionList extends Component {
     render() {
         const {userData, handlePageChange, activePage} = this.props;
-        const row = userData.map((item,index) => 
-        <tr key={index}>
-            <td>{item.user__username}</td>
-            <td>{item.min_timestamp}</td>
-            <td>{item.duration_sec}</td>
-            <td>{item.request_count}</td>
-        </tr>
-        );
         return (
             <div className="app__container">
                 <main className="app__main">
@@ -34,58 +27,14 @@ class SessionList extends Component {
                     </div>
                     <UserFilter />
                     <div className="table__container">
-                        <table className="table__results">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        <div className="table__head">
-                                            <p>Username</p>
-                                            <div className="arrow__container">
-                                                <i class="zmdi zmdi-chevron-up"></i>
-                                                <i class="zmdi zmdi-chevron-down"></i>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="table__head">
-                                            <p>Time Started (local TZ)</p>
-                                            <div className="arrow__container">
-                                                <i class="zmdi zmdi-chevron-up"></i>
-                                                <i class="zmdi zmdi-chevron-down"></i>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="table__head">
-                                            <p>Duration</p>
-                                            <div className="arrow__container">
-                                                <i class="zmdi zmdi-chevron-up"></i>
-                                                <i class="zmdi zmdi-chevron-down"></i>
-                                            </div>
-                                        </div>
-                                    </th>
-                                    <th>
-                                        <div className="table__head">
-                                            <p>Request Count</p>
-                                            <div className="arrow__container">
-                                                <i class="zmdi zmdi-chevron-up"></i>
-                                                <i class="zmdi zmdi-chevron-down"></i>
-                                            </div>
-                                        </div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {row}
-                            </tbody>
-                        </table>
+                        <TableSessionList activePage={activePage} handlePageChange={handlePageChange} userData={userData} />
                     </div>
                 </main>
                 <footer className="app__footer-session">
-                    <div className="options__numberspage">
+                    <div className="entries__container">
                         <p>
                             Show
-                            <select className="select__entries">
+                            <select className="entries__select">
                                 <option value="5">5</option>
                                 <option value="10">10</option>
                                 <option value="15">15</option>
@@ -94,9 +43,9 @@ class SessionList extends Component {
                             entries per page
                         </p>
                     </div>
-                    <div className="options__pagination">
+                    <div className="pagination__container">
                         <Pagination
-                            innerClassName={<ul className="pagination"></ul>}
+                            innerClassName={<ul className="pagination">f</ul>}
                             activeClassName={<li className="pagination__list-item"></li>}
                             firstPageText={<li className="pagination__list-item">First</li>}
                             prevPageText={<li className="pagination__list-item">Previous</li>}
