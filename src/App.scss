@@ -1,0 +1,93 @@
+//component App
+.page__wrapper {
+  display:flex;
+}
+
+//component aside
+.aside__sidebar {
+  width: 200px;
+  background-color: lightgreen;
+}
+
+//component sessionList
+.app__container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.app__main {
+background-color: pink;
+}
+
+.breadcrumb__container {
+  text-align: center;
+}
+
+.breadcrumb__container-list {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
+// breadcrumb__container-item
+.panel__session {
+  display: flex;
+  align-items: center;
+}
+
+.icon {
+  font-size: 32px;
+}
+
+// panel__session-title
+// username__filter
+
+//>ESTILOS DE LA TABLA
+.table__container {
+  display: flex;
+}
+
+.table__content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: lightsalmon;
+}
+
+.table__icons {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+//>ESTILOS DEL FOOTER
+.app__footer-session {
+  background-color: lightblue;
+  display: flex;
+  justify-content: space-between;
+}
+
+// options__numberspage
+// select__entries
+
+.options__pagination {
+  background-color: lightblue;
+}
+
+.pagination {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+// pagination__list-item
+
+
+// ESTILOS DEL USERNAME FILTER
+
+.username__filter {
+  display: flex;
+  align-items: center;
+}
