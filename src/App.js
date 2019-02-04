@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Sidebar from './components/Sidebar';
 import SessionList from './components/SessionList';
 import ChartsUsage from './components/ChartsUsage';
+import { requestSessions } from './services/SessionsService';
 import './App.scss';
 
 const userData = {
@@ -39,11 +40,45 @@ const userData = {
       "user": 17,
       "request_count": 106,
       "session_key": "eiqk9g55mpkg3hq29q1mu5ozkck13ka6"
+    },
+    {
+      "user__username": "yeti@stylesage.co",
+      "max_timestamp": "2019-01-28T17:32:49.570Z",
+      "user__job_title": "",
+      "min_timestamp": "2019-12-28T15:02:34.682Z",
+      "duration_sec": 7934.888322,
+      "user": 17,
+      "request_count": 50,
+      "session_key": "4d3z5dnb34rlojytunofjzma0j8nggyq"
+    },
+    {
+      "user__username": "jede@stylesage.co",
+      "max_timestamp": "2019-01-28T17:32:49.570Z",
+      "user__job_title": "",
+      "min_timestamp": "2019-12-28T15:02:34.682Z",
+      "duration_sec": 7934.888322,
+      "user": 17,
+      "request_count": 50,
+      "session_key": "4d3z5dnb34rlojytunofjzma0j8nggyq"
     }
   ]
 }
 
+
+
 class App extends Component {
+
+  componentDidMount() {
+    this.fetchSessions();
+  }
+
+  fetchSessions() {
+    requestSessions()
+      .then(data => {
+        console.log(data)
+      })
+  }
+
   render() {
     return (
       <div className="app">

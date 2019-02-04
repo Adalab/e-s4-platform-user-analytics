@@ -6,13 +6,11 @@ class SessionList extends Component {
         super(props);
 
         this.state = {
-            query: "",
+            queryUsername: "",
             sessionsList: []
         }
 
-        this.getQueryUserName = this.getQueryUserName.bind(this);
-        this.searchUsername = this.searchUsername.bind(this);
-        this.orderResultsRequestCount = this.orderResultsRequestCount.bind(this);
+        this.getQueryUsername = this.getQueryUsername.bind(this);
     }
 
     componentDidMount() {
@@ -65,19 +63,17 @@ class SessionList extends Component {
         return durationString;
     }
 
-    getQueryUserName(e) {
-        const userName = e.currentTarget.value;
-        console.log('hola');
+    getQueryUsername(e) {
+        const userName = e.currentTarget.value;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
 
-        this.searchUsername(userName);
+        this.filterUserame(userName);
 
         this.setState({
-            query: userName
+            queryUsername: userName
         })
     }
 
-    searchUsername(userName) {
-
+    filterUserame(userName) {
         const originalList = this.props.userData.sessions;
 
         const filteredList = originalList.filter(item => {
@@ -150,13 +146,15 @@ class SessionList extends Component {
         return mappedSessions;
     }
 
-
-
     render() {
-        this.orderResultsRequestCount(this.state.sessionsList);
+        this.orderResultsUserName(this.state.sessionsList);
+        // this.orderResultsTimeStarted(this.state.sessionsList);
+        // this.orderResultsDuration(this.state.sessionsList);
+        // this.orderResultsRequestCount(this.state.sessionsList);
+
         return (
             <React.Fragment>
-                <input onKeyUp={this.getQueryUserName}></input>
+                <input onKeyUp={this.getQueryUsername}></input>
                 <ul>
                     {this.mapResults(this.state.sessionsList)}
                 </ul>
