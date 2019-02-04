@@ -64,7 +64,7 @@ class SessionList extends Component {
     }
 
     getQueryUsername(e) {
-        const userName = e.currentTarget.value;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+        const userName = e.currentTarget.value;
 
         this.filterUserame(userName);
 
@@ -147,8 +147,8 @@ class SessionList extends Component {
     }
 
     render() {
-        this.orderResultsUserName(this.state.sessionsList);
-        // this.orderResultsTimeStarted(this.state.sessionsList);
+        //this.orderResultsUserName(this.state.sessionsList);
+        this.orderResultsTimeStarted(this.state.sessionsList);
         // this.orderResultsDuration(this.state.sessionsList);
         // this.orderResultsRequestCount(this.state.sessionsList);
 
