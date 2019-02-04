@@ -5,58 +5,16 @@ import UserFilter from './UserFilter';
 
 
 class SessionList extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            activePage: 15,
-            userData: [
-                {
-                    "user__username": "jade@stylesage.co",
-                    "max_timestamp": "2019-01-28T17:32:49.570Z",
-                    "user__job_title": "",
-                    "min_timestamp": "2019-01-28T15:20:34.682Z",
-                    "duration_sec": 7934.888322,
-                    "user": 17,
-                    "request_count": 50,
-                    "session_key": "4d3z5dnb34rlojytunofjzma0j8nggyq"
-                },
-                {
-                    "user__username": "jade@stylesage.co",
-                    "max_timestamp": "2019-01-22T15:34:32.548Z",
-                    "user__job_title": "",
-                    "min_timestamp": "2019-01-22T15:33:26.764Z",
-                    "duration_sec": 65.783448,
-                    "user": 17,
-                    "request_count": 19,
-                    "session_key": "dieyd3xze1ovzq4zdgexyt3rqeg4uq6p"
-                },
-                {
-                    "user__username": "jade@stylesage.co",
-                    "max_timestamp": "2019-01-09T15:08:27.590Z",
-                    "user__job_title": "",
-                    "min_timestamp": "2019-01-09T14:40:17.034Z",
-                    "duration_sec": 1690.556118,
-                    "user": 17,
-                    "request_count": 106,
-                    "session_key": "eiqk9g55mpkg3hq29q1mu5ozkck13ka6"
-                }
-            ]
-        }
-
-
-        this.handlePageChange = this.handlePageChange.bind(this);
-    }
-
-    handlePageChange(pageNumber) {
-        console.log(`active page is ${pageNumber}`);
-        this.setState({
-            activePage: pageNumber
-        });
-    }
-
-
     render() {
+        const {userData, handlePageChange, activePage} = this.props;
+        const row = userData.map((item,index) => 
+        <tr key={index}>
+            <td>{item.user__username}</td>
+            <td>{item.min_timestamp}</td>
+            <td>{item.duration_sec}</td>
+            <td>{item.request_count}</td>
+        </tr>
+        );
         return (
             <div className="app__container">
                 <main className="app__main">
@@ -118,65 +76,9 @@ class SessionList extends Component {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr className="">
-                                    {this.state.userData.map((item, index) => {
-                                        return (
-                                            <td key={index}>{item.user__username}</td>
-                                        )
-                                    })}
-                                </tr>
-                                <tr className="">
-                                    {this.state.userData.map((item, index) => {
-                                        return (
-                                            <td key={index}>{item.min_timestamp}</td>
-                                        )
-                                    })}
-                                </tr>
-                                <tr className="">
-                                    {this.state.userData.map((item, index) => {
-                                        return (
-                                            <td key={index}>{item.duration_sec}</td>
-                                        )
-                                    })}
-                                </tr>
-                                <tr className="">
-                                    {this.state.userData.map((item, index) => {
-                                        return (
-                                            <td key={index}>{item.request_count}</td>
-                                        )
-                                    })}
-                                </tr>
+                                {row}
                             </tbody>
                         </table>
-
-                        {/* <ul className="username__list">UserName
-                                {this.state.userData.map((item,index) => {
-                                return(
-                                <li key={index}>{item.user__username}</li>
-                                )
-                            })}
-                            </ul>
-                            <ul className="username__list">Time
-                                {this.state.userData.map((item,index) => {
-                                return(
-                                <li key={index}>{item.min_timestamp}</li>
-                                )
-                            })}
-                            </ul>
-                            <ul className="username__list">Duration
-                                {this.state.userData.map((item,index) => {
-                                return(
-                                <li key={index}>{item.duration_sec}</li>
-                                )
-                            })}
-                            </ul>
-                            <ul className="username__list">Request Count
-                                {this.state.userData.map((item,index) => {
-                                return(
-                                <li key={index}>{item.request_count}</li>
-                                )
-                            })}
-                            </ul> */}
                     </div>
                 </main>
                 <footer className="app__footer-session">
@@ -200,11 +102,11 @@ class SessionList extends Component {
                             prevPageText={<li className="pagination__list-item">Previous</li>}
                             nextPageText={<li className="pagination__list-item">Next</li>}
                             lastPageText={<li className="pagination__list-item">Last</li>}
-                            activePage={this.state.activePage}
+                            activePage={activePage}
                             itemsCountPerPage={10}
                             totalItemsCount={450}
                             pageRangeDisplayed={5}
-                            onChange={this.handlePageChange}
+                            onChange={handlePageChange}
                         />
                     </div>
                 </footer>
