@@ -4,6 +4,25 @@ class SessionList extends Component {
 
     constructor(props) {
         super(props);
+
+        this.state = {
+            query: "",
+            sessionsList: []
+        }
+
+        this.renderTime = this.renderTime.bind(this);
+        this.orderRequestCount = this.orderRequestCount.bind(this);
+        this.getQueryUserName = this.getQueryUserName.bind(this);
+        this.searchUsername = this.searchUsername.bind(this);
+    }
+
+    componentDidMount() {
+        const { sessions } = this.props.userData;
+        const sessionsList = sessions.slice();
+
+        this.setState({
+            sessionsList: sessionsList
+        })
     }
 
     renderTime(timestamp) {
@@ -18,7 +37,7 @@ class SessionList extends Component {
         return (
             year + '-' + month + '-' + day + ',' + hour + ':' + minutes
         )
-    };
+    }
 
     addZero(par) {
         if (par.length < 2) {
@@ -43,46 +62,51 @@ class SessionList extends Component {
             durationString = seconds + 's';
         }
         return durationString;
-    };
+    }
 
-    orderResultsDuration(sessionsList) {
-        const sortedList = sessionsList.sort((a,b)=> {
+    orderResultsDuration(list) {
+        const sortedList = list.sort((a, b) => {
             return b.duration_sec - a.duration_sec;
         });
         return sortedList;
     }
 
-
-    orderResultsTimeStarted(sessionsList) {
-        // const sessionStart = new Date(sessionsList.min_timestamp);
-        const sortedList = sessionsList.sort((a,b)=> {
+    orderResultsTimeStarted(list) {
+        const sortedList = list.sort((a, b) => {
             const timeA = new Date(a.min_timestamp);
             const timeB = new Date(b.min_timestamp);
-            return (timeB.value - timeA.value);
+            return (timeB - timeA);
         });
         return sortedList;
     }
 
     sortName(items) {
-        items.sort(function(a, b) {
-        var nameA = a.user__username.toUpperCase();
-        var nameB = b.user__username.toUpperCase();
-        if (nameA < nameB) {
+        items.sort(function (a, b) {
+            var nameA = a.user__username.toUpperCase();
+            var nameB = b.user__username.toUpperCase();
+            if (nameA < nameB) {
                 return -1;
             }
             if (nameA > nameB) {
                 return 1;
-            }   
+            }
         })
     }
 
-    orderResultsUserName(sessionsList) {
-        const sortedList = sessionsList.sort(this.sortName(sessionsList));
+    orderResultsUserName(list) {
+        const sortedList = list.sort(this.sortName(list));
         return sortedList;
     }
 
-    mapResults(sessionsList) {
-        const mappedSessions = sessionsList.map((item, index) => {
+    orderRequestCount(list) {
+        const sortedList = list.sort((a, b) => {
+            return b.request_count - a.request_count;
+        });
+        return sortedList;
+    }
+
+    mapResults(list) {
+        const mappedSessions = list.map((item, index) => {
             return (
                 <li key={index}>
                     <p> Username: {item.user__username}</p>
@@ -95,14 +119,40 @@ class SessionList extends Component {
         return mappedSessions;
     }
 
+    getQueryUserName(e) {
+        const userName = e.currentTarget.value;
+        console.log('hola');
+
+        this.searchUsername(userName);
+
+        this.setState({
+            query: userName
+        })
+    }
+
+    searchUsername(userName) {
+
+        const originalList = this.props.userData.sessions;
+
+        const filteredList = originalList.filter(item => {
+            return item.user__username.includes(userName);
+        });
+
+        this.setState({
+            sessionsList: filteredList
+        });
+    }
+
     render() {
-        const { sessions } = this.props.userData;
-        const sessionsList = sessions.slice();
-        this.orderResultsTimeStarted(sessionsList);
+        this.orderRequestCount(this.state.sessionsList);
         return (
-            <ul>
-                {this.mapResults(sessionsList)}
-            </ul>);
+            <React.Fragment>
+                <input onKeyUp={this.getQueryUserName}></input>
+                <ul>
+                    {this.mapResults(this.state.sessionsList)}
+                </ul>
+            </React.Fragment>
+        );
     }
 }
 
