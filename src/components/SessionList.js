@@ -9,11 +9,11 @@ class SessionList extends Component {
     renderTime(timestamp) {
         const sessionStart = new Date(timestamp);
 
-        const year = this.addZero(sessionStart.getFullYear());
-        let month = this.addZero((sessionStart.getMonth() + 1).toString());
-        let day = this.addZero(sessionStart.getDate().toString());
-        let hour = this.addZero(sessionStart.getHours().toString());
-        let minutes = this.addZero(sessionStart.getMinutes().toString());
+        const year = sessionStart.getFullYear();
+        const month = this.addZero((sessionStart.getMonth() + 1).toString());
+        const day = this.addZero(sessionStart.getDate().toString());
+        const hour = this.addZero(sessionStart.getHours().toString());
+        const minutes = this.addZero(sessionStart.getMinutes().toString());
 
         return (
             year + '-' + month + '-' + day + ',' + hour + ':' + minutes
@@ -65,8 +65,8 @@ class SessionList extends Component {
 
     sortName(items) {
         items.sort(function(a, b) {
-        var nameA = a.user__username.toUpperCase(); // ignore upper and lowercase
-        var nameB = b.user__username.toUpperCase(); // ignore upper and lowercase
+        var nameA = a.user__username.toUpperCase();
+        var nameB = b.user__username.toUpperCase();
         if (nameA < nameB) {
                 return -1;
             }
