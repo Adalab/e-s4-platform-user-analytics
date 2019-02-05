@@ -4,7 +4,6 @@ import Pagination from "react-js-pagination";
 import UserFilter from './UserFilter';
 import TableSessionList from "./TableSessionList";
 
-
 class SessionList extends Component {
 
     constructor(props) {
@@ -224,7 +223,7 @@ class SessionList extends Component {
                                 <Link to="/">Overview</Link>
                             </li>>
                             <li className="breadcrumb__container-item">
-                                <Link to="/">Sessions</Link>
+                                <span>Sessions</span>
                             </li>
                         </ul>
                     </div>

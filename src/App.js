@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
+import Overview from './components/Overview';
 import SessionList from './components/SessionList';
 import ChartsUsage from './components/ChartsUsage';
 import { requestSessions } from './services/SessionsService';
@@ -52,7 +53,8 @@ class App extends Component {
         <div className="page__wrapper">
           <Sidebar />
           {(activePetition) ? (<Switch>
-            <Route exact path="/" render={props => <SessionList match={props.match} userData={userData} activePage={activePage} handlePageChange={this.handlePageChange} />} />
+            <Route exact path="/" render={() => <Overview />} />
+            <Route path="/session-list" render={props => <SessionList match={props.match} userData={userData} activePage={activePage} handlePageChange={this.handlePageChange} />} />
             <Route path="/charts-usage" render={() => <ChartsUsage />} />
           </Switch>) : (<p>Looking for data...</p>)}
         </div>
