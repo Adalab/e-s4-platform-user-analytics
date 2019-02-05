@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Pagination from "react-js-pagination";
 import UserFilter from './UserFilter';
 import TableSessionList from "./TableSessionList";
+import { requestSessions } from './../services/SessionsService';
 
 class SessionList extends Component {
 
@@ -10,17 +11,27 @@ class SessionList extends Component {
         super(props);
 
         this.state = {
+            userData: [],
+            activePetition: false,
             queryUsername: '',
             sessionsList: [],
             duplicatedArray: false,
-            filter: ''
+            filter: '',
+            resultsNumber: '0'
         }
 
+        this.fetchSessions = this.fetchSessions.bind(this);
+        this.fromToDate = this.fromToDate.bind(this);
+        this.renderTime = this.renderTime.bind(this);
+
         this.getQueryUsername = this.getQueryUsername.bind(this);
+        this.calculateResultsNumber = this.calculateResultsNumber.bind(this);
+
         this.orderResultsUsername = this.orderResultsUsername.bind(this);
         this.orderResultsTimeStarted = this.orderResultsTimeStarted.bind(this);
         this.orderResultsDuration = this.orderResultsDuration.bind(this);
         this.orderResultsRequestCount = this.orderResultsRequestCount.bind(this);
+
         this.orderUsername = this.orderUsername.bind(this);
         this.orderTimeStarted = this.orderTimeStarted.bind(this);
         this.orderDuration = this.orderDuration.bind(this);
@@ -28,13 +39,48 @@ class SessionList extends Component {
     }
 
     componentDidMount() {
-        const { sessions } = this.props.userData;
-        const sessionsList = sessions.slice();
+        this.fetchSessions();
+    }
 
-        this.setState({
-            sessionsList: sessionsList,
-            duplicatedArray: true
-        });
+    fetchSessions() {
+        requestSessions()
+            .then(data => {
+                this.setState({
+                    userData: data,
+                    sessionsList: data.sessions,
+                    duplicatedArray: true
+                });
+                this.calculateResultsNumber(this.state.sessionsList);
+                this.fromToDate();
+            });
+    }
+
+    fromToDate() {
+       const fromDateToDate = this.renderTime(this.state.userData.from_date) + ' and ' + this.renderTime(this.state.userData.to_date);
+
+       return fromDateToDate;
+    }
+
+    addZero(par) {
+        if (par.length < 2) {
+            par = '0' + par;
+        }
+
+        return par;
+    }
+
+    renderTime(timestamp) {
+        const sessionStart = new Date(timestamp);
+
+        const year = sessionStart.getFullYear();
+        const month = this.addZero((sessionStart.getMonth() + 1).toString());
+        const day = this.addZero(sessionStart.getDate().toString());
+        const hour = this.addZero(sessionStart.getHours().toString());
+        const minutes = this.addZero(sessionStart.getMinutes().toString());
+
+        return (
+            year + '-' + month + '-' + day + ',' + hour + ':' + minutes
+        );
     }
 
     getQueryUsername(e) {
@@ -42,7 +88,7 @@ class SessionList extends Component {
         const filteredList = this.filterUserame(userName);
         let orderedList;
 
-        switch(this.state.filter) {
+        switch (this.state.filter) {
             case 'Username-up':
                 orderedList = this.orderUsername(filteredList);
                 break;
@@ -74,26 +120,35 @@ class SessionList extends Component {
             case 'RequestCount-down':
                 orderedList = this.orderRequestCount(filteredList).reverse();
                 break;
-            
+
             default:
                 orderedList = filteredList;
                 break;
-        }
+        };
 
+        this.calculateResultsNumber(orderedList);
         this.setState({
             queryUsername: userName,
             sessionsList: orderedList
-        })  
+        })
     }
 
     filterUserame(userName) {
-        const originalList = this.props.userData.sessions;
+        const originalList = this.state.userData.sessions;
 
         const filteredList = originalList.filter(item => {
             return item.user__username.includes(userName);
         });
 
         return filteredList;
+    }
+
+    calculateResultsNumber(list) {
+        const resultsNumber =  parseInt(list.length) + '/' + parseInt(this.state.userData.sessions.length);
+
+        this.setState({
+            resultsNumber: resultsNumber
+        });
     }
 
     orderUsername(list) {
@@ -212,7 +267,7 @@ class SessionList extends Component {
 
     render() {
         const { handlePageChange, activePage } = this.props;
-        const { sessionsList, duplicatedArray } = this.state;
+        const { sessionsList, duplicatedArray, resultsNumber } = this.state;
 
         return (
             <div className="app__container">
@@ -229,12 +284,13 @@ class SessionList extends Component {
                     </div>
                     <div className="panel__session">
                         <i className="zmdi zmdi-format-list-bulleted icon"></i>
-                        <h2 className="panel__session-title">Sessions between *DATA</h2>
+                        <h2 className="panel__session-title">Sessions between {this.fromToDate()}</h2>
                     </div>
-                    <UserFilter getQueryUsername={this.getQueryUsername} />
+                    <UserFilter getQueryUsername={this.getQueryUsername} resultsNumber={resultsNumber} />
                     <div className="table__container">
                         {(duplicatedArray.length !== 0)
                             ? (<TableSessionList
+                                renderTime={this.renderTime}
                                 orderResultsUsername={this.orderResultsUsername}
                                 orderResultsTimeStarted={this.orderResultsTimeStarted}
                                 orderResultsDuration={this.orderResultsDuration}

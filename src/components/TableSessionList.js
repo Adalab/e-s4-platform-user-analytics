@@ -16,7 +16,7 @@ class TableSessionList extends Component {
             return (
                 <tr className="table__tr" key={index}>
                     <td className="table__td">{item.user__username}</td>
-                    <td className="table__td">{this.renderTime(item.min_timestamp)}</td>
+                    <td className="table__td">{this.props.renderTime(item.min_timestamp)}</td>
                     <td className="table__td">{this.renderDuration(item.duration_sec)}</td>
                     <td className="table__td">{item.request_count}</td>
                 </tr>
@@ -24,28 +24,6 @@ class TableSessionList extends Component {
         });
 
         return row;
-    }
-
-    addZero(par) {
-        if (par.length < 2) {
-            par = '0' + par;
-        }
-
-        return par;
-    }
-
-    renderTime(timestamp) {
-        const sessionStart = new Date(timestamp);
-
-        const year = sessionStart.getFullYear();
-        const month = this.addZero((sessionStart.getMonth() + 1).toString());
-        const day = this.addZero(sessionStart.getDate().toString());
-        const hour = this.addZero(sessionStart.getHours().toString());
-        const minutes = this.addZero(sessionStart.getMinutes().toString());
-
-        return (
-            year + '-' + month + '-' + day + ',' + hour + ':' + minutes
-        );
     }
 
     renderDuration(duration) {
