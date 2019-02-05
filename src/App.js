@@ -33,7 +33,7 @@ class App extends Component {
           userData: data,
           activePetition: true
         });
-      })
+      });
   }
 
   handlePageChange(pageNumber) {
@@ -44,7 +44,7 @@ class App extends Component {
 
   render() {
 
-    const { userData, activePetition } = this.state;
+    const { userData, activePetition, activePage } = this.state;
 
     return (
       <div className="app">
@@ -52,7 +52,7 @@ class App extends Component {
         <div className="page__wrapper">
           <Sidebar />
           {(activePetition) ? (<Switch>
-            <Route exact path="/" render={props => <SessionList match={props.match} userData={userData} activePage={this.state.activePage} handlePageChange={this.handlePageChange} />} />
+            <Route exact path="/" render={props => <SessionList match={props.match} userData={userData} activePage={activePage} handlePageChange={this.handlePageChange} />} />
             <Route path="/charts-usage" render={() => <ChartsUsage />} />
           </Switch>) : (<p>Looking for data...</p>)}
         </div>

@@ -4,6 +4,10 @@ class TableSessionList extends Component {
     constructor(props) {
         super(props);
 
+        this.state = {
+           row: '' 
+        }   
+
         this.mapResults = this.mapResults.bind(this);
     }
 
@@ -64,9 +68,8 @@ class TableSessionList extends Component {
     }
 
     render() {
-        const { userData } = this.props;
-        const row = this.mapResults(userData.sessions);
-
+        const { sessionsList, orderResultsUsername, orderResultsTimeStarted, orderResultsDuration, orderResultsRequestCount } = this.props;
+        
         return (
             <table className="table">
                 <thead className="table__thead">
@@ -75,8 +78,8 @@ class TableSessionList extends Component {
                             <div className="table__content">
                                 <p className="table__title">Username</p>
                                 <div className="table__icons">
-                                    <i className="zmdi zmdi-chevron-up"></i>
-                                    <i className="zmdi zmdi-chevron-down"></i>
+                                    <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsUsername}></i>
+                                    <i className="zmdi zmdi-chevron-down" data-arrow="down" onClick={orderResultsUsername}></i>
                                 </div>
                             </div>
                         </th>
@@ -84,8 +87,8 @@ class TableSessionList extends Component {
                             <div className="table__content">
                                 <p className="table__title">Time Started (local TZ)</p>
                                 <div className="table__icons">
-                                    <i className="zmdi zmdi-chevron-up"></i>
-                                    <i className="zmdi zmdi-chevron-down"></i>
+                                    <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsTimeStarted}></i>
+                                    <i className="zmdi zmdi-chevron-down" data-arrow="down" onClick={orderResultsTimeStarted}></i>
                                 </div>
                             </div>
                         </th>
@@ -93,8 +96,8 @@ class TableSessionList extends Component {
                             <div className="table__content">
                                 <p className="table__title">Duration</p>
                                 <div className="table__icons">
-                                    <i className="zmdi zmdi-chevron-up"></i>
-                                    <i className="zmdi zmdi-chevron-down"></i>
+                                    <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsDuration}></i>
+                                    <i className="zmdi zmdi-chevron-down" data-arrow="down" onClick={orderResultsDuration}></i>
                                 </div>
                             </div>
                         </th>
@@ -102,15 +105,15 @@ class TableSessionList extends Component {
                             <div className="table__content">
                                 <p className="table__title">Request Count</p>
                                 <div className="table__icons">
-                                    <i className="zmdi zmdi-chevron-up"></i>
-                                    <i className="zmdi zmdi-chevron-down"></i>
+                                    <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsRequestCount}></i>
+                                    <i className="zmdi zmdi-chevron-down" data-arrow="down" onClick={orderResultsRequestCount}></i>
                                 </div>
                             </div>
                         </th>
                     </tr>
                 </thead>
                 <tbody className="table__tbody">
-                    {row}
+                    {this.mapResults(sessionsList)}
                 </tbody>
             </table>
         );
