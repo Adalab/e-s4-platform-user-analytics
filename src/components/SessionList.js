@@ -21,12 +21,17 @@ class SessionList extends Component {
         }
 
         this.fetchSessions = this.fetchSessions.bind(this);
+        this.fromToDate = this.fromToDate.bind(this);
+        this.renderTime = this.renderTime.bind(this);
+
         this.getQueryUsername = this.getQueryUsername.bind(this);
         this.calculateResultsNumber = this.calculateResultsNumber.bind(this);
+
         this.orderResultsUsername = this.orderResultsUsername.bind(this);
         this.orderResultsTimeStarted = this.orderResultsTimeStarted.bind(this);
         this.orderResultsDuration = this.orderResultsDuration.bind(this);
         this.orderResultsRequestCount = this.orderResultsRequestCount.bind(this);
+
         this.orderUsername = this.orderUsername.bind(this);
         this.orderTimeStarted = this.orderTimeStarted.bind(this);
         this.orderDuration = this.orderDuration.bind(this);
@@ -46,7 +51,36 @@ class SessionList extends Component {
                     duplicatedArray: true
                 });
                 this.calculateResultsNumber(this.state.sessionsList);
+                this.fromToDate();
             });
+    }
+
+    fromToDate() {
+       const fromDateToDate = this.renderTime(this.state.userData.from_date) + ' and ' + this.renderTime(this.state.userData.to_date);
+
+       return fromDateToDate;
+    }
+
+    addZero(par) {
+        if (par.length < 2) {
+            par = '0' + par;
+        }
+
+        return par;
+    }
+
+    renderTime(timestamp) {
+        const sessionStart = new Date(timestamp);
+
+        const year = sessionStart.getFullYear();
+        const month = this.addZero((sessionStart.getMonth() + 1).toString());
+        const day = this.addZero(sessionStart.getDate().toString());
+        const hour = this.addZero(sessionStart.getHours().toString());
+        const minutes = this.addZero(sessionStart.getMinutes().toString());
+
+        return (
+            year + '-' + month + '-' + day + ',' + hour + ':' + minutes
+        );
     }
 
     getQueryUsername(e) {
@@ -250,12 +284,13 @@ class SessionList extends Component {
                     </div>
                     <div className="panel__session">
                         <i className="zmdi zmdi-format-list-bulleted icon"></i>
-                        <h2 className="panel__session-title">Sessions between *2019-01-06, 23:48 and 2019-01-28, 16:09*</h2>
+                        <h2 className="panel__session-title">Sessions between {this.fromToDate()}</h2>
                     </div>
                     <UserFilter getQueryUsername={this.getQueryUsername} resultsNumber={resultsNumber} />
                     <div className="table__container">
                         {(duplicatedArray.length !== 0)
                             ? (<TableSessionList
+                                renderTime={this.renderTime}
                                 orderResultsUsername={this.orderResultsUsername}
                                 orderResultsTimeStarted={this.orderResultsTimeStarted}
                                 orderResultsDuration={this.orderResultsDuration}
