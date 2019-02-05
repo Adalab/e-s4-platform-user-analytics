@@ -36,14 +36,13 @@ class SessionList extends Component {
     }
 
     fetchSessions() {
-        console.log(requestSessions);
         requestSessions()
             .then(data => {
                 this.setState({
-                    sessionsList: data,
+                    userData: data,
+                    sessionsList: data.sessions,
                     duplicatedArray: true
                 });
-                console.log(data)
             });
     }
 
