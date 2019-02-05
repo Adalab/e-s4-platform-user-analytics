@@ -33,7 +33,7 @@ class App extends Component {
           userData: data,
           activePetition: true
         });
-      })
+      });
   }
 
   handlePageChange(pageNumber) {

@@ -21,8 +21,6 @@ class SessionList extends Component {
         this.orderResultsTimeStarted = this.orderResultsTimeStarted.bind(this);
         this.orderResultsDuration = this.orderResultsDuration.bind(this);
         this.orderResultsRequestCount = this.orderResultsRequestCount.bind(this);
-        //this.sortName = this.sortName.bind(this);
-
     }
 
     componentDidMount() {
@@ -55,58 +53,76 @@ class SessionList extends Component {
         this.setState({
             sessionsList: filteredList
         });
-        console.log(this.state.sessionsList);
     }
 
-    sortName(items) {
-        items.sort(function (a, b) {
-            const nameA = a.user__username.toUpperCase();
-            const nameB = b.user__username.toUpperCase();
-            
-            if (nameA < nameB) {
-                return -1;
+    orderResultsUsername(e) {
+        const sortedList = this.state.sessionsList.sort(
+            function (a, b) {
+                const nameA = a.user__username.toUpperCase();
+                const nameB = b.user__username.toUpperCase();
+               
+                if (nameA < nameB) {
+                    return -1;
 
-            } else if (nameA > nameB) {
-                return 1;
+                } else if (nameA > nameB) {
+                    return 1;
 
-            } else {
-                return 0;
+                } else {
+                    return 0;
+                }
+            });
+
+            if (e.currentTarget.getAttribute('data-arrow') === 'down') {
+                sortedList.reverse();
             }
-        });
-    }
 
-    orderResultsUsername() {
-        const sortedList = this.sortName(this.state.sessionsList);
-        console.log(sortedList)
         this.setState({
             sessionsList: sortedList
         }) 
     }
 
-    orderResultsTimeStarted(list) {
-        const sortedList = list.sort((a, b) => {
+    orderResultsTimeStarted(e) {
+        const sortedList = this.state.sessionsList.sort((a, b) => {
             const timeA = new Date(a.min_timestamp);
             const timeB = new Date(b.min_timestamp);
-            return (timeB - timeA);
+            return (timeA - timeB);
         });
 
-        return sortedList;
+        if (e.currentTarget.getAttribute('data-arrow') === 'down') {
+            sortedList.reverse();
+        }
+
+        this.setState({
+            sessionsList: sortedList
+        }) 
     }
 
-    orderResultsDuration(list) {
-        const sortedList = list.sort((a, b) => {
-            return b.duration_sec - a.duration_sec;
+    orderResultsDuration(e) {
+        const sortedList = this.state.sessionsList.sort((a, b) => {
+            return a.duration_sec - b.duration_sec;
         });
 
-        return sortedList;
+        if (e.currentTarget.getAttribute('data-arrow') === 'down') {
+            sortedList.reverse();
+        }
+
+        this.setState({
+            sessionsList: sortedList
+        }) 
     }
 
-    orderResultsRequestCount(list) {
-        const sortedList = list.sort((a, b) => {
-            return b.request_count - a.request_count;
+    orderResultsRequestCount(e) {
+        const sortedList = this.state.sessionsList.sort((a, b) => {
+            return a.request_count - b.request_count;
         });
 
-        return sortedList;
+        if (e.currentTarget.getAttribute('data-arrow') === 'down') {
+            sortedList.reverse();
+        }
+
+        this.setState({
+            sessionsList: sortedList
+        }) 
     }
 
     render() {
