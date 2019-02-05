@@ -11,9 +11,10 @@ class SessionList extends Component {
         super(props);
 
         this.state = {
-            queryUsername: "",
+            queryUsername: '',
             sessionsList: [],
-            duplicatedArray: false
+            duplicatedArray: false,
+            filter: ''
         }
 
         this.getQueryUsername = this.getQueryUsername.bind(this);
@@ -21,6 +22,10 @@ class SessionList extends Component {
         this.orderResultsTimeStarted = this.orderResultsTimeStarted.bind(this);
         this.orderResultsDuration = this.orderResultsDuration.bind(this);
         this.orderResultsRequestCount = this.orderResultsRequestCount.bind(this);
+        this.orderUsername = this.orderUsername.bind(this);
+        this.orderTimeStarted = this.orderTimeStarted.bind(this);
+        this.orderDuration = this.orderDuration.bind(this);
+        this.orderRequestCount = this.orderRequestCount.bind(this);
     }
 
     componentDidMount() {
@@ -35,12 +40,47 @@ class SessionList extends Component {
 
     getQueryUsername(e) {
         const userName = e.currentTarget.value;
+        const filteredList = this.filterUserame(userName);
+        let orderedList;
 
-        this.filterUserame(userName);
+        switch(this.state.filter) {
+            case 'Username-up':
+                orderedList = this.orderUsername(filteredList);
+                break;
+
+            case 'Username-down':
+                orderedList = this.orderUsername(filteredList).reverse();
+                break;
+
+            case 'TimeStarted-up':
+                orderedList = this.orderTimeStarted(filteredList);
+                break;
+
+            case 'TimeStarted-down':
+                orderedList = this.orderTimeStarted(filteredList).reverse();
+                break;
+
+            case 'Duration-up':
+                orderedList = this.orderDuration(filteredList);
+                break;
+
+            case 'Duration-down':
+                orderedList = this.orderDuration(filteredList).reverse();
+                break;
+
+            case 'RequestCount-up':
+                orderedList = this.orderRequestCount(filteredList);
+                break;
+
+            case 'RequestCount-down':
+                orderedList = this.orderRequestCount(filteredList).reverse();
+                break;
+        }
 
         this.setState({
-            queryUsername: userName
-        })
+            queryUsername: userName,
+            sessionsList: orderedList
+        })  
     }
 
     filterUserame(userName) {
@@ -49,18 +89,16 @@ class SessionList extends Component {
         const filteredList = originalList.filter(item => {
             return item.user__username.includes(userName);
         });
-        
-        this.setState({
-            sessionsList: filteredList
-        });
+
+        return filteredList;
     }
 
-    orderResultsUsername(e) {
-        const sortedList = this.state.sessionsList.sort(
+    orderUsername(list) {
+        const sortedList = list.sort(
             function (a, b) {
                 const nameA = a.user__username.toUpperCase();
                 const nameB = b.user__username.toUpperCase();
-               
+
                 if (nameA < nameB) {
                     return -1;
 
@@ -72,57 +110,102 @@ class SessionList extends Component {
                 }
             });
 
-            if (e.currentTarget.getAttribute('data-arrow') === 'down') {
-                sortedList.reverse();
-            }
-
-        this.setState({
-            sessionsList: sortedList
-        }) 
+        return sortedList;
     }
 
-    orderResultsTimeStarted(e) {
-        const sortedList = this.state.sessionsList.sort((a, b) => {
+    orderResultsUsername(e) {
+        const sortedList = this.orderUsername(this.state.sessionsList);
+        console.log(sortedList);
+
+        if (e.currentTarget.getAttribute('data-arrow') === 'down') {
+            this.setState({
+                sessionsList: sortedList.reverse(),
+                filter: 'Username-down'
+            });
+
+        } else {
+            this.setState({
+                sessionsList: sortedList,
+                filter: 'Username-up'
+            });
+        }
+    }
+
+    orderTimeStarted(list) {
+        const sortedList = list.sort((a, b) => {
             const timeA = new Date(a.min_timestamp);
             const timeB = new Date(b.min_timestamp);
             return (timeA - timeB);
         });
 
-        if (e.currentTarget.getAttribute('data-arrow') === 'down') {
-            sortedList.reverse();
-        }
-
-        this.setState({
-            sessionsList: sortedList
-        }) 
+        return sortedList;
     }
 
-    orderResultsDuration(e) {
-        const sortedList = this.state.sessionsList.sort((a, b) => {
+    orderResultsTimeStarted(e) {
+        const sortedList = this.orderTimeStarted(this.state.sessionsList);
+
+        if (e.currentTarget.getAttribute('data-arrow') === 'down') {
+            this.setState({
+                sessionsList: sortedList.reverse(),
+                filter: 'TimeStarted-down'
+            });
+
+        } else {
+            this.setState({
+                sessionsList: sortedList,
+                filter: 'TimeStarted-up'
+            });
+        }
+    }
+
+    orderDuration(list) {
+        const sortedList = list.sort((a, b) => {
             return a.duration_sec - b.duration_sec;
         });
 
-        if (e.currentTarget.getAttribute('data-arrow') === 'down') {
-            sortedList.reverse();
-        }
-
-        this.setState({
-            sessionsList: sortedList
-        }) 
+        return sortedList;
     }
 
-    orderResultsRequestCount(e) {
-        const sortedList = this.state.sessionsList.sort((a, b) => {
+    orderResultsDuration(e) {
+        const sortedList = this.orderDuration(this.state.sessionsList);
+
+        if (e.currentTarget.getAttribute('data-arrow') === 'down') {
+            this.setState({
+                sessionsList: sortedList.reverse(),
+                filter: 'Duration-down'
+            });
+
+        } else {
+            this.setState({
+                sessionsList: sortedList,
+                filter: 'Duration-up'
+            });
+        }
+    }
+
+    orderRequestCount(list) {
+        const sortedList = list.sort((a, b) => {
             return a.request_count - b.request_count;
         });
 
-        if (e.currentTarget.getAttribute('data-arrow') === 'down') {
-            sortedList.reverse();
-        }
+        return sortedList;
+    }
 
-        this.setState({
-            sessionsList: sortedList
-        }) 
+    orderResultsRequestCount(e) {
+        const sortedList = this.orderRequestCount(this.state.sessionsList);
+
+        if (e.currentTarget.getAttribute('data-arrow') === 'down') {
+            this.setState({
+                sessionsList: sortedList.reverse(),
+                filter: 'RequestCount-down'
+            });
+
+        } else {
+            this.setState({
+                sessionsList: sortedList,
+                filter: 'RequestCount-up'
+            });
+        }
     }
 
     render() {
@@ -148,17 +231,17 @@ class SessionList extends Component {
                     </div>
                     <UserFilter getQueryUsername={this.getQueryUsername} />
                     <div className="table__container">
-                        {(duplicatedArray.length !== 0) 
-                        ? (<TableSessionList 
-                        orderResultsUsername={this.orderResultsUsername} 
-                        orderResultsTimeStarted={this.orderResultsTimeStarted} 
-                        orderResultsDuration={this.orderResultsDuration} 
-                        orderResultsRequestCount={this.orderResultsRequestCount} 
+                        {(duplicatedArray.length !== 0)
+                            ? (<TableSessionList
+                                orderResultsUsername={this.orderResultsUsername}
+                                orderResultsTimeStarted={this.orderResultsTimeStarted}
+                                orderResultsDuration={this.orderResultsDuration}
+                                orderResultsRequestCount={this.orderResultsRequestCount}
 
-                        activePage={activePage} 
-                        handlePageChange={handlePageChange} 
-                        sessionsList={sessionsList} />) 
-                        : (<p>Looking for data...</p>)}
+                                activePage={activePage}
+                                handlePageChange={handlePageChange}
+                                sessionsList={sessionsList} />)
+                            : (<p>Looking for data...</p>)}
                     </div>
                 </main>
                 <footer className="app__footer-session">
