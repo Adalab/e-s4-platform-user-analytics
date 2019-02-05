@@ -223,7 +223,7 @@ class SessionList extends Component {
                                 <Link to="/">Overview</Link>
                             </li>>
                             <li className="breadcrumb__container-item">
-                                <Link to="/">Sessions</Link>
+                                <span>Sessions</span>
                             </li>
                         </ul>
                     </div>
