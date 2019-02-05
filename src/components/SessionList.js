@@ -75,6 +75,10 @@ class SessionList extends Component {
             case 'RequestCount-down':
                 orderedList = this.orderRequestCount(filteredList).reverse();
                 break;
+            
+            default:
+                orderedList = filteredList;
+                break;
         }
 
         this.setState({
@@ -115,7 +119,6 @@ class SessionList extends Component {
 
     orderResultsUsername(e) {
         const sortedList = this.orderUsername(this.state.sessionsList);
-        console.log(sortedList);
 
         if (e.currentTarget.getAttribute('data-arrow') === 'down') {
             this.setState({
