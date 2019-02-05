@@ -17,6 +17,12 @@ class SessionList extends Component {
         }
 
         this.getQueryUsername = this.getQueryUsername.bind(this);
+        this.orderResultsUsername = this.orderResultsUsername.bind(this);
+        this.orderResultsTimeStarted = this.orderResultsTimeStarted.bind(this);
+        this.orderResultsDuration = this.orderResultsDuration.bind(this);
+        this.orderResultsRequestCount = this.orderResultsRequestCount.bind(this);
+        //this.sortName = this.sortName.bind(this);
+
     }
 
     componentDidMount() {
@@ -45,17 +51,18 @@ class SessionList extends Component {
         const filteredList = originalList.filter(item => {
             return item.user__username.includes(userName);
         });
-
+        
         this.setState({
             sessionsList: filteredList
         });
+        console.log(this.state.sessionsList);
     }
 
     sortName(items) {
         items.sort(function (a, b) {
             const nameA = a.user__username.toUpperCase();
             const nameB = b.user__username.toUpperCase();
-
+            
             if (nameA < nameB) {
                 return -1;
 
@@ -68,10 +75,12 @@ class SessionList extends Component {
         });
     }
 
-    orderResultsUserName(list) {
-        const sortedList = this.sortName(list);
-
-        return sortedList;
+    orderResultsUsername() {
+        const sortedList = this.sortName(this.state.sessionsList);
+        console.log(sortedList)
+        this.setState({
+            sessionsList: sortedList
+        }) 
     }
 
     orderResultsTimeStarted(list) {
@@ -101,11 +110,9 @@ class SessionList extends Component {
     }
 
     render() {
-        // this.orderResultsUserName(this.state.sessionsList);
-        // this.orderResultsTimeStarted(this.state.sessionsList);
-        // this.orderResultsDuration(this.state.sessionsList);
-        // this.orderResultsRequestCount(this.state.sessionsList);
-        const { userData, handlePageChange, activePage } = this.props;
+        const { handlePageChange, activePage } = this.props;
+        const { sessionsList, duplicatedArray } = this.state;
+
         return (
             <div className="app__container">
                 <main className="app__main">
@@ -123,10 +130,19 @@ class SessionList extends Component {
                         <i className="zmdi zmdi-format-list-bulleted icon"></i>
                         <h2 className="panel__session-title">Sessions between *DATA</h2>
                     </div>
-                    <UserFilter getQueryUserName={this.getQueryUsername} />
+                    <UserFilter getQueryUsername={this.getQueryUsername} />
                     <div className="table__container">
-                        {(this.state.duplicatedArray.length !== 0) ? (<TableSessionList activePage={activePage} handlePageChange={handlePageChange} userData={userData}>
-                        </TableSessionList>) : (<p>Looking for data...</p>)}
+                        {(duplicatedArray.length !== 0) 
+                        ? (<TableSessionList 
+                        orderResultsUsername={this.orderResultsUsername} 
+                        orderResultsTimeStarted={this.orderResultsTimeStarted} 
+                        orderResultsDuration={this.orderResultsDuration} 
+                        orderResultsRequestCount={this.orderResultsRequestCount} 
+
+                        activePage={activePage} 
+                        handlePageChange={handlePageChange} 
+                        sessionsList={sessionsList} />) 
+                        : (<p>Looking for data...</p>)}
                     </div>
                 </main>
                 <footer className="app__footer-session">
