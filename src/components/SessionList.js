@@ -16,11 +16,13 @@ class SessionList extends Component {
             queryUsername: '',
             sessionsList: [],
             duplicatedArray: false,
-            filter: ''
+            filter: '',
+            resultsNumber: '0'
         }
 
         this.fetchSessions = this.fetchSessions.bind(this);
         this.getQueryUsername = this.getQueryUsername.bind(this);
+        this.calculateResultsNumber = this.calculateResultsNumber.bind(this);
         this.orderResultsUsername = this.orderResultsUsername.bind(this);
         this.orderResultsTimeStarted = this.orderResultsTimeStarted.bind(this);
         this.orderResultsDuration = this.orderResultsDuration.bind(this);
@@ -43,6 +45,7 @@ class SessionList extends Component {
                     sessionsList: data.sessions,
                     duplicatedArray: true
                 });
+                this.calculateResultsNumber(this.state.sessionsList);
             });
     }
 
@@ -87,8 +90,9 @@ class SessionList extends Component {
             default:
                 orderedList = filteredList;
                 break;
-        }
+        };
 
+        this.calculateResultsNumber(orderedList);
         this.setState({
             queryUsername: userName,
             sessionsList: orderedList
@@ -103,6 +107,14 @@ class SessionList extends Component {
         });
 
         return filteredList;
+    }
+
+    calculateResultsNumber(list) {
+        const resultsNumber =  parseInt(list.length) + '/' + parseInt(this.state.userData.sessions.length);
+
+        this.setState({
+            resultsNumber: resultsNumber
+        });
     }
 
     orderUsername(list) {
@@ -221,7 +233,7 @@ class SessionList extends Component {
 
     render() {
         const { handlePageChange, activePage } = this.props;
-        const { sessionsList, duplicatedArray } = this.state;
+        const { sessionsList, duplicatedArray, resultsNumber } = this.state;
 
         return (
             <div className="app__container">
@@ -240,7 +252,7 @@ class SessionList extends Component {
                         <i className="zmdi zmdi-format-list-bulleted icon"></i>
                         <h2 className="panel__session-title">Sessions between *2019-01-06, 23:48 and 2019-01-28, 16:09*</h2>
                     </div>
-                    <UserFilter getQueryUsername={this.getQueryUsername} />
+                    <UserFilter getQueryUsername={this.getQueryUsername} resultsNumber={resultsNumber} />
                     <div className="table__container">
                         {(duplicatedArray.length !== 0)
                             ? (<TableSessionList
