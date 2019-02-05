@@ -4,7 +4,6 @@ import Pagination from "react-js-pagination";
 import UserFilter from './UserFilter';
 import TableSessionList from "./TableSessionList";
 
-
 class SessionList extends Component {
 
     constructor(props) {
