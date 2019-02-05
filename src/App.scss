@@ -1,19 +1,35 @@
-//component App
+//>> Component App
+//.app {}
+
 .page__wrapper {
   display:flex;
 }
 
-//component aside
-// .app_aside{
-
-// }
-
-.aside__sidebar {
-  width: 200px;
-  background-color: lightgreen;
+//>> Component Header
+.app__header {
+  border-bottom: 1px solid black;
 }
 
-//component sessionList
+//.app__header-title {}
+
+//>> Component Aside
+.app__aside {
+ width: 250px;
+ border-right: 1px solid black;
+}
+
+.aside__list {
+  list-style: none;
+// background-color: lightgreen;
+}
+
+.aside__item-link {
+  text-decoration: none;
+}
+
+//.aside__item {}
+
+//>> Component SessionList
 .app__container {
   display: flex;
   flex-direction: column;
@@ -21,7 +37,8 @@
 }
 
 .app__main {
-background-color: pink;
+  padding-left: 10px;
+// background-color: pink;
 }
 
 .breadcrumb__container {
@@ -34,30 +51,56 @@ background-color: pink;
   list-style: none;
 }
 
-// breadcrumb__container-item
+//.breadcrumb__container-item {}
+
 .panel__session {
   display: flex;
   align-items: center;
 }
 
 .icon {
-  font-size: 32px;
+  font-size: 18px;
 }
 
-// panel__session-title
-// username__filter
+.panel__session-title {
+  padding-left: 10px;
+  font-size: 18px;
+}
 
-//>ESTILOS DE LA TABLA
+//>> Component UserFilter
+.search__container {
+  display: flex;
+  align-items: center;
+}
+
+//.search__input-container {}
+
+//.search__input {}
+
+.search__info-total {
+  padding-left: 10px;
+}
+//>> End Component UserFilter
+
 .table__container {
   display: flex;
 }
+
+//>> Component TableSessionsList
+
+//.table {}
+//.table__thead {}
+//.table__tr {}
+//.table__th {}
 
 .table__content {
   display: flex;
   flex-direction: row;
   align-items: center;
-  background-color: lightsalmon;
+  // background-color: lightsalmon;
 }
+
+//.table__title {}
 
 .table__icons {
   display: flex;
@@ -65,19 +108,21 @@ background-color: pink;
   background-color: white;
 }
 
-//>ESTILOS DEL FOOTER
+//.table__tbody {}
+//.table__td {}
+
 .app__footer-session {
-  background-color: lightblue;
+  // background-color: lightblue;
   display: flex;
   justify-content: space-between;
+  border-top: 1px solid black;
+  padding-left: 10px;
+
 }
 
-// options__numberspage
-// select__entries
-
-.options__pagination {
-  background-color: lightblue;
-}
+//.entries__container {}
+//.entries__select {}
+//.pagination__container {}
 
 .pagination {
   list-style: none;
@@ -86,12 +131,4 @@ background-color: pink;
   justify-content: center;
 }
 
-// pagination__list-item
-
-
-// ESTILOS DEL USERNAME FILTER
-
-.username__filter {
-  display: flex;
-  align-items: center;
-}
+//.pagination__list-item {}
