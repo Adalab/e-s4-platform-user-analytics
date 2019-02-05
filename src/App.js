@@ -5,7 +5,6 @@ import Sidebar from './components/Sidebar';
 import Overview from './components/Overview';
 import SessionList from './components/SessionList';
 import ChartsUsage from './components/ChartsUsage';
-import { requestSessions } from './services/SessionsService';
 import './App.scss';
 
 
@@ -14,28 +13,13 @@ class App extends Component {
     super(props);
 
     this.state = {
-      userData: [],
-      activePetition: false,
       activePage: 15
     }
 
-    this.fetchSessions = this.fetchSessions.bind(this);
     this.handlePageChange = this.handlePageChange.bind(this);
   }
 
-  componentDidMount() {
-    this.fetchSessions();
-  }
-
-  fetchSessions() {
-    requestSessions()
-      .then(data => {
-        this.setState({
-          userData: data,
-          activePetition: true
-        });
-      });
-  }
+  
 
   handlePageChange(pageNumber) {
     this.setState({
@@ -45,18 +29,18 @@ class App extends Component {
 
   render() {
 
-    const { userData, activePetition, activePage } = this.state;
+    const { activePage } = this.state;
 
     return (
       <div className="app">
         <Header />
         <div className="page__wrapper">
           <Sidebar />
-          {(activePetition) ? (<Switch>
+          <Switch>
             <Route exact path="/" render={() => <Overview />} />
-            <Route path="/session-list" render={props => <SessionList match={props.match} userData={userData} activePage={activePage} handlePageChange={this.handlePageChange} />} />
+            <Route path="/session-list" render={props => <SessionList match={props.match} activePage={activePage} handlePageChange={this.handlePageChange} />} />
             <Route path="/charts-usage" render={() => <ChartsUsage />} />
-          </Switch>) : (<p>Looking for data...</p>)}
+          </Switch>
         </div>
       </div>
     );

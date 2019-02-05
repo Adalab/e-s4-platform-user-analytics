@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Pagination from "react-js-pagination";
 import UserFilter from './UserFilter';
 import TableSessionList from "./TableSessionList";
+import { requestSessions } from './../services/SessionsService';
 
 class SessionList extends Component {
 
@@ -10,12 +11,15 @@ class SessionList extends Component {
         super(props);
 
         this.state = {
+            userData: [],
+            activePetition: false,
             queryUsername: '',
             sessionsList: [],
             duplicatedArray: false,
             filter: ''
         }
 
+        this.fetchSessions = this.fetchSessions.bind(this);
         this.getQueryUsername = this.getQueryUsername.bind(this);
         this.orderResultsUsername = this.orderResultsUsername.bind(this);
         this.orderResultsTimeStarted = this.orderResultsTimeStarted.bind(this);
@@ -28,13 +32,19 @@ class SessionList extends Component {
     }
 
     componentDidMount() {
-        const { sessions } = this.props.userData;
-        const sessionsList = sessions.slice();
+        this.fetchSessions();
+    }
 
-        this.setState({
-            sessionsList: sessionsList,
-            duplicatedArray: true
-        });
+    fetchSessions() {
+        console.log(requestSessions);
+        requestSessions()
+            .then(data => {
+                this.setState({
+                    sessionsList: data,
+                    duplicatedArray: true
+                });
+                console.log(data)
+            });
     }
 
     getQueryUsername(e) {
@@ -42,7 +52,7 @@ class SessionList extends Component {
         const filteredList = this.filterUserame(userName);
         let orderedList;
 
-        switch(this.state.filter) {
+        switch (this.state.filter) {
             case 'Username-up':
                 orderedList = this.orderUsername(filteredList);
                 break;
@@ -74,7 +84,7 @@ class SessionList extends Component {
             case 'RequestCount-down':
                 orderedList = this.orderRequestCount(filteredList).reverse();
                 break;
-            
+
             default:
                 orderedList = filteredList;
                 break;
@@ -83,11 +93,11 @@ class SessionList extends Component {
         this.setState({
             queryUsername: userName,
             sessionsList: orderedList
-        })  
+        })
     }
 
     filterUserame(userName) {
-        const originalList = this.props.userData.sessions;
+        const originalList = this.state.userData.sessions;
 
         const filteredList = originalList.filter(item => {
             return item.user__username.includes(userName);
@@ -229,7 +239,7 @@ class SessionList extends Component {
                     </div>
                     <div className="panel__session">
                         <i className="zmdi zmdi-format-list-bulleted icon"></i>
-                        <h2 className="panel__session-title">Sessions between *DATA</h2>
+                        <h2 className="panel__session-title">Sessions between *2019-01-06, 23:48 and 2019-01-28, 16:09*</h2>
                     </div>
                     <UserFilter getQueryUsername={this.getQueryUsername} />
                     <div className="table__container">
