@@ -9,25 +9,8 @@ import './App.scss';
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      activePage: 15
-    }
-
-    this.handlePageChange = this.handlePageChange.bind(this);
-  }
-
-  handlePageChange(pageNumber) {
-    this.setState({
-      activePage: pageNumber
-    });
-  }
 
   render() {
-
-    const { activePage } = this.state;
 
     return (
       <div className="app">
@@ -36,7 +19,7 @@ class App extends Component {
           <Sidebar />
           <Switch>
             <Route exact path="/" render={() => <Overview />} />
-            <Route path="/session-list" render={props => <SessionList match={props.match} activePage={activePage} handlePageChange={this.handlePageChange} />} />
+            <Route path="/session-list" render={() => <SessionList />} />
             <Route path="/charts-usage" render={() => <ChartsUsage />} />
           </Switch>
         </div>

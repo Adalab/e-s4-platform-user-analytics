@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-import Pagination from "react-js-pagination";
 import UserFilter from './UserFilter';
 import TableSessionList from "./TableSessionList";
 import { requestSessions } from './../services/SessionsService';
@@ -20,22 +19,13 @@ class SessionList extends Component {
             resultsNumber: '0'
         }
 
-        this.fetchSessions = this.fetchSessions.bind(this);
-        this.fromToDate = this.fromToDate.bind(this);
         this.renderTime = this.renderTime.bind(this);
-
         this.getQueryUsername = this.getQueryUsername.bind(this);
-        this.calculateResultsNumber = this.calculateResultsNumber.bind(this);
 
         this.orderResultsUsername = this.orderResultsUsername.bind(this);
         this.orderResultsTimeStarted = this.orderResultsTimeStarted.bind(this);
         this.orderResultsDuration = this.orderResultsDuration.bind(this);
         this.orderResultsRequestCount = this.orderResultsRequestCount.bind(this);
-
-        this.orderUsername = this.orderUsername.bind(this);
-        this.orderTimeStarted = this.orderTimeStarted.bind(this);
-        this.orderDuration = this.orderDuration.bind(this);
-        this.orderRequestCount = this.orderRequestCount.bind(this);
     }
 
     componentDidMount() {
@@ -48,17 +38,30 @@ class SessionList extends Component {
                 this.setState({
                     userData: data,
                     sessionsList: data.sessions,
-                    duplicatedArray: true
+                    duplicatedArray: true,
+                    resultsDate: "",
+                    resultsNumber: ""
                 });
+
                 this.calculateResultsNumber(this.state.sessionsList);
-                this.fromToDate();
+                this.calculateFromToDate(this.state.userData);
             });
     }
 
-    fromToDate() {
+    calculateFromToDate() {
         const fromDateToDate = this.renderTime(this.state.userData.from_date) + ' and ' + this.renderTime(this.state.userData.to_date);
 
-        return fromDateToDate;
+        this.setState({
+            resultsDate: fromDateToDate
+        });
+    }
+
+    calculateResultsNumber(list) {
+        const resultsNumber = parseInt(list.length) + '/' + parseInt(this.state.userData.sessions.length);
+
+        this.setState({
+            resultsNumber: resultsNumber
+        });
     }
 
     addZero(par) {
@@ -81,6 +84,16 @@ class SessionList extends Component {
         return (
             year + '-' + month + '-' + day + ',' + hour + ':' + minutes
         );
+    }
+
+    filterUserame(userName) {
+        const originalList = this.state.userData.sessions;
+
+        const filteredList = originalList.filter(item => {
+            return item.user__username.includes(userName);
+        });
+
+        return filteredList;
     }
 
     getQueryUsername(e) {
@@ -131,24 +144,6 @@ class SessionList extends Component {
             queryUsername: userName,
             sessionsList: orderedList
         })
-    }
-
-    filterUserame(userName) {
-        const originalList = this.state.userData.sessions;
-
-        const filteredList = originalList.filter(item => {
-            return item.user__username.includes(userName);
-        });
-
-        return filteredList;
-    }
-
-    calculateResultsNumber(list) {
-        const resultsNumber = parseInt(list.length) + '/' + parseInt(this.state.userData.sessions.length);
-
-        this.setState({
-            resultsNumber: resultsNumber
-        });
     }
 
     orderUsername(list) {
@@ -266,8 +261,7 @@ class SessionList extends Component {
     }
 
     render() {
-        const { handlePageChange, activePage } = this.props;
-        const { sessionsList, duplicatedArray, resultsNumber } = this.state;
+        const { sessionsList, duplicatedArray, resultsDate, resultsNumber } = this.state;
 
         return (
             <div className="app__container">
@@ -284,7 +278,7 @@ class SessionList extends Component {
                     </div>
                     <div className="panel__session">
                         <i className="zmdi zmdi-format-list-bulleted icon"></i>
-                        <h2 className="panel__session-title">Sessions between {this.fromToDate()}</h2>
+                        <h2 className="panel__session-title">Sessions between {resultsDate}</h2>
                     </div>
                     <UserFilter getQueryUsername={this.getQueryUsername} resultsNumber={resultsNumber} />
                     <div className="table__container">
@@ -295,42 +289,10 @@ class SessionList extends Component {
                                 orderResultsTimeStarted={this.orderResultsTimeStarted}
                                 orderResultsDuration={this.orderResultsDuration}
                                 orderResultsRequestCount={this.orderResultsRequestCount}
-
-                                activePage={activePage}
-                                handlePageChange={handlePageChange}
                                 sessionsList={sessionsList} />)
                             : (<p>Looking for data...</p>)}
                     </div>
                 </main>
-                <footer className="app__footer-session">
-                    <div className="entries__container">
-                        <p>
-                            Show
-                            <select className="entries__select">
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="15">15</option>
-                                <option value="20">20</option>
-                            </select>
-                            entries per page
-                        </p>
-                    </div>
-                    <div className="pagination__container">
-                        <Pagination
-                            innerClassName={<ul className="pagination">f</ul>}
-                            activeClassName={<li className="pagination__list-item"></li>}
-                            firstPageText={<li className="pagination__list-item">First</li>}
-                            prevPageText={<li className="pagination__list-item">Previous</li>}
-                            nextPageText={<li className="pagination__list-item">Next</li>}
-                            lastPageText={<li className="pagination__list-item">Last</li>}
-                            activePage={activePage}
-                            itemsCountPerPage={10}
-                            totalItemsCount={450}
-                            pageRangeDisplayed={5}
-                            onChange={handlePageChange}
-                        />
-                    </div>
-                </footer>
             </div>
         );
     }
