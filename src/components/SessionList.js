@@ -56,9 +56,9 @@ class SessionList extends Component {
     }
 
     fromToDate() {
-       const fromDateToDate = this.renderTime(this.state.userData.from_date) + ' and ' + this.renderTime(this.state.userData.to_date);
+        const fromDateToDate = this.renderTime(this.state.userData.from_date) + ' and ' + this.renderTime(this.state.userData.to_date);
 
-       return fromDateToDate;
+        return fromDateToDate;
     }
 
     addZero(par) {
@@ -144,7 +144,7 @@ class SessionList extends Component {
     }
 
     calculateResultsNumber(list) {
-        const resultsNumber =  parseInt(list.length) + '/' + parseInt(this.state.userData.sessions.length);
+        const resultsNumber = parseInt(list.length) + '/' + parseInt(this.state.userData.sessions.length);
 
         this.setState({
             resultsNumber: resultsNumber

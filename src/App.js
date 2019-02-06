@@ -19,8 +19,6 @@ class App extends Component {
     this.handlePageChange = this.handlePageChange.bind(this);
   }
 
-  
-
   handlePageChange(pageNumber) {
     this.setState({
       activePage: pageNumber

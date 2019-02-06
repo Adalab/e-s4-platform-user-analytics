@@ -5,8 +5,8 @@ class TableSessionList extends Component {
         super(props);
 
         this.state = {
-           row: '' 
-        }   
+            row: ''
+        }
 
         this.mapResults = this.mapResults.bind(this);
     }
@@ -47,7 +47,7 @@ class TableSessionList extends Component {
 
     render() {
         const { sessionsList, orderResultsUsername, orderResultsTimeStarted, orderResultsDuration, orderResultsRequestCount } = this.props;
-        
+
         return (
             <table className="table">
                 <thead className="table__thead">
