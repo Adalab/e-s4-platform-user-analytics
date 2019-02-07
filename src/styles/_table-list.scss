@@ -1,25 +1,47 @@
 .table__container {
   display: flex;
-  background-color: $lightgrey;
 }
-//.table {}
+.table {
+  table-layout: fixed;
+  width: 1200px;
+  background-color: $violet263;
+  border-top: 1px solid black;
+  margin:0;
+  padding: 0;
+}
+#table tr:nth-child(odd) {
+  
+	color:purple
+}
+
+#table tr:nth-child(even) {
+	background-color: $violet263;
+	color:black;
+}
+.table__tr{
+  background-color: $violet2635;
+  width: 325px;
+}
 .table__thead {
-  background-color: $lightgrey;
+  margin:0;
+  padding: 0;
   color: $purple;
 }
-// .table__tr {}
-//.table__th {}
+
+.table__th {
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+}
 
 .table__content {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-
 }
-
 .table__title {
   margin-left: 10px;
+  font-weight: bold;
 }
 
 .table__icons {
@@ -30,19 +52,16 @@
   flex-direction: column;
   i:hover {
     font-weight: bold;
-    background-color: lightgray;
     height: 20px;
     width: 20px;
     }
     
 }
 
-.table__tbody {
- 
-  background-color: green;
-}
+// .table__tbody {}
+
 .table__td { 
-  width: 200px;
-  background-color: $lightgrey;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
   padding: 10px; 
 }
