@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Sidebar from './components/Sidebar';
-import Overview from './components/Overview';
-import SessionList from './components/SessionList';
-import ChartsUsage from './components/ChartsUsage';
+import Overview from './component-overview/Overview';
+import SessionList from './component-list/SessionList';
+import ChartsUsage from './component-charts/ChartsUsage';
 import './App.scss';
 
 

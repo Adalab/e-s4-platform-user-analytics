@@ -1,0 +1,28 @@
+.table__container {
+  display: flex;
+}
+
+//>> Component TableSessionsList
+
+//.table {}
+//.table__thead {}
+//.table__tr {}
+//.table__th {}
+
+.table__content {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  // background-color: lightsalmon;
+}
+
+//.table__title {}
+
+.table__icons {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+}
+
+//.table__tbody {}
+//.table__td {}
