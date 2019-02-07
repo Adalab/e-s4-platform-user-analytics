@@ -5,7 +5,7 @@ import Sidebar from './components/Sidebar';
 import Overview from './component-overview/Overview';
 import SessionList from './component-list/SessionList';
 import ChartsUsage from './component-charts/ChartsUsage';
-import './App.scss';
+import './styles.scss';
 
 
 class App extends Component {
