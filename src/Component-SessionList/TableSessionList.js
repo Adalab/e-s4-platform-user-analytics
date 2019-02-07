@@ -16,9 +16,9 @@ class TableSessionList extends Component {
             return (
                 <tr className="table__tr" key={index}>
                     <td className="table__td">{item.user__username}</td>
-                    <td className="table__td">{this.props.renderTime(item.timestamp)}</td>
-                    <td className="table__td">{this.renderDuration(item.chart_name)}</td>
-                    <td className="table__td">{item.user}</td>
+                    <td className="table__td">{this.props.renderTime(item.min_timestamp)}</td>
+                    <td className="table__td">{this.renderDuration(item.duration_sec)}</td>
+                    <td className="table__td">{item.request_count}</td>
                 </tr>
             );
         });
@@ -54,7 +54,7 @@ class TableSessionList extends Component {
                     <tr className="table__tr">
                         <th className="table__th">
                             <div className="table__content">
-                                <p className="table__title">Chart</p>
+                                <p className="table__title">Username</p>
                                 <div className="table__icons">
                                     <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsUsername}></i>
                                     <i className="zmdi zmdi-chevron-down" data-arrow="down" onClick={orderResultsUsername}></i>
@@ -63,7 +63,7 @@ class TableSessionList extends Component {
                         </th>
                         <th className="table__th">
                             <div className="table__content">
-                                <p className="table__title">Times Used</p>
+                                <p className="table__title">Times Started (local TZ)</p>
                                 <div className="table__icons">
                                     <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsTimeStarted}></i>
                                     <i className="zmdi zmdi-chevron-down" data-arrow="down" onClick={orderResultsTimeStarted}></i>
@@ -72,7 +72,7 @@ class TableSessionList extends Component {
                         </th>
                         <th className="table__th">
                             <div className="table__content">
-                                <p className="table__title">%</p>
+                                <p className="table__title">Duration</p>
                                 <div className="table__icons">
                                     <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsDuration}></i>
                                     <i className="zmdi zmdi-chevron-down" data-arrow="down" onClick={orderResultsDuration}></i>
@@ -81,7 +81,7 @@ class TableSessionList extends Component {
                         </th>
                         <th className="table__th">
                             <div className="table__content">
-                                <p className="table__title">Users</p>
+                                <p className="table__title">Request Count</p>
                                 <div className="table__icons">
                                     <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsRequestCount}></i>
                                     <i className="zmdi zmdi-chevron-down" data-arrow="down" onClick={orderResultsRequestCount}></i>

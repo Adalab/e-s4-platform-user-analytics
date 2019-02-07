@@ -34,25 +34,25 @@ class TableCharts extends Component {
                     <tr className="table__tr">
                         <th className="table__th">
                             <div className="table__content">
-                                <p className="table__title">Username</p>
+                                <p className="table__title">Chart</p>
                               
                             </div>
                         </th>
                         <th className="table__th">
                             <div className="table__content">
-                                <p className="table__title">Time Started (local TZ)</p>
+                                <p className="table__title">Times Used</p>
                                
                             </div>
                         </th>
                         <th className="table__th">
                             <div className="table__content">
-                                <p className="table__title">Duration</p>
+                                <p className="table__title">%</p>
                                
                             </div>
                         </th>
                         <th className="table__th">
                             <div className="table__content">
-                                <p className="table__title">Request Count</p>
+                                <p className="table__title">Users</p>
                              
                             </div>
                         </th>
