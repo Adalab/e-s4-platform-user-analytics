@@ -1,0 +1,48 @@
+.table__container {
+  display: flex;
+  background-color: $lightgrey;
+}
+//.table {}
+.table__thead {
+  background-color: $lightgrey;
+  color: $purple;
+}
+// .table__tr {}
+//.table__th {}
+
+.table__content {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+}
+
+.table__title {
+  margin-left: 10px;
+}
+
+.table__icons {
+  background-color: $lightgrey;
+  color: $purple;
+  width: 20px;
+  display: flex;
+  flex-direction: column;
+  i:hover {
+    font-weight: bold;
+    background-color: lightgray;
+    height: 20px;
+    width: 20px;
+    }
+    
+}
+
+.table__tbody {
+ 
+  background-color: green;
+}
+.table__td { 
+  width: 200px;
+  background-color: $lightgrey;
+  padding: 10px; 
+}
