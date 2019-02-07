@@ -1,3 +1,12 @@
+
+@import 'styles/header';
+@import 'styles/sidebar';
+@import 'styles/session-list';
+@import 'styles/user-filter';
+@import 'styles/table';
+@import 'styles/breadcrumb';
+@import 'styles/charts';
+
 //>> Component App
 //.app {}
 
@@ -5,130 +14,3 @@
   display:flex;
 }
 
-//>> Component Header
-.app__header {
-  border-bottom: 1px solid black;
-}
-
-//.app__header-title {}
-
-//>> Component Aside
-.app__aside {
- width: 250px;
- border-right: 1px solid black;
-}
-
-.aside__list {
-  list-style: none;
-// background-color: lightgreen;
-}
-
-.aside__item-link {
-  text-decoration: none;
-}
-
-//.aside__item {}
-
-//>> Component SessionList
-.app__container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.app__main {
-  padding-left: 10px;
-// background-color: pink;
-}
-
-.breadcrumb__container {
-  text-align: center;
-}
-
-.breadcrumb__container-list {
-  display: flex;
-  flex-direction: row;
-  list-style: none;
-}
-
-//.breadcrumb__container-item {}
-
-.panel__session {
-  display: flex;
-  align-items: center;
-}
-
-.icon {
-  font-size: 18px;
-}
-
-.panel__session-title {
-  padding-left: 10px;
-  font-size: 18px;
-}
-
-//>> Component UserFilter
-.search__container {
-  display: flex;
-  align-items: center;
-}
-
-//.search__input-container {}
-
-//.search__input {}
-
-.search__info-total {
-  padding-left: 10px;
-}
-//>> End Component UserFilter
-
-.table__container {
-  display: flex;
-}
-
-//>> Component TableSessionsList
-
-//.table {}
-//.table__thead {}
-//.table__tr {}
-//.table__th {}
-
-.table__content {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  // background-color: lightsalmon;
-}
-
-//.table__title {}
-
-.table__icons {
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-}
-
-//.table__tbody {}
-//.table__td {}
-
-.app__footer-session {
-  // background-color: lightblue;
-  display: flex;
-  justify-content: space-between;
-  border-top: 1px solid black;
-  padding-left: 10px;
-
-}
-
-//.entries__container {}
-//.entries__select {}
-//.pagination__container {}
-
-.pagination {
-  list-style: none;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-}
-
-//.pagination__list-item {}

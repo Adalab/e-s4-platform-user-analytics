@@ -5,8 +5,8 @@ class TableSessionList extends Component {
         super(props);
 
         this.state = {
-           row: '' 
-        }   
+            row: ''
+        }
 
         this.mapResults = this.mapResults.bind(this);
     }
@@ -47,7 +47,7 @@ class TableSessionList extends Component {
 
     render() {
         const { sessionsList, orderResultsUsername, orderResultsTimeStarted, orderResultsDuration, orderResultsRequestCount } = this.props;
-        
+
         return (
             <table className="table">
                 <thead className="table__thead">
@@ -63,7 +63,7 @@ class TableSessionList extends Component {
                         </th>
                         <th className="table__th">
                             <div className="table__content">
-                                <p className="table__title">Time Started (local TZ)</p>
+                                <p className="table__title">Times Started (local TZ)</p>
                                 <div className="table__icons">
                                     <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsTimeStarted}></i>
                                     <i className="zmdi zmdi-chevron-down" data-arrow="down" onClick={orderResultsTimeStarted}></i>
