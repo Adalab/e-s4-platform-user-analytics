@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Header from './Components/Header';
-import Sidebar from './Components/Sidebar';
-import Overview from './Component-Overview/Overview';
-import SessionList from './Component-SessionList/SessionList';
-import ChartsUsage from './Component-Charts/ChartsUsage';
+import Header from './components/Header';
+import Sidebar from './components/Sidebar';
+import Overview from './component-overview/Overview';
+import SessionList from './component-list/SessionList';
+import ChartsUsage from './component-charts/ChartsUsage';
 import './App.scss';
 
 

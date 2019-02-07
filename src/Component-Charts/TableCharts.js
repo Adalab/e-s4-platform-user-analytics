@@ -7,24 +7,23 @@ class TableCharts extends Component {
         this.state = {
             row: ''
         }
-
-   
+        this.mapChartResults = this.mapChartResults.bind(this);
     }
 
-    // mapResults(list) {
-    
-    //         return (
-    //             <tr className="table__tr" key={index}>
-    //                 <td className="table__td"></td>
-    //                 <td className="table__td"></td>
-    //                 <td className="table__td"></td>
-    //                 <td className="table__td"></td>
-    //             </tr>
-    //         );
-    //     }
-
-      
-    // }
+    mapChartResults() {
+        const row = this.props.chartData.map ((item,index)=>{
+             return (
+                <tr className="table__tr" key={index}>
+                    <td className="table__td">{item.details.chart_name}</td>
+                    <td className="table__td"></td>
+                    <td className="table__td"></td>
+                    <td className="table__td"></td>
+                </tr>
+            );
+         });
+         return row;
+        }
+        
 
     render() {
 
@@ -35,7 +34,7 @@ class TableCharts extends Component {
                         <th className="table__th">
                             <div className="table__content">
                                 <p className="table__title">Chart</p>
-                              
+
                             </div>
                         </th>
                         <th className="table__th">
@@ -59,7 +58,7 @@ class TableCharts extends Component {
                     </tr>
                 </thead>
                 <tbody className="table__tbody">
-                    
+                    {this.mapChartResults()}
                 </tbody>
             </table>
         );

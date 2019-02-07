@@ -1,8 +1,28 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
+import { requestCharts } from '../services/ChartsService';
 import TableCharts from './TableCharts';
 
 class ChartsUsage extends Component {
+    constructor(props) {
+      super(props)
+    
+      this.state = {
+         chartData:[]
+      }
+    }
+    componentDidMount(){
+        this.fetchCharts()
+    }
+
+    fetchCharts() {
+        requestCharts()
+            .then(data => {
+                this.setState({
+                    chartData: data.open_chart_events
+                });
+            });
+    }
 
 
     render() {
@@ -21,7 +41,7 @@ class ChartsUsage extends Component {
                     </div>
                     <div className="charts__container">
                         <div className="table__container">
-                            <TableCharts />
+                            <TableCharts chartData={this.state.chartData}/>
                         </div>
                         <div className="chart__filters">
                             <div className="chart__filters-options">
@@ -65,7 +85,7 @@ class ChartsUsage extends Component {
                                 <h3>USER GROUPS</h3>
                                 <p>select all | select active | clear all</p>
                                 <div>
-                                    <label for="flightoption1">
+                                    <label htmlFor="flightoption1">
                                         <input id="flightoption1" type="checkbox" value="chooseseat" name="flightoptions" />>
                                         ejemplo
                                     </label>
