@@ -15,6 +15,7 @@ class ChartsUsage extends Component {
         this.renderChartData = this.renderChartData.bind(this);
         this.renderTimesUsed = this.renderTimesUsed.bind(this);
         this.renderTimesPercentage = this.renderTimesPercentage.bind(this);
+        this.renderChartUsers = this.renderChartUsers.bind(this);
     }
 
     componentDidMount() {
@@ -33,12 +34,12 @@ class ChartsUsage extends Component {
     }
 
     renderChartData(chartData) {
-        const mapChartData = chartData.map(item => {
-            return item.details.chart_name;
+        const mappedChartData = chartData.map(chart => {
+            return chart.details.chart_name;
         });
 
         this.setState({
-            chartNames: [...new Set(mapChartData)]
+            chartNames: [...new Set(mappedChartData)]
         })
     }
 
@@ -58,22 +59,17 @@ class ChartsUsage extends Component {
         return timesPercentage;
     }
 
-    // renderUsersUsed(chart) {
-    //     const mapUserData = this.state.chartData.map(item => {
-    //         return item.request.user__username;
-    //     });
+    renderChartUsers(givenChart) {
+        const originalCharts = this.state.chartData;
 
-    //     const chartUsers = [...new Set(mapUserData)];
+        const mappedUsersData = originalCharts
+            .filter(chart => chart.details.chart_name === givenChart)
+            .map(chart => {
+                return chart.request.user__username;
+            });
 
-    //     const reducedChartUsers = chartUsers.reduce((acc, item) => {
-    //         if (item.details.chart_name === chart) {
-    //             acc++
-    //         }
-    //         return acc
-    //     }, 0);
-
-    //     return reducedChartUsers;
-    // }
+        return [...new Set(mappedUsersData)].length;
+    }
 
     render() {
         const { chartNames } = this.state;
@@ -93,7 +89,7 @@ class ChartsUsage extends Component {
                     </div>
                     <div className="charts__container">
                         <div className="table__container">
-                            <TableCharts chartNames={chartNames} renderTimesUsed={this.renderTimesUsed} renderTimesPercentage={this.renderTimesPercentage} />
+                            <TableCharts chartNames={chartNames} renderTimesUsed={this.renderTimesUsed} renderTimesPercentage={this.renderTimesPercentage} renderChartUsers={this.renderChartUsers}/>
                         </div>
                         <div className="chart__filters">
                             <div className="chart__filters-options">

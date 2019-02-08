@@ -3,7 +3,7 @@ import React, { Component } from "react";
 class TableCharts extends Component {
     
     chartNames() {
-        const { renderTimesUsed, renderTimesPercentage } = this.props;
+        const { renderTimesUsed, renderTimesPercentage, renderChartUsers } = this.props;
 
         const row = this.props.chartNames.map((item,index) => {
             return (
@@ -11,7 +11,7 @@ class TableCharts extends Component {
                     <td className="table__td">{item}</td>
                     <td className="table__td">{renderTimesUsed(item)}</td>
                     <td className="table__td">{renderTimesPercentage(renderTimesUsed(item))}</td>
-                    <td className="table__td">{item}</td>
+                    <td className="table__td">{renderChartUsers(item)}</td>
                 </tr>
             );
         });
