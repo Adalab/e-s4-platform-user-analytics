@@ -12,6 +12,7 @@ class TableCharts extends Component {
         });
         return row;
     }
+    
     render() {
         
         return (

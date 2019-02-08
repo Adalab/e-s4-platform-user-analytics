@@ -5,14 +5,17 @@ import TableCharts from './TableCharts';
 
 class ChartsUsage extends Component {
     constructor(props) {
-      super(props)
-    
-      this.state = {
-         chartData:[]
-      }
+        super(props)
+
+        this.state = {
+            chartData: []
+        }
+
+        this.renderChartData = this.renderChartData.bind(this);
     }
-    componentDidMount(){
-        this.fetchCharts()
+
+    componentDidMount() {
+        this.fetchCharts();
     }
 
     fetchCharts() {
@@ -21,9 +24,38 @@ class ChartsUsage extends Component {
                 this.setState({
                     chartData: data.open_chart_events
                 });
+
+                //this.renderChartData(data.open_chart_events);
+                this.addRamiro(data.open_chart_events);
             });
     }
 
+    addRamiro(chartData) {
+        const mapChartData = chartData.map(item => {
+            return item.details.chart_name;
+        });
+
+        console.log([...new Set(mapChartData)]);
+    }
+
+    renderChartData(chartData) {
+        const filteredChartData = chartData.filter(chart => {
+            chart.details.filter((item, index, chart)=>{
+                return chart.chart_name.indexOf(item)===index;
+               });
+         });
+
+        console.log(filteredChartData);
+    }
+
+    // getTimesUsed() {
+    //     const reduceChartNames = this.getChartsNames.reduce(function (obj, item) {
+    //         obj[item] = (obj[item] || 0) + 1;
+    //         return obj;
+    //     }, {});
+
+    //     console.log(reduceChartNames);
+    // }
 
     render() {
         return (
@@ -41,13 +73,13 @@ class ChartsUsage extends Component {
                     </div>
                     <div className="charts__container">
                         <div className="table__container">
-                            <TableCharts chartData={this.state.chartData}/>
+                            <TableCharts chartData={this.state.chartData} />
                         </div>
                         <div className="chart__filters">
                             <div className="chart__filters-options">
-                                    <h3>OPTIONS</h3>
-                                    <label>
-                                        <input type="radio"></input> exclude support users (x@stylesage.com)
+                                <h3>OPTIONS</h3>
+                                <label>
+                                    <input type="radio"></input> exclude support users (x@stylesage.com)
                                     </label>
                             </div>
                             <div className="chart__filters-range">
@@ -63,24 +95,22 @@ class ChartsUsage extends Component {
                                         <input type="radio" />last month
                                     </label>
                                 </div>
-                               <div>
+                                <div>
                                     <label>
-                                        <input type="radio"/>last 2 months
+                                        <input type="radio" />last 2 months
                                     </label>
-                               </div>
-                               <div>
+                                </div>
+                                <div>
                                     <label>
                                         <input type="radio" /> set date
-                                    </label> 
-                               </div>
+                                    </label>
+                                </div>
                                 <div>
                                     <label>
                                         <input type="radio" /> always
                                     </label>
                                 </div>
-                                
                             </div>
-                                    
                             <div className="chart__filters-groups">
                                 <h3>USER GROUPS</h3>
                                 <p>select all | select active | clear all</p>
@@ -93,8 +123,6 @@ class ChartsUsage extends Component {
                             </div>
                         </div>
                     </div>
-                  
-                    
                 </main>
             </div>
         );
