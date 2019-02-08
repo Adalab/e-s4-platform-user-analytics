@@ -8,7 +8,8 @@ class ChartsUsage extends Component {
         super(props)
 
         this.state = {
-            chartData: []
+            chartData: [],
+            chartNames: []
         }
 
         this.renderChartData = this.renderChartData.bind(this);
@@ -25,27 +26,18 @@ class ChartsUsage extends Component {
                     chartData: data.open_chart_events
                 });
 
-                //this.renderChartData(data.open_chart_events);
-                this.addRamiro(data.open_chart_events);
+                this.renderChartData(data.open_chart_events);
             });
     }
 
-    addRamiro(chartData) {
+    renderChartData(chartData) {
         const mapChartData = chartData.map(item => {
             return item.details.chart_name;
         });
 
-        console.log([...new Set(mapChartData)]);
-    }
-
-    renderChartData(chartData) {
-        const filteredChartData = chartData.filter(chart => {
-            chart.details.filter((item, index, chart)=>{
-                return chart.chart_name.indexOf(item)===index;
-               });
-         });
-
-        console.log(filteredChartData);
+        this.setState({
+            chartNames: [...new Set(mapChartData)]
+        })
     }
 
     // getTimesUsed() {
@@ -73,7 +65,7 @@ class ChartsUsage extends Component {
                     </div>
                     <div className="charts__container">
                         <div className="table__container">
-                            <TableCharts chartData={this.state.chartData} />
+                            <TableCharts chartNames={this.state.chartNames} />
                         </div>
                         <div className="chart__filters">
                             <div className="chart__filters-options">

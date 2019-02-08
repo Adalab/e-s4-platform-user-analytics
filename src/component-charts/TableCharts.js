@@ -2,11 +2,11 @@ import React, { Component } from "react";
 
 class TableCharts extends Component {
     
-    mapResults() {
-        const row = this.props.chartData.map((item,index) => {
+    chartNames() {
+        const row = this.props.chartNames.map((item,index) => {
             return (
                 <tr className="table__tr" key={index}>
-                    <td className="table__td">{item.details.chart_name}</td>
+                    <td className="table__td">{item}</td>
                 </tr>
             );
         });
@@ -34,7 +34,7 @@ class TableCharts extends Component {
                     </tr>
                 </thead>
                 <tbody className="table__tbody-chart">
-                   {this.mapResults()}
+                   {this.chartNames()}
     
                 </tbody>
             </table>
