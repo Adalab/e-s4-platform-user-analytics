@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import UserFilter from './UserFilter';
 import TableSessionList from "./TableSessionList";
-import { requestSessions } from './../services/SessionsService';
+import { requestSessions } from '../../services/SessionsService';
 
 class SessionList extends Component {
 
