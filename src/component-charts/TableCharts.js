@@ -3,9 +3,14 @@ import React, { Component } from "react";
 class TableCharts extends Component {
     
     chartNames() {
+        const { renderTimesUsed } = this.props;
+
         const row = this.props.chartNames.map((item,index) => {
             return (
                 <tr className="table__tr" key={index}>
+                    <td className="table__td">{item}</td>
+                    <td className="table__td">{renderTimesUsed(item)}</td>
+                    <td className="table__td">{item}</td>
                     <td className="table__td">{item}</td>
                 </tr>
             );

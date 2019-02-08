@@ -13,6 +13,7 @@ class ChartsUsage extends Component {
         }
 
         this.renderChartData = this.renderChartData.bind(this);
+        this.renderTimesUsed = this.renderTimesUsed.bind(this);
     }
 
     componentDidMount() {
@@ -27,6 +28,7 @@ class ChartsUsage extends Component {
                 });
 
                 this.renderChartData(data.open_chart_events);
+                // this.getTimesUsed();
             });
     }
 
@@ -40,8 +42,18 @@ class ChartsUsage extends Component {
         })
     }
 
+    renderTimesUsed(chart) {
+        const reducedChartData = this.state.chartData.reduce((acc, item) => {
+            if (item.details.chart_name === chart) {
+                acc++}
+                return acc
+        }, 0);
+
+        return reducedChartData;
+    }
+
     // getTimesUsed() {
-    //     const reduceChartNames = this.getChartsNames.reduce(function (obj, item) {
+    //     const reduceChartNames = this.state.chartData.reduce(function (obj, item) {
     //         obj[item] = (obj[item] || 0) + 1;
     //         return obj;
     //     }, {});
@@ -65,7 +77,7 @@ class ChartsUsage extends Component {
                     </div>
                     <div className="charts__container">
                         <div className="table__container">
-                            <TableCharts chartNames={this.state.chartNames} />
+                            <TableCharts chartNames={this.state.chartNames} renderTimesUsed={this.renderTimesUsed}/>
                         </div>
                         <div className="chart__filters">
                             <div className="chart__filters-options">
