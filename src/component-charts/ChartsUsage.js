@@ -14,6 +14,7 @@ class ChartsUsage extends Component {
 
         this.renderChartData = this.renderChartData.bind(this);
         this.renderTimesUsed = this.renderTimesUsed.bind(this);
+        this.renderTimesPercentage = this.renderTimesPercentage.bind(this);
     }
 
     componentDidMount() {
@@ -24,11 +25,10 @@ class ChartsUsage extends Component {
         requestCharts()
             .then(data => {
                 this.setState({
-                    chartData: data.open_chart_events
+                    chartData: data.open_chart_events,
                 });
 
                 this.renderChartData(data.open_chart_events);
-                // this.getTimesUsed();
             });
     }
 
@@ -45,23 +45,39 @@ class ChartsUsage extends Component {
     renderTimesUsed(chart) {
         const reducedChartData = this.state.chartData.reduce((acc, item) => {
             if (item.details.chart_name === chart) {
-                acc++}
-                return acc
+                acc++
+            }
+            return acc
         }, 0);
 
         return reducedChartData;
     }
 
-    // getTimesUsed() {
-    //     const reduceChartNames = this.state.chartData.reduce(function (obj, item) {
-    //         obj[item] = (obj[item] || 0) + 1;
-    //         return obj;
-    //     }, {});
+    renderTimesPercentage(timesUsed) {
+        const timesPercentage = (timesUsed / this.state.chartData.length * 100).toFixed(1);
+        return timesPercentage;
+    }
 
-    //     console.log(reduceChartNames);
+    // renderUsersUsed(chart) {
+    //     const mapUserData = this.state.chartData.map(item => {
+    //         return item.request.user__username;
+    //     });
+
+    //     const chartUsers = [...new Set(mapUserData)];
+
+    //     const reducedChartUsers = chartUsers.reduce((acc, item) => {
+    //         if (item.details.chart_name === chart) {
+    //             acc++
+    //         }
+    //         return acc
+    //     }, 0);
+
+    //     return reducedChartUsers;
     // }
 
     render() {
+        const { chartNames } = this.state;
+
         return (
             <div className="app__container">
                 <main className="app__main">
@@ -77,7 +93,7 @@ class ChartsUsage extends Component {
                     </div>
                     <div className="charts__container">
                         <div className="table__container">
-                            <TableCharts chartNames={this.state.chartNames} renderTimesUsed={this.renderTimesUsed}/>
+                            <TableCharts chartNames={chartNames} renderTimesUsed={this.renderTimesUsed} renderTimesPercentage={this.renderTimesPercentage} />
                         </div>
                         <div className="chart__filters">
                             <div className="chart__filters-options">
