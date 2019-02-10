@@ -17,9 +17,7 @@ class TableCharts extends Component {
         });
         return row;
     }
-    
     render() {
-        
         return (
             <table className="table">
                 <thead className="table__thead-chart">
@@ -40,7 +38,6 @@ class TableCharts extends Component {
                 </thead>
                 <tbody className="table__tbody-chart">
                    {this.chartNames()}
-    
                 </tbody>
             </table>
         );
