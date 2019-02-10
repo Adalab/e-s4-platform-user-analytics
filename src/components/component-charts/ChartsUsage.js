@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
-import { requestCharts } from '../services/ChartsService';
+import { requestCharts } from '../../services/ChartsService';
 import TableCharts from './TableCharts';
 
 class ChartsUsage extends Component {
