@@ -8,11 +8,12 @@ class ChartsUsage extends Component {
         super(props)
 
         this.state = {
-            chartData: [],
+            userData: [],
+            chartList: [],
             chartNames: []
         }
 
-        this.renderChartData = this.renderChartData.bind(this);
+        this.renderChartList = this.renderChartList.bind(this);
         this.renderTimesUsed = this.renderTimesUsed.bind(this);
         this.renderTimesPercentage = this.renderTimesPercentage.bind(this);
         this.renderChartUsers = this.renderChartUsers.bind(this);
@@ -26,41 +27,42 @@ class ChartsUsage extends Component {
         requestCharts()
             .then(data => {
                 this.setState({
-                    chartData: data.open_chart_events,
+                    userData: data,
+                    chartList: data.open_chart_events
                 });
 
-                this.renderChartData(data.open_chart_events);
+                this.renderChartList(data.open_chart_events);
             });
     }
 
-    renderChartData(chartData) {
-        const mappedChartData = chartData.map(chart => {
+    renderChartList(chartList) {
+        const mappedChartList = chartList.map(chart => {
             return chart.details.chart_name;
         });
 
         this.setState({
-            chartNames: [...new Set(mappedChartData)]
+            chartNames: [...new Set(mappedChartList)]
         })
     }
 
     renderTimesUsed(chart) {
-        const reducedChartData = this.state.chartData.reduce((acc, item) => {
+        const reducedChartList = this.state.chartList.reduce((acc, item) => {
             if (item.details.chart_name === chart) {
                 acc++
             }
             return acc
         }, 0);
 
-        return reducedChartData;
+        return reducedChartList;
     }
 
     renderTimesPercentage(timesUsed) {
-        const timesPercentage = (timesUsed / this.state.chartData.length * 100).toFixed(1);
+        const timesPercentage = (timesUsed / this.state.chartList.length * 100).toFixed(1);
         return timesPercentage;
     }
 
     renderChartUsers(givenChart) {
-        const originalCharts = this.state.chartData;
+        const originalCharts = this.state.chartList;
 
         const mappedUsersData = originalCharts
             .filter(chart => chart.details.chart_name === givenChart)
