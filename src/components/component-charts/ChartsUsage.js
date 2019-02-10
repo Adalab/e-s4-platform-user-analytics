@@ -10,13 +10,15 @@ class ChartsUsage extends Component {
         this.state = {
             userData: [],
             chartList: [],
-            chartNames: []
+            chartNames: [],
+            currentDate: '',
+            timelapse: 7
         }
 
-        this.renderChartList = this.renderChartList.bind(this);
         this.renderTimesUsed = this.renderTimesUsed.bind(this);
         this.renderTimesPercentage = this.renderTimesPercentage.bind(this);
         this.renderChartUsers = this.renderChartUsers.bind(this);
+        this.handleChangeDate = this.handleChangeDate.bind(this);
     }
 
     componentDidMount() {
@@ -24,16 +26,58 @@ class ChartsUsage extends Component {
     }
 
     fetchCharts() {
-        requestCharts()
+        const {timelapse} = this.state;
+        let toDate = new Date();
+       // fecha.setDate(fecha.getDate() + dias);
+        let fromDate = new Date().setDate(toDate.getDate() - timelapse);
+        fromDate = new Date(fromDate).toISOString();
+        toDate = new Date(toDate).toISOString();
+
+        console.log('fromDate: ', fromDate);
+        console.log('toDate: ', toDate);
+
+        requestCharts(fromDate, toDate)
             .then(data => {
+                console.log('yay!! ', data);
                 this.setState({
+                    chartList: data.open_chart_events,
                     userData: data,
-                    chartList: data.open_chart_events
+                    currentDate: toDate
                 });
 
                 this.renderChartList(data.open_chart_events);
             });
     }
+
+    ///
+
+// Preguntar qué es más eficiente sacar newDate new function
+
+    getCurrentDate() {
+
+    }
+
+    handleChangeDate(e) {
+        const ct = new Date();
+        const time = e.currentTarget.value; //change name
+        let fromDate = '';
+
+        switch(time) {
+            case 'last-month':
+                fromDate = ct.setMonth(ct.getMonth() -1);
+                this.setState({
+                    timelapse: 1
+                })
+                break;
+            default:
+                console.log('Life is wonderful');
+                break;
+        }
+
+        this.fetchCharts();
+    }
+
+    ///
 
     renderChartList(chartList) {
         const mappedChartList = chartList.map(chart => {
@@ -103,30 +147,31 @@ class ChartsUsage extends Component {
                             <div className="chart__filters-range">
                                 <h3>DATE RANGE</h3>
                                 <p> From: | To:</p>
+
                                 <div>
-                                    <label>
-                                        <input type="radio" />last week
-                                    </label>
+                                    <input onChange={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week"
+                                            checked />
+                                    <label htmlFor="last-week">last week</label>
                                 </div>
                                 <div>
-                                    <label>
-                                        <input type="radio" />last month
-                                    </label>
+                                    <input type="radio" id="last-month" name="date" value="last-month"
+                                            checked />
+                                    <label htmlFor="last-month">last month</label>
                                 </div>
                                 <div>
-                                    <label>
-                                        <input type="radio" />last 2 months
-                                    </label>
+                                    <input type="radio" id="last-two-months" name="date" value="last-two-months"
+                                            checked />
+                                    <label htmlFor="last-two-months">last 2 months</label>
                                 </div>
                                 <div>
-                                    <label>
-                                        <input type="radio" /> set date
-                                    </label>
+                                    <input type="radio" id="set-date" name="date" value="set-date"
+                                            checked />
+                                    <label htmlFor="last-two-months">set date</label>
                                 </div>
                                 <div>
-                                    <label>
-                                        <input type="radio" /> always
-                                    </label>
+                                    <input type="radio" id="always" name="date" value="always"
+                                            checked />
+                                    <label htmlFor="always">always</label>
                                 </div>
                             </div>
                             <div className="chart__filters-groups">
