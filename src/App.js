@@ -11,27 +11,25 @@ import './styles.scss';
 class App extends Component {
   constructor(props) {
     super(props)
-      this.state = {
-          hiddenButton:true
-      }
+    this.state = {
+      hiddenButton: true
+    }
     this.handleClick = this.handleClick.bind(this);
   }
-  
-  handleClick(){
-      console.log('he dado click')
-      const hiddenStatus = (this.state.hiddenButton === true)? false : true;
-          this.setState({
-              hiddenButton: hiddenStatus 
-      });
-      console.log(hiddenStatus)
-  } 
-  
+
+  handleClick() {
+    const hiddenStatus = (this.state.hiddenButton === true) ? false : true;
+    this.setState({
+      hiddenButton: hiddenStatus
+    });
+  }
+
   render() {
     return (
       <div className="app">
-        <Header onClick={this.handleClick}/>
+        <Header onClick={this.handleClick} />
         <div className="page__wrapper">
-          <Sidebar hiddenButton={this.state.hiddenButton}/>
+          <Sidebar hiddenButton={this.state.hiddenButton} />
           <Switch>
             <Route exact path="/" render={() => <Overview />} />
             <Route path="/session-list" render={() => <SessionList />} />
