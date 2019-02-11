@@ -5,8 +5,8 @@ import TableCharts from './TableCharts';
 
 class ChartsUsage extends Component {
     constructor(props) {
-        super(props)
-
+        super(props);
+        
         this.state = {
             userData: [],
             chartList: [],
@@ -70,10 +70,13 @@ class ChartsUsage extends Component {
         let fd = new Date();
         let period;
 
+<<<<<<< HEAD
         if (e.currentTarget) {
             period = e.currentTarget.value;
         }
 
+=======
+>>>>>>> 364d19af7e9a531cbd02b2d665fd95ab59df3b7f
         switch (period) {
             case 'last-week':
                 fd.setDate(fd.getDate() - 7);
@@ -96,9 +99,13 @@ class ChartsUsage extends Component {
                 fd = new Date(this.state.fromDate);
                 break;
         }
+<<<<<<< HEAD
 
         const timelapse = (ct - fd) / (1000 * 60 * 60 * 24);
+=======
+>>>>>>> 364d19af7e9a531cbd02b2d665fd95ab59df3b7f
 
+        const timelapse = (ct - fd) / (1000 * 60 * 60 * 24);
         this.setState({
             timelapse: Math.round(timelapse)
         });
@@ -119,14 +126,13 @@ class ChartsUsage extends Component {
     renderTimesUsed(chart) {
         const reducedChartList = this.state.chartList.reduce((acc, item) => {
             if (item.details.chart_name === chart) {
-                acc++
+                acc++;
             }
-            return acc
+            return acc;
         }, 0);
 
         return reducedChartList;
     }
-
     renderTimesPercentage(timesUsed) {
         const timesPercentage = (timesUsed / this.state.chartList.length * 100).toFixed(1);
         return timesPercentage;
@@ -134,7 +140,6 @@ class ChartsUsage extends Component {
 
     renderChartUsers(givenChart) {
         const originalCharts = this.state.chartList;
-
         const mappedUsersData = originalCharts
             .filter(chart => chart.details.chart_name === givenChart)
             .map(chart => {
@@ -147,6 +152,7 @@ class ChartsUsage extends Component {
     filterOptions(checked) {
         const originalCharts = this.state.userData.open_chart_events;
         const duplicateCharts = originalCharts.slice();
+
         const removedStyleUser = duplicateCharts.filter(item => {
             if (checked) {
                 return !item.request.user__username.includes('stylesage');
@@ -200,7 +206,6 @@ class ChartsUsage extends Component {
                             <div className="chart__filters-range">
                                 <h3>DATE RANGE</h3>
                                 <p> From: | To:</p>
-
                                 <div>
                                     <input defaultChecked={true} onClick={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" />
                                     <label htmlFor="last-week">last week</label>
