@@ -10,13 +10,16 @@ class ChartsUsage extends Component {
         this.state = {
             userData: [],
             chartList: [],
-            chartNames: []
+            chartNames: [],
+            filterOptionsQuery: ''
         }
 
         this.renderChartList = this.renderChartList.bind(this);
         this.renderTimesUsed = this.renderTimesUsed.bind(this);
         this.renderTimesPercentage = this.renderTimesPercentage.bind(this);
         this.renderChartUsers = this.renderChartUsers.bind(this);
+        this.filterOptions = this.filterOptions.bind(this);
+        this.handleOptions = this.handleOptions.bind(this);
     }
 
     componentDidMount() {
@@ -73,6 +76,31 @@ class ChartsUsage extends Component {
         return [...new Set(mappedUsersData)].length;
     }
 
+    filterOptions(checked) {
+        const originalCharts = this.state.userData.open_chart_events;
+        const duplicateCharts = originalCharts.slice();
+        const removedStyleUser = duplicateCharts.filter(item => {
+            if (checked) {
+                return !item.request.user__username.includes('stylesage');
+            } else {
+                return item;
+            }
+        });
+
+        this.setState({
+            chartList: removedStyleUser
+        })
+    }
+
+    handleOptions(e) {
+        const optionsTarget = e.currentTarget.checked;
+        this.setState({
+            filterOptionsQuery: optionsTarget
+        });
+
+        this.filterOptions(optionsTarget);
+    }
+
     render() {
         const { chartNames } = this.state;
 
@@ -91,14 +119,14 @@ class ChartsUsage extends Component {
                     </div>
                     <div className="charts__container">
                         <div className="table__container">
-                            <TableCharts chartNames={chartNames} renderTimesUsed={this.renderTimesUsed} renderTimesPercentage={this.renderTimesPercentage} renderChartUsers={this.renderChartUsers}/>
+                            <TableCharts chartNames={chartNames} renderTimesUsed={this.renderTimesUsed} renderTimesPercentage={this.renderTimesPercentage} renderChartUsers={this.renderChartUsers} />
                         </div>
                         <div className="chart__filters">
                             <div className="chart__filters-options">
                                 <h3>OPTIONS</h3>
                                 <label>
-                                    <input type="radio"></input> exclude support users (x@stylesage.com)
-                                    </label>
+                                    <input type="checkbox" onClick={this.handleOptions} defaultChecked={false}/> exclude support users (x@stylesage.com)
+                                </label>
                             </div>
                             <div className="chart__filters-range">
                                 <h3>DATE RANGE</h3>
