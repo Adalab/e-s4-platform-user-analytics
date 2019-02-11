@@ -99,7 +99,7 @@ class SessionList extends Component {
     getQueryUsername(e) {
         const userName = e.currentTarget.value;
         const filteredList = this.filterUserame(userName);
-        let orderedList;
+        let orderedList = '';
 
         switch (this.state.filter) {
             case 'Username-up':
