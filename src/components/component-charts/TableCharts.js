@@ -2,16 +2,22 @@ import React, { Component } from "react";
 
 class TableCharts extends Component {
     
-    mapResults() {
-        const row = this.props.chartData.map((item,index) => {
+    chartNames() {
+        const { renderTimesUsed, renderTimesPercentage, renderChartUsers } = this.props;
+
+        const row = this.props.chartNames.map((item,index) => {
             return (
                 <tr className="table__tr" key={index}>
-                    <td className="table__td">{item.details.chart_name}</td>
+                    <td className="table__td">{item}</td>
+                    <td className="table__td">{renderTimesUsed(item)}</td>
+                    <td className="table__td">{renderTimesPercentage(renderTimesUsed(item))}</td>
+                    <td className="table__td">{renderChartUsers(item)}</td>
                 </tr>
             );
         });
         return row;
     }
+    
     render() {
         
         return (
@@ -33,8 +39,7 @@ class TableCharts extends Component {
                     </tr>
                 </thead>
                 <tbody className="table__tbody-chart">
-                   {this.mapResults()}
-    
+                   {this.chartNames()}
                 </tbody>
             </table>
         );
