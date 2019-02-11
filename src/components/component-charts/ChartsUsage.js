@@ -52,23 +52,29 @@ class ChartsUsage extends Component {
     }
 
     handleDateTo(e) {
+        e.persist();
         this.setState({
-            toDate: new Date(e.currentTarget.value)
+            toDate: e.currentTarget.value
         }, () => this.handleChangeDate(e));
     }
 
     handleDateFrom(e) {
+        e.persist();
         this.setState({
             fromDate: e.currentTarget.value
         }, () => this.handleChangeDate(e));
     }
 
     handleChangeDate(e) {
-        const period = e.currentTarget.value;
         let ct = new Date();
         let fd = new Date();
+        let period;
 
-        switch(period) {
+        if (e.currentTarget) {
+            period = e.currentTarget.value;
+        }
+
+        switch (period) {
             case 'last-week':
                 fd.setDate(fd.getDate() - 7);
                 break;
@@ -90,8 +96,8 @@ class ChartsUsage extends Component {
                 fd = new Date(this.state.fromDate);
                 break;
         }
-        
-        const timelapse = (ct - fd)/(1000*60*60*24);
+
+        const timelapse = (ct - fd) / (1000 * 60 * 60 * 24);
 
         this.setState({
             timelapse: Math.round(timelapse)
@@ -188,7 +194,7 @@ class ChartsUsage extends Component {
                             <div className="chart__filters-options">
                                 <h3>OPTIONS</h3>
                                 <label>
-                                    <input type="checkbox" onClick={this.handleOptions} defaultChecked={false}/> exclude support users (x@stylesage.com)
+                                    <input type="checkbox" onClick={this.handleOptions} defaultChecked={false} /> exclude support users (x@stylesage.com)
                                 </label>
                             </div>
                             <div className="chart__filters-range">
@@ -200,7 +206,7 @@ class ChartsUsage extends Component {
                                     <label htmlFor="last-week">last week</label>
                                 </div>
                                 <div>
-                                    <input  onClick={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" />
+                                    <input onClick={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" />
                                     <label htmlFor="last-month">last month</label>
                                 </div>
                                 <div>
