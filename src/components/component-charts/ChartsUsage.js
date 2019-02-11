@@ -79,7 +79,7 @@ class ChartsUsage extends Component {
     filterOptions(checked) {
         const originalCharts = this.state.userData.open_chart_events;
         const duplicateCharts = originalCharts.slice();
-        const removeStyleUser = duplicateCharts.filter(item => {
+        const removedStyleUser = duplicateCharts.filter(item => {
             if (checked) {
                 return !item.request.user__username.includes('stylesage');
             } else {
@@ -87,8 +87,9 @@ class ChartsUsage extends Component {
             }
         });
 
-        console.log(removeStyleUser)
-        
+        this.setState({
+            chartList: removedStyleUser
+        })
     }
 
     handleOptions(e) {
