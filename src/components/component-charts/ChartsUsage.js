@@ -11,7 +11,10 @@ class ChartsUsage extends Component {
             userData: [],
             chartList: [],
             chartNames: [],
-            filterOptionsQuery: ''
+            filterOptionsQuery: '',
+            allGroupsList: [],
+            groupsList: [],
+            userGroupsInputs: null
         }
 
         this.renderChartList = this.renderChartList.bind(this);
@@ -20,6 +23,8 @@ class ChartsUsage extends Component {
         this.renderChartUsers = this.renderChartUsers.bind(this);
         this.filterOptions = this.filterOptions.bind(this);
         this.handleOptions = this.handleOptions.bind(this);
+        this.renderUserGroups = this.renderUserGroups.bind(this);
+        this.handleUserGroups = this.handleUserGroups.bind(this);
     }
 
     componentDidMount() {
@@ -35,6 +40,7 @@ class ChartsUsage extends Component {
                 });
 
                 this.renderChartList(data.open_chart_events);
+                this.renderUserGroups(data.open_chart_events);
             });
     }
 
@@ -71,7 +77,7 @@ class ChartsUsage extends Component {
             .filter(chart => chart.details.chart_name === givenChart)
             .map(chart => {
                 return chart.request.user__username;
-            });
+            })
 
         return [...new Set(mappedUsersData)].length;
     }
@@ -101,9 +107,75 @@ class ChartsUsage extends Component {
         this.filterOptions(optionsTarget);
     }
 
-    render() {
-        const { chartNames } = this.state;
+    renderUserGroups(chartList) {
+        const mappedGroups = chartList.map(item => item.request.user__group__name);
+        const usersSet = [...new Set(mappedGroups)];
 
+        const userGroupsInputs = usersSet.map((item, index) => {
+            return (
+                <li key={index}>
+                    <label htmlFor={item}>
+                        <input onChange={this.handleUserGroups} id={item} type="checkbox" value={item} name={item} />
+                        {item}
+                    </label>
+                </li>
+            );
+        })
+
+        this.setState({
+            allGroupsList: usersSet,
+            userGroupsInputs: userGroupsInputs
+        });
+    }
+
+    handleUserGroups(e) {
+        const userGroupsTarget = e.currentTarget.value;
+
+        const groupsList = this.state.groupsList;
+
+        if (e.currentTarget.checked) {
+            groupsList.push(userGroupsTarget);
+        } else {
+            groupsList.splice(userGroupsTarget, 1);
+        }
+
+        this.setState({
+            groupsList: groupsList
+        });
+
+        this.filterUserGroups(groupsList);
+    }
+
+    filterUserGroups(groupsList) {
+        const originalCharts = this.state.userData.open_chart_events;
+
+        const filteredCharts = originalCharts.filter(chart => {
+            const isGroupPresent = groupsList.map(group => {
+                if (chart.request.user__group__name === group) {
+                    return true;
+                } else {
+                    return false;
+                }
+            })
+
+            let isPresent = false;
+
+            for (let ii = 0; ii < isGroupPresent.length; ii++) {
+                if (isGroupPresent[ii] === true) {
+                    isPresent = true;
+                }
+            }
+
+            return isPresent;
+        });
+
+        this.setState({
+            chartList: filteredCharts
+        });
+    }
+
+    render() {
+        const { chartNames, userGroupsInputs } = this.state;
         return (
             <div className="app__container">
                 <main className="app__main">
@@ -125,7 +197,7 @@ class ChartsUsage extends Component {
                             <div className="chart__filters-options">
                                 <h3>OPTIONS</h3>
                                 <label>
-                                    <input type="checkbox" onClick={this.handleOptions} defaultChecked={false}/> exclude support users (x@stylesage.com)
+                                    <input type="checkbox" onClick={this.handleOptions} defaultChecked={false} /> exclude support users (x@stylesage.com)
                                 </label>
                             </div>
                             <div className="chart__filters-range">
@@ -160,12 +232,9 @@ class ChartsUsage extends Component {
                             <div className="chart__filters-groups">
                                 <h3>USER GROUPS</h3>
                                 <p>select all | select active | clear all</p>
-                                <div>
-                                    <label htmlFor="flightoption1">
-                                        <input id="flightoption1" type="checkbox" value="chooseseat" name="flightoptions" />>
-                                        ejemplo
-                                    </label>
-                                </div>
+                                <ul>
+                                    {(userGroupsInputs) ? userGroupsInputs : ""}
+                                </ul>
                             </div>
                         </div>
                     </div>
