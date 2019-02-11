@@ -11,32 +11,89 @@ class ChartsUsage extends Component {
             userData: [],
             chartList: [],
             chartNames: [],
-            filterOptionsQuery: ''
+            currentDate: '',
+            timelapse: 7,
+            filterOptionsQuery: false
         }
 
-        this.renderChartList = this.renderChartList.bind(this);
         this.renderTimesUsed = this.renderTimesUsed.bind(this);
         this.renderTimesPercentage = this.renderTimesPercentage.bind(this);
         this.renderChartUsers = this.renderChartUsers.bind(this);
+        this.handleChangeDate = this.handleChangeDate.bind(this);
+        this.getCalendar = this.getCalendar.bind(this);
         this.filterOptions = this.filterOptions.bind(this);
         this.handleOptions = this.handleOptions.bind(this);
     }
 
     componentDidMount() {
-        this.fetchCharts();
+        this.fetchCharts(this.state.timelapse);
     }
 
-    fetchCharts() {
-        requestCharts()
+    fetchCharts(timelapse) {
+        let toDate = new Date();
+        let fromDate = new Date().setDate(toDate.getDate() - timelapse);
+        fromDate = new Date(fromDate).toISOString();
+        toDate = new Date(toDate).toISOString();
+
+        console.log('fromDate: ', fromDate);
+        console.log('toDate: ', toDate);
+
+        requestCharts(fromDate, toDate)
             .then(data => {
                 this.setState({
+                    chartList: data.open_chart_events,
                     userData: data,
-                    chartList: data.open_chart_events
+                    currentDate: toDate
                 });
 
+                this.filterOptions(this.state.filterOptionsQuery);
                 this.renderChartList(data.open_chart_events);
             });
     }
+
+    getCalendar() {
+        const now = new Date();
+
+        const day = ("0" + now.getDate()).slice(-2);
+        const month = ("0" + (now.getMonth() + 1)).slice(-2);
+        const today = now.getFullYear()+"-"+(month)+"-"+(day);
+
+        return today;
+    }
+
+    handleChangeDate(e) {
+        const period = e.currentTarget.value;
+        const ct = new Date();
+        let fd = new Date();
+
+        switch(period) {
+            case 'last-week':
+                fd.setDate(fd.getDate() - 7);
+                break;
+            case 'last-month':
+                fd.setMonth(fd.getMonth() - 1);
+                break;
+            case 'last-two-months':
+                fd.setMonth(fd.getMonth() - 2);
+                break;
+            case 'set-date':
+            
+                break;
+            case 'always':
+                fd = new Date(2015, 0, 1, 0, 0);
+                break;
+        }
+        
+        const timelapse = (ct - fd)/(1000*60*60*24);
+
+        this.setState({
+            timelapse: Math.round(timelapse)
+        });
+
+        this.fetchCharts(Math.round(timelapse));
+    }
+
+    
 
     renderChartList(chartList) {
         const mappedChartList = chartList.map(chart => {
@@ -94,6 +151,7 @@ class ChartsUsage extends Component {
 
     handleOptions(e) {
         const optionsTarget = e.currentTarget.checked;
+
         this.setState({
             filterOptionsQuery: optionsTarget
         });
@@ -131,30 +189,34 @@ class ChartsUsage extends Component {
                             <div className="chart__filters-range">
                                 <h3>DATE RANGE</h3>
                                 <p> From: | To:</p>
+
                                 <div>
-                                    <label>
-                                        <input type="radio" />last week
-                                    </label>
+                                    <input defaultChecked={true} onClick={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" />
+                                    <label htmlFor="last-week">last week</label>
                                 </div>
                                 <div>
-                                    <label>
-                                        <input type="radio" />last month
-                                    </label>
+                                    <input  onClick={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" />
+                                    <label htmlFor="last-month">last month</label>
                                 </div>
                                 <div>
-                                    <label>
-                                        <input type="radio" />last 2 months
-                                    </label>
+                                    <input onClick={this.handleChangeDate} type="radio" id="last-two-months" name="date" value="last-two-months" />
+                                    <label htmlFor="last-two-months">last 2 months</label>
                                 </div>
                                 <div>
-                                    <label>
-                                        <input type="radio" /> set date
-                                    </label>
+                                    <input onClick={this.handleChangeDate} type="radio" id="set-date" name="date" value="set-date" />
+                                    <label htmlFor="last-two-months">set date</label>
                                 </div>
                                 <div>
-                                    <label>
-                                        <input type="radio" /> always
-                                    </label>
+                                    <input id="from-date" type="date" name="date??" value={this.getCalendar()} />
+                                    <label htmlFor="from-date">from date</label>
+                                </div>
+                                <div>
+                                    <input id="to-date" type="date" name="date??" value={this.getCalendar()} />
+                                    <label htmlFor="to-date">to date</label>
+                                </div>
+                                <div>
+                                    <input onClick={this.handleChangeDate} type="radio" id="always" name="date" value="always" />
+                                    <label htmlFor="always">always</label>
                                 </div>
                             </div>
                             <div className="chart__filters-groups">
