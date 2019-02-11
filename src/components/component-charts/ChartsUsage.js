@@ -2,42 +2,36 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { requestCharts } from './../../services/ChartsService';
 import TableCharts from './TableCharts';
-
 class ChartsUsage extends Component {
     constructor(props) {
         super(props)
-
         this.state = {
             userData: [],
             chartList: [],
             chartNames: [],
             currentDate: '',
             timelapse: 7,
-            filterOptionsQuery: false
+            filterOptionsQuery: false,
+            fromDate: new Date(),
+            toDate: new Date()
         }
-
         this.renderTimesUsed = this.renderTimesUsed.bind(this);
         this.renderTimesPercentage = this.renderTimesPercentage.bind(this);
         this.renderChartUsers = this.renderChartUsers.bind(this);
         this.handleChangeDate = this.handleChangeDate.bind(this);
-        this.getCalendar = this.getCalendar.bind(this);
+        this.handleDateFrom = this.handleDateFrom.bind(this);
+        this.handleDateTo = this.handleDateTo.bind(this);
         this.filterOptions = this.filterOptions.bind(this);
         this.handleOptions = this.handleOptions.bind(this);
     }
-
     componentDidMount() {
         this.fetchCharts(this.state.timelapse);
     }
-
     fetchCharts(timelapse) {
         let toDate = new Date();
         let fromDate = new Date().setDate(toDate.getDate() - timelapse);
         fromDate = new Date(fromDate).toISOString();
         toDate = new Date(toDate).toISOString();
-
-        console.log('fromDate: ', fromDate);
-        console.log('toDate: ', toDate);
-
         requestCharts(fromDate, toDate)
             .then(data => {
                 this.setState({
@@ -45,27 +39,24 @@ class ChartsUsage extends Component {
                     userData: data,
                     currentDate: toDate
                 });
-
                 this.filterOptions(this.state.filterOptionsQuery);
                 this.renderChartList(data.open_chart_events);
             });
     }
-
-    getCalendar() {
-        const now = new Date();
-
-        const day = ("0" + now.getDate()).slice(-2);
-        const month = ("0" + (now.getMonth() + 1)).slice(-2);
-        const today = now.getFullYear()+"-"+(month)+"-"+(day);
-
-        return today;
+    handleDateTo(e) {
+        this.setState({
+            toDate: new Date(e.currentTarget.value)
+        }, () => this.handleChangeDate(e));
     }
-
+    handleDateFrom(e) {
+        this.setState({
+            fromDate: e.currentTarget.value
+        }, () => this.handleChangeDate(e));
+    }
     handleChangeDate(e) {
         const period = e.currentTarget.value;
-        const ct = new Date();
+        let ct = new Date();
         let fd = new Date();
-
         switch(period) {
             case 'last-week':
                 fd.setDate(fd.getDate() - 7);
@@ -76,35 +67,29 @@ class ChartsUsage extends Component {
             case 'last-two-months':
                 fd.setMonth(fd.getMonth() - 2);
                 break;
-            case 'set-date':
-            
-                break;
             case 'always':
                 fd = new Date(2015, 0, 1, 0, 0);
+                break;
+            default:
+                ct = new Date(this.state.toDate);
+                fd = new Date(this.state.fromDate);
                 break;
         }
         
         const timelapse = (ct - fd)/(1000*60*60*24);
-
         this.setState({
             timelapse: Math.round(timelapse)
         });
-
         this.fetchCharts(Math.round(timelapse));
     }
-
-    
-
     renderChartList(chartList) {
         const mappedChartList = chartList.map(chart => {
             return chart.details.chart_name;
         });
-
         this.setState({
             chartNames: [...new Set(mappedChartList)]
         })
     }
-
     renderTimesUsed(chart) {
         const reducedChartList = this.state.chartList.reduce((acc, item) => {
             if (item.details.chart_name === chart) {
@@ -112,27 +97,21 @@ class ChartsUsage extends Component {
             }
             return acc
         }, 0);
-
         return reducedChartList;
     }
-
     renderTimesPercentage(timesUsed) {
         const timesPercentage = (timesUsed / this.state.chartList.length * 100).toFixed(1);
         return timesPercentage;
     }
-
     renderChartUsers(givenChart) {
         const originalCharts = this.state.chartList;
-
         const mappedUsersData = originalCharts
             .filter(chart => chart.details.chart_name === givenChart)
             .map(chart => {
                 return chart.request.user__username;
             });
-
         return [...new Set(mappedUsersData)].length;
     }
-
     filterOptions(checked) {
         const originalCharts = this.state.userData.open_chart_events;
         const duplicateCharts = originalCharts.slice();
@@ -143,25 +122,19 @@ class ChartsUsage extends Component {
                 return item;
             }
         });
-
         this.setState({
             chartList: removedStyleUser
         })
     }
-
     handleOptions(e) {
         const optionsTarget = e.currentTarget.checked;
-
         this.setState({
             filterOptionsQuery: optionsTarget
         });
-
         this.filterOptions(optionsTarget);
     }
-
     render() {
         const { chartNames } = this.state;
-
         return (
             <div className="app__container">
                 <main className="app__main">
@@ -189,7 +162,6 @@ class ChartsUsage extends Component {
                             <div className="chart__filters-range">
                                 <h3>DATE RANGE</h3>
                                 <p> From: | To:</p>
-
                                 <div>
                                     <input defaultChecked={true} onClick={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" />
                                     <label htmlFor="last-week">last week</label>
@@ -207,11 +179,11 @@ class ChartsUsage extends Component {
                                     <label htmlFor="last-two-months">set date</label>
                                 </div>
                                 <div>
-                                    <input id="from-date" type="date" name="date??" value={this.getCalendar()} />
+                                    <input onChange={this.handleDateFrom} id="from-date" type="date" name="date??" />
                                     <label htmlFor="from-date">from date</label>
                                 </div>
                                 <div>
-                                    <input id="to-date" type="date" name="date??" value={this.getCalendar()} />
+                                    <input onChange={this.handleDateTo} id="to-date" type="date" name="date??" />
                                     <label htmlFor="to-date">to date</label>
                                 </div>
                                 <div>
@@ -236,5 +208,4 @@ class ChartsUsage extends Component {
         );
     }
 }
-
 export default ChartsUsage;
