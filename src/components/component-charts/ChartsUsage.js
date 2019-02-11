@@ -82,7 +82,7 @@ class ChartsUsage extends Component {
                     <div className="breadcrumb__container">
                         <ul className="breadcrumb__container-list">
                             <li className="breadcrumb__container-item">
-                                <Link to="/">Overview</Link>
+                                <Link to="/" className="breadcrumb__link">Overview</Link>
                             </li>>
                             <li className="breadcrumb__container-item">
                                 <span>ChartsUsage</span>
@@ -94,14 +94,22 @@ class ChartsUsage extends Component {
                             <TableCharts chartNames={chartNames} renderTimesUsed={this.renderTimesUsed} renderTimesPercentage={this.renderTimesPercentage} renderChartUsers={this.renderChartUsers}/>
                         </div>
                         <div className="chart__filters">
-                            <div className="chart__filters-options">
-                                <h3>OPTIONS</h3>
+                            <div className="chart__filter chart__filter-options">
+                            <div className="chart__filter-header">
+                                <i className="zmdi zmdi-account-add"></i>
+                                <h3 className="chart__filter-title">OPTIONS</h3>
+                            </div>
+                               
                                 <label>
                                     <input type="radio"></input> exclude support users (x@stylesage.com)
                                     </label>
                             </div>
-                            <div className="chart__filters-range">
-                                <h3>DATE RANGE</h3>
+                            <div className="chart__filter chart__filter-range">
+                                <div className="chart__filter-header">
+                                    <i className="zmdi zmdi-calendar-check"></i>
+                                    <h3 className="chart__filter-title">DATE RANGE</h3>
+                                </div>
+                                
                                 <p> From: | To:</p>
                                 <div>
                                     <label>
@@ -129,8 +137,12 @@ class ChartsUsage extends Component {
                                     </label>
                                 </div>
                             </div>
-                            <div className="chart__filters-groups">
-                                <h3>USER GROUPS</h3>
+                            <div className="chart__filter chart__filter-groups">
+                            <div className="chart__filter-header">
+                                <i className="zmdi zmdi-accounts"></i>
+                                <h3 className="chart__filter-title">USER GROUPS</h3>
+                            </div>
+                               
                                 <p>select all | select active | clear all</p>
                                 <div>
                                     <label htmlFor="flightoption1">

@@ -21,24 +21,24 @@ class TableCharts extends Component {
     render() {
         
         return (
-            <table className="table">
-                <thead className="table__thead-chart">
-                    <tr className="table__tr">
+            <table className="table" id="table">
+                <thead className="table__thead">
+                    <tr className="table__tr-title">
                         <th className="table__th">
-                            Chart
+                            <p className="table__title">Chart</p>
                         </th>
                         <th className="table__th">
-                            Times Used
+                            <p className="table__title">Times Used</p>
                         </th>
                         <th className="table__th">
-                            %
+                            <p className="table__title">%</p>
                         </th>
                         <th className="table__th">
-                            Users
+                            <p className="table__title">Users</p>
                         </th>
                     </tr>
                 </thead>
-                <tbody className="table__tbody-chart">
+                <tbody className="table__tbody">
                    {this.chartNames()}
                 </tbody>
             </table>

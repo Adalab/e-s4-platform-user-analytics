@@ -8,7 +8,7 @@ class UserFilter extends Component {
             <div className="search__container">
                 <div className="search__input-container">
                     <label htmlFor="username"></label>
-                    <span className="icon__search"> <i class="zmdi zmdi-search"></i> </span>
+                    <span className="icon__search"> <i className="zmdi zmdi-search"></i> </span>
                     <input type="text" id="username" className="search__input" placeholder="search" name="username" onKeyUp={getQueryUsername} />
                 </div>
                 <p className="search__info-total">Showing {resultsNumber} entries</p>
