@@ -1,17 +1,9 @@
 @import 'colors-typo';
 @import './styles/header';
+@import './styles/common';
 @import './styles/sidebar';
 @import './styles/session-list';
 @import './styles/user-filter';
 @import './styles/table-list';
 @import './styles/breadcrumb';
 @import './styles/charts';
-
-
-//>> Component App
-//.app {}
-
-.page__wrapper {
-  display:flex;
-}
-

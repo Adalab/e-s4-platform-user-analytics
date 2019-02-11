@@ -1,10 +1,15 @@
+
+// .app{
+  
+// }
+.page__wrapper {
+  height: 100vh;
+  display:flex;
+  position: relative;
+  top: 83px;
+}
 .app__container {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  width: 100%;
-}
-
-.app__main {
-  padding-left: 10px;
-// background-color: pink;
 }

@@ -2,15 +2,28 @@
   display:flex;
 }
 // .table__container{}
-.chart__filters{
-  border-left: 1px solid black;
+// .chart__filters{
+
+// }
+.chart__filter-title{
+  margin-left: 10px;
+  
 }
-.chart__filters-options{
-  border: 1px solid red;
+.chart__filter{
+  font-size: $roboto;
+  background-color: $white;
+  border: 1px solid $lightgrey;
+  margin: 20px;
+  width: 400px;
 }
-.chart__filters-range{
-  border: 1px solid red;
+.chart__filter-options{
+  
+  height: 100px;
 }
-.chart__filters-groups{
-  border: 1px solid red;
+.chart__filter-header{
+  
+  background-color: $lightgrey;
+  padding-left: 10px;
+  display: flex;
+  align-items: center;
 }
