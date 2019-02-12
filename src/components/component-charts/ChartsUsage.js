@@ -6,30 +6,31 @@ import TableCharts from './TableCharts';
 class ChartsUsage extends Component {
     constructor(props) {
         super(props);
-        
+
         this.state = {
             userData: [],
             chartList: [],
             chartNames: [],
             allGroupsList: [],
             groupsList: [],
-            userGroupsInputs: null,
-            currentDate: '',
+            filterOptionsChecked: true,
             timelapse: 7,
-            filterOptionsQuery: false,
             fromDate: new Date(),
-            toDate: new Date()
+            toDate: new Date(),
+            userGroupsInputs: null
         }
 
         this.renderTimesUsed = this.renderTimesUsed.bind(this);
         this.renderTimesPercentage = this.renderTimesPercentage.bind(this);
         this.renderChartUsers = this.renderChartUsers.bind(this);
+
+        this.filterOptions = this.filterOptions.bind(this);
+        this.handleOptions = this.handleOptions.bind(this);
+
         this.handleChangeDate = this.handleChangeDate.bind(this);
         this.handleDateFrom = this.handleDateFrom.bind(this);
         this.handleDateTo = this.handleDateTo.bind(this);
-        this.filterOptions = this.filterOptions.bind(this);
-        this.handleOptions = this.handleOptions.bind(this);
-        this.renderUserGroups = this.renderUserGroups.bind(this);
+
         this.handleUserGroups = this.handleUserGroups.bind(this);
     }
 
@@ -40,6 +41,7 @@ class ChartsUsage extends Component {
     fetchCharts(timelapse) {
         let toDate = new Date();
         let fromDate = new Date().setDate(toDate.getDate() - timelapse);
+
         fromDate = new Date(fromDate).toISOString();
         toDate = new Date(toDate).toISOString();
 
@@ -47,14 +49,123 @@ class ChartsUsage extends Component {
             .then(data => {
                 this.setState({
                     chartList: data.open_chart_events,
-                    userData: data,
-                    currentDate: toDate
+                    userData: data
                 });
 
-                this.filterOptions(this.state.filterOptionsQuery);
+                this.filterOptions(this.state.filterOptionsChecked, data.open_chart_events);
                 this.renderChartList(data.open_chart_events);
                 this.renderUserGroups(data.open_chart_events);
             });
+    }
+
+    renderChartList(chartList) {
+        const mappedChartList = chartList
+            .map(chart => {
+            return chart.details.chart_name;
+            })
+            .sort((a, b) => {
+
+                if (a > b) {
+                    return 1;
+                } else if (a < b) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            });
+
+        this.setState({
+            chartNames: [...new Set(mappedChartList)]
+        })
+    }
+
+    renderTimesUsed(givenChart) {
+        const reducedChartList = this.state.chartList.reduce((acc, item) => {
+            if (item.details.chart_name === givenChart) {
+                acc++;
+            }
+            return acc;
+        }, 0);
+
+        return reducedChartList;
+    }
+
+    renderTimesPercentage(timesUsed) {
+        const timesPercentage = (timesUsed / this.state.chartList.length * 100).toFixed(1);
+        return timesPercentage;
+    }
+
+    renderChartUsers(givenChart) {
+        const originalCharts = this.state.chartList;
+        const mappedUsersData = originalCharts
+            .filter(chart => chart.details.chart_name === givenChart)
+            .map(chart => {
+                return chart.request.user__username;
+            })
+
+        return [...new Set(mappedUsersData)].length;
+    }
+
+    renderUserGroups(chartList) {
+        const mappedGroups = chartList.map(item => item.request.user__group__name);
+        const usersSet = [...new Set(mappedGroups)];
+
+        const sortedSet = usersSet
+            .sort((a, b) => {
+                const groupA = a.toLowerCase();
+                const groupB = b.toLowerCase();
+
+                if (groupA > groupB) {
+                    return 1;
+                } else if (groupA < groupB) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            });
+
+        const userGroupsInputs = sortedSet.map((item, index) => {
+            return (
+                <li key={index}>
+                    <label htmlFor={item}>
+                        <input onChange={this.handleUserGroups} id={item} type="checkbox" value={item} name={item} defaultChecked={true} />
+                        {item}
+                    </label>
+                </li>
+            );
+        });
+
+        this.setState({
+            allGroupsList: usersSet,
+            groupsList: usersSet,
+            userGroupsInputs: userGroupsInputs
+        });
+    }
+
+    filterOptions(checked, originalCharts) {
+
+        const removedStyleUser = originalCharts.filter(item => {
+            if (checked) {
+                return !item.request.user__username.includes('stylesage');
+            } else {
+                return item;
+            }
+        });
+
+        this.setState({
+            chartList: removedStyleUser
+        });
+    }
+
+    handleOptions(e) {
+        const optionsTarget = e.currentTarget.checked;
+        const chartsToFilter = this.state.userData.open_chart_events;
+
+        this.setState({
+            filterOptionsChecked: optionsTarget
+        });
+
+        this.filterOptions(optionsTarget, chartsToFilter);
     }
 
     handleDateTo(e) {
@@ -103,97 +214,13 @@ class ChartsUsage extends Component {
                 break;
         }
 
-        const timelapse = (ct - fd) / (1000 * 60 * 60 * 24);
+        const timelapse = Math.round((ct - fd) / (1000 * 60 * 60 * 24));
 
         this.setState({
-            timelapse: Math.round(timelapse)
+            timelapse: timelapse
         });
 
-        this.fetchCharts(Math.round(timelapse));
-    }
-
-    renderChartList(chartList) {
-        const mappedChartList = chartList.map(chart => {
-            return chart.details.chart_name;
-        });
-
-        this.setState({
-            chartNames: [...new Set(mappedChartList)]
-        })
-    }
-
-    renderTimesUsed(chart) {
-        const reducedChartList = this.state.chartList.reduce((acc, item) => {
-            if (item.details.chart_name === chart) {
-                acc++;
-            }
-            return acc;
-        }, 0);
-
-        return reducedChartList;
-    }
-    renderTimesPercentage(timesUsed) {
-        const timesPercentage = (timesUsed / this.state.chartList.length * 100).toFixed(1);
-        return timesPercentage;
-    }
-
-    renderChartUsers(givenChart) {
-        const originalCharts = this.state.chartList;
-        const mappedUsersData = originalCharts
-            .filter(chart => chart.details.chart_name === givenChart)
-            .map(chart => {
-                return chart.request.user__username;
-            })
-
-        return [...new Set(mappedUsersData)].length;
-    }
-
-    filterOptions(checked) {
-        const originalCharts = this.state.userData.open_chart_events;
-        const duplicateCharts = originalCharts.slice();
-
-        const removedStyleUser = duplicateCharts.filter(item => {
-            if (checked) {
-                return !item.request.user__username.includes('stylesage');
-            } else {
-                return item;
-            }
-        });
-
-        this.setState({
-            chartList: removedStyleUser
-        })
-    }
-
-    handleOptions(e) {
-        const optionsTarget = e.currentTarget.checked;
-
-        this.setState({
-            filterOptionsQuery: optionsTarget
-        });
-
-        this.filterOptions(optionsTarget);
-    }
-
-    renderUserGroups(chartList) {
-        const mappedGroups = chartList.map(item => item.request.user__group__name);
-        const usersSet = [...new Set(mappedGroups)];
-
-        const userGroupsInputs = usersSet.map((item, index) => {
-            return (
-                <li key={index}>
-                    <label htmlFor={item}>
-                        <input onChange={this.handleUserGroups} id={item} type="checkbox" value={item} name={item} />
-                        {item}
-                    </label>
-                </li>
-            );
-        })
-
-        this.setState({
-            allGroupsList: usersSet,
-            userGroupsInputs: userGroupsInputs
-        });
+        this.fetchCharts(timelapse);
     }
 
     handleUserGroups(e) {
@@ -203,6 +230,7 @@ class ChartsUsage extends Component {
 
         if (e.currentTarget.checked) {
             groupsList.push(userGroupsTarget);
+
         } else {
             groupsList.splice(userGroupsTarget, 1);
         }
@@ -224,7 +252,7 @@ class ChartsUsage extends Component {
                 } else {
                     return false;
                 }
-            })
+            });
 
             let isPresent = false;
 
@@ -240,10 +268,13 @@ class ChartsUsage extends Component {
         this.setState({
             chartList: filteredCharts
         });
+
+        this.filterOptions(this.state.filterOptionsChecked, filteredCharts);
     }
 
     render() {
         const { chartNames, userGroupsInputs } = this.state;
+
         return (
             <div className="app__container">
                 <main className="app__main">
@@ -272,7 +303,7 @@ class ChartsUsage extends Component {
                                         <input type="checkbox" onClick={this.handleOptions} defaultChecked={false} /> exclude support users (x@stylesage.com)
                                     </label>
                                 </div>
-                                </div>
+                            </div>
                             <div className="chart__filter chart__filter-range">
                                 <div className="chart__filter-header">
                                     <i className="zmdi zmdi-calendar-check"></i>
@@ -341,7 +372,7 @@ class ChartsUsage extends Component {
                 </main>
             </div>
         );
-    }
-}
+    };
+};
 
 export default ChartsUsage;
