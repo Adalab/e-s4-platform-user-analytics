@@ -5,7 +5,7 @@
 .app__aside {
   width: 270px;
   height: 100vh;
-  background:$violet;
+  background: $violet;
   bottom:0;
   transition: bottom ease 2s;
   position: relative;
@@ -17,13 +17,14 @@
  .zmdi-chart{
   padding: 10px;
   font-size: 30px;
-  color:purple;
+  color: $purple02;
  }
  .app__aside-title{
-   margin-left: 10px;
-   font-size: 18px;
-   font-weight: bold;
-   text-transform: uppercase;
+  color: $purple02;
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
  }
  .aside__list {
   padding: 0;

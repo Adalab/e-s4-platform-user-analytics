@@ -1,3 +1,4 @@
+
 .charts__container{
   display:flex;
 }
@@ -7,23 +8,39 @@
 // }
 .chart__filter-title{
   margin-left: 10px;
-  
+  color: $purple02;
+}
+.chart__filter-content{
+  margin: 0px;
+  padding: 10px 20px 20px;
 }
 .chart__filter{
-  font-size: $roboto;
+  font-family: $roboto;
   background-color: $white;
-  border: 1px solid $lightgrey;
+  border: 1px solid $violet;
   margin: 20px;
   width: 400px;
 }
-.chart__filter-options{
-  
-  height: 100px;
-}
 .chart__filter-header{
-  
-  background-color: $lightgrey;
+  background-color: $violet;
   padding-left: 10px;
   display: flex;
   align-items: center;
 }
+.chart__filter-options{
+  height: 100px;
+}
+.chart__filter-range{
+  line-height: 32px;
+}
+.chart__filter-groups{
+  
+  line-height: 32px;
+}
+.chart__filter-listgroups{
+  padding: 0;
+  list-style: none;
+}
+.input__type-radio{
+  cursor: pointer; 
+  }

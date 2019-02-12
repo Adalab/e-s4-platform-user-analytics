@@ -263,61 +263,78 @@ class ChartsUsage extends Component {
                         </div>
                         <div className="chart__filters">
                             <div className="chart__filter chart__filter-options">
-                            <div className="chart__filter-header">
-                                <i className="zmdi zmdi-account-add"></i>
-                                <h3 className="chart__filter-title">OPTIONS</h3>
-                            </div>
-                               
-                                <label>
-                                    <input type="checkbox" onClick={this.handleOptions} defaultChecked={false} /> exclude support users (x@stylesage.com)
-                                </label>
-                            </div>
+                                <div className="chart__filter-header">
+                                    <i className="zmdi zmdi-account-add"></i>
+                                    <h3 className="chart__filter-title">OPTIONS</h3>
+                                </div>
+                                <div className="chart__filter-content">
+                                    <label>
+                                        <input type="checkbox" onClick={this.handleOptions} defaultChecked={false} /> exclude support users (x@stylesage.com)
+                                    </label>
+                                </div>
+                                </div>
                             <div className="chart__filter chart__filter-range">
                                 <div className="chart__filter-header">
                                     <i className="zmdi zmdi-calendar-check"></i>
                                     <h3 className="chart__filter-title">DATE RANGE</h3>
                                 </div>
-                                
-                                <p> From: | To:</p>
-                                <div>
-                                    <input defaultChecked={true} onClick={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" />
-                                    <label htmlFor="last-week">last week</label>
-                                </div>
-                                <div>
-                                    <input onClick={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" />
-                                    <label htmlFor="last-month">last month</label>
-                                </div>
-                                <div>
-                                    <input onClick={this.handleChangeDate} type="radio" id="last-two-months" name="date" value="last-two-months" />
-                                    <label htmlFor="last-two-months">last 2 months</label>
-                                </div>
-                                <div>
-                                    <input onClick={this.handleChangeDate} type="radio" id="set-date" name="date" value="set-date" />
-                                    <label htmlFor="last-two-months">set date</label>
-                                </div>
-                                <div>
-                                    <input onChange={this.handleDateFrom} id="from-date" type="date" name="date??" />
-                                    <label htmlFor="from-date">from date</label>
-                                </div>
-                                <div>
-                                    <input onChange={this.handleDateTo} id="to-date" type="date" name="date??" />
-                                    <label htmlFor="to-date">to date</label>
-                                </div>
-                                <div>
-                                    <input onClick={this.handleChangeDate} type="radio" id="always" name="date" value="always" />
-                                    <label htmlFor="always">always</label>
+                                <div className="chart__filter-content">
+                                    <p> From: | To:</p>
+                                    <div>
+                                        <label htmlFor="last-week" >
+                                            <input defaultChecked={true} onClick={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" className="input__type-radio"/>
+                                            last week
+                                        </label>
+                                    </div>
+                                    <div >
+                                        <label htmlFor="last-month">
+                                            <input onClick={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" className="input__type-radio"/>
+                                            last month
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="last-two-months">
+                                            <input onClick={this.handleChangeDate} type="radio" id="last-two-months" name="date" value="last-two-months" className="input__type-radio" />
+                                            last 2 months
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="last-two-months">
+                                            <input onClick={this.handleChangeDate} type="radio" id="set-date" name="date" value="set-date" className="input__type-radio" />
+                                            set date
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="from-date">
+                                            <input onChange={this.handleDateFrom} id="from-date" type="date" name="date??" />
+                                        from date
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="to-date">
+                                            <input onChange={this.handleDateTo} id="to-date" type="date" name="date??" />
+                                            to date
+                                        </label>
+                                    </div>
+                                    <div>
+                                        <label htmlFor="always">
+                                            <input onClick={this.handleChangeDate} type="radio" id="always" name="date" value="always" className="input__type-radio"/>
+                                            always
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                             <div className="chart__filter chart__filter-groups">
-                            <div className="chart__filter-header">
-                                <i className="zmdi zmdi-accounts"></i>
-                                <h3 className="chart__filter-title">USER GROUPS</h3>
-                            </div>
-                               
-                                <p>select all | select active | clear all</p>
-                                <ul>
-                                    {(userGroupsInputs) ? userGroupsInputs : ""}
-                                </ul>
+                                <div className="chart__filter-header">
+                                    <i className="zmdi zmdi-accounts"></i>
+                                    <h3 className="chart__filter-title">USER GROUPS</h3>
+                                </div>
+                                <div className="chart__filter-content">
+                                    <p>select all | select active | clear all</p>
+                                    <ul className="chart__filter-listgroups">
+                                        {(userGroupsInputs) ? userGroupsInputs : ""}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>

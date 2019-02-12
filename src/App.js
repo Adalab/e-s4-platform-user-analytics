@@ -18,12 +18,10 @@ class App extends Component {
   }
   
   handleClick(){
-      console.log('he dado click')
       const hiddenStatus = (this.state.hiddenButton === true)? false : true;
           this.setState({
               hiddenButton: hiddenStatus 
       });
-      console.log(hiddenStatus)
   } 
   
   render() {
