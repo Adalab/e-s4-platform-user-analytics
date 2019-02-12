@@ -1,0 +1,50 @@
+.hidden{
+  display: none;
+}
+
+.app__aside {
+  width: 270px;
+  height: 100vh;
+  background: $violet;
+  bottom:0;
+  transition: bottom ease 2s;
+  position: relative;
+ }
+ .app__aside-header{
+   display: flex;
+   align-items: center;
+ }
+ .zmdi-chart{
+  padding: 10px;
+  font-size: 30px;
+  color: $purple02;
+ }
+ .app__aside-title{
+  color: $purple02;
+  margin-left: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+ }
+ .aside__list {
+  padding: 0;
+  background-color: $violet;
+  color: $violet263;
+  list-style: none;
+  text-decoration: none;
+  line-height: 24px;
+ }
+ .aside__item-link {
+   text-decoration: none;
+   color: $purple;
+   font-weight: bold;
+    
+ }
+ .aside__item {
+    &:hover {
+  
+      background-color: rgb(245, 217, 245);
+    }
+    transition: background-color ease 1s;
+ }
+
