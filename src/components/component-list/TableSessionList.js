@@ -15,10 +15,10 @@ class TableSessionList extends Component {
         const row = list.map((item, index) => {
             return (
                 <tr className="table__tr" key={index}>
-                    <td className="table__td">{item.user__username}</td>
-                    <td className="table__td">{this.props.renderTime(item.min_timestamp)}</td>
-                    <td className="table__td">{this.renderDuration(item.duration_sec)}</td>
-                    <td className="table__td">{item.request_count}</td>
+                    <td className="table__td table__td--user">{item.user__username}</td>
+                    <td className="table__td table__td--times">{this.props.renderTime(item.min_timestamp)}</td>
+                    <td className="table__td table__td--sec">{this.renderDuration(item.duration_sec)}</td>
+                    <td className="table__td table__td-req">{item.request_count}</td>
                 </tr>
             );
         });
@@ -49,9 +49,9 @@ class TableSessionList extends Component {
         const { sessionsList, orderResultsUsername, orderResultsTimeStarted, orderResultsDuration, orderResultsRequestCount } = this.props;
 
         return (
-            <table className="table">
+            <table className="table" id="table">
                 <thead className="table__thead">
-                    <tr className="table__tr">
+                    <tr className="table__tr-title">
                         <th className="table__th">
                             <div className="table__content">
                                 <p className="table__title">Username</p>
@@ -63,7 +63,7 @@ class TableSessionList extends Component {
                         </th>
                         <th className="table__th">
                             <div className="table__content">
-                                <p className="table__title">Time Started (local TZ)</p>
+                                <p className="table__title">Times Started (local TZ)</p>
                                 <div className="table__icons">
                                     <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsTimeStarted}></i>
                                     <i className="zmdi zmdi-chevron-down" data-arrow="down" onClick={orderResultsTimeStarted}></i>

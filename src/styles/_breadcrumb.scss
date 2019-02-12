@@ -1,0 +1,21 @@
+.breadcrumb__container {
+  text-align: center;
+}
+
+.breadcrumb__container-list {
+  padding: 0 10px;
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
+.breadcrumb__container-item {
+  padding: 0 10px;
+}
+.breadcrumb__link{
+    text-decoration: none;
+      &:hover {
+      background-color: rgb(245, 217, 245);
+    }
+    transition: background-color ease 0.8s;
+}
