@@ -25,24 +25,40 @@ class TableCharts extends Component {
     }
 
     chartNames() {
-        const row = this.props.chartNames.reduce((acc, item, index) => {
-            
-            const timesPercentage = (this.renderTimesUsed(item) / this.props.chartList.length * 100).toFixed(1);
+        const matrix = this.props.chartList.reduce((acc, item, index) => {
 
-            acc.push(
-                <tr className="table__tr" key={index}>
-                    <td className="table__td">{item}</td>
-                    <td className="table__td">{this.renderTimesUsed(item)}</td>
-                    <td className="table__td">{timesPercentage}</td>
-                    <td className="table__td">{this.renderChartUsers(item)}</td>
-                </tr>
-            );
-            return acc;
-        }, []);
-        return row;
+                if (this.props.chartList.includes(item.details.chart_name)) {
+                    console.log('hola');
+                } else {
+                    console.log(acc.length);
+                    const timesPercentage = (this.renderTimesUsed(item) / this.props.chartList.length * 100).toFixed(1);
+
+                    const tableRow = (<tr className="table__tr" key={index}>
+                        <td className="table__td">{item}</td>
+                        <td className="table__td">{this.renderTimesUsed(item)}</td>
+                        <td className="table__td">{timesPercentage}</td>
+                        <td className="table__td">{this.renderChartUsers(item)}</td>
+                    </tr>)
+
+                    const accMatrix = [];
+
+                    accMatrix.push(item.details.chart_name);
+                    accMatrix.push(tableRow);
+
+                    acc.push(accMatrix);
+                }
+
+                return acc;
+            }, [[]]);
+
+        const table = matrix.map(arr => arr[0]);
+
+        return table;
     }
 
     render() {
+        const table = this.chartNames();
+        console.log("òwo");
         return (
             <table className="table" id="table">
                 <thead className="table__thead">
@@ -62,7 +78,7 @@ class TableCharts extends Component {
                     </tr>
                 </thead>
                 <tbody className="table__tbody">
-                    {this.chartNames()}
+                    {table}
                 </tbody>
             </table>
         );
