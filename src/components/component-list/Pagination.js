@@ -57,6 +57,8 @@ class Pagination extends Component {
 			pageCount: pageCount
 		});
 
+		console.log(sessionsList);
+
 		this.createControls(pageCount);
 	}
 
@@ -113,21 +115,19 @@ class Pagination extends Component {
 
 		const arIni = [
 			(<li className={`${baseClassName}`} key="First" onClick={() => { this.setCurrentPage(1) }}>First</li>),
-			(<li className={`${baseClassName}`} key="Previous" onClick={() => { (this.state.currentPage === 1) ? this.setCurrentPage(1) : this.setCurrentPage(this.state.currentPage - 1) }}>Previous</li>),
-			(<li className={`${baseClassName}`} key="...nw" onClick={() => { this.setCurrentPage(controls.length - 2) }}>...nw</li>)
+			(<li className={`${baseClassName}`} key="Previous" onClick={() => { (this.state.currentPage === 1) ? this.setCurrentPage(1) : this.setCurrentPage(this.state.currentPage - 1) }}>Previous</li>)
 		];
 
 		const arEnd = [
-			(<div className={`${baseClassName}`} key="..." onClick={() => { this.setCurrentPage(controls.length - 2) }}>...</div>),
 			(<div className={`${baseClassName}`} key="Next" onClick={() => { (this.state.currentPage === (controls.length)) ? this.setCurrentPage(controls.length) : this.setCurrentPage(this.state.currentPage + 1) }}>Next</div>),
 			(<div className={`${baseClassName}`} key="Last" onClick={() => { this.setCurrentPage(controls.length) }}>Last</div>)];
-
+		
 		return (
 			<React.Fragment>
 				<select onChange={this.handleSelect}>
-					<option value="3">3</option>
 					<option value="5">5</option>
 					<option value="10">10</option>
+					<option value="20">20</option>
 				</select>
 				<div className='pagination'>
 					<div className='pagination-controls'>
@@ -138,11 +138,11 @@ class Pagination extends Component {
 					<div className='pagination-results'>
                         {((dataSlice) ? (React.cloneElement(this.props.children, { 
                             sessionsList: dataSlice,
-                            renderTime: this.renderTime,
-                            orderResultsUsername: this.orderResultsUsername,
-                            orderResultsTimeStarted: this.orderResultsTimeStarted,
-                            orderResultsDuration: this.orderResultsDuration,
-                            orderResultsRequestCount: this.orderResultsRequestCount
+                            renderTime: this.props.renderTime,
+                            orderResultsUsername: this.props.orderResultsUsername,
+                            orderResultsTimeStarted: this.props.orderResultsTimeStarted,
+                            orderResultsDuration: this.props.orderResultsDuration,
+                            orderResultsRequestCount: this.props.orderResultsRequestCount
                         
                         })) : ('looking for data'))}
 					</div>

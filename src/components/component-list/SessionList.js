@@ -283,7 +283,7 @@ class SessionList extends Component {
                     </div>
                     <UserFilter getQueryUsername={this.getQueryUsername} resultsNumber={resultsNumber} />
                     <div className="table__container">
-                        {(duplicatedArray.length !== 0)
+                        {(duplicatedArray === true)
                             ? (
                             <Pagination
                                 renderTime={this.renderTime}
