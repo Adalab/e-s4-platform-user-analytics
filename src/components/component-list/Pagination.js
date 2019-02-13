@@ -6,7 +6,7 @@ class Pagination extends Component {
 		this.state = {
 			currentPage: 1,
 			pageCount: 1,
-			pageSize: 3,
+			pageSize: 5,
 			controls: [],
 			matrixControls: [[]]
 		}
