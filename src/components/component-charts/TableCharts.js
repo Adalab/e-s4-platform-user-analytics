@@ -1,25 +1,63 @@
 import React, { Component } from "react";
 
 class TableCharts extends Component {
-    
-    chartNames() {
-        const { renderTimesUsed, renderTimesPercentage, renderChartUsers } = this.props;
+    constructor(props) {
+        super(props);
 
-        const row = this.props.chartNames.map((item,index) => {
-            return (
-                <tr className="table__tr" key={index}>
-                    <td className="table__td">{item}</td>
-                    <td className="table__td">{renderTimesUsed(item)}</td>
-                    <td className="table__td">{renderTimesPercentage(renderTimesUsed(item))}</td>
-                    <td className="table__td">{renderChartUsers(item)}</td>
-                </tr>
-            );
-        });
-        return row;
+        this.state = {
+            table: []
+        }
     }
-    
+
+    chartNames() {
+        const matrix = this.props.chartList.reduce((acc, item) => {
+            const matrixIndex = acc.findIndex(chart => chart[0] === item.details.chart_name)
+
+            if (matrixIndex === -1) {
+
+                const accMatrix = [];
+
+                accMatrix.push(item.details.chart_name);
+                accMatrix.push(1);
+                accMatrix.push([item.request.user__username]);
+
+                acc.push(accMatrix);
+
+            } else {
+
+                acc[matrixIndex][1] += 1;
+
+                if (acc[matrixIndex][2].indexOf(item.request.user__username) === -1) {
+                    acc[matrixIndex][2].push(item.request.user__username);
+                }
+            }
+
+            return acc;
+        }, [[]]);
+
+        const table = matrix.splice(1);
+
+        return table;
+    }
+
     render() {
-        
+        const matrix = this.chartNames();
+
+        let table;
+
+        if (matrix.length !== 0) {
+            table = matrix.map((row, index) => {
+                return (
+                    <tr className="table__tr" key={index}>
+                        <td className="table__td">{row[0]}</td>
+                        <td className="table__td">{row[1]}</td>
+                        <td className="table__td">{(row[1] / this.props.chartList.length * 100).toFixed(1)}</td>
+                        <td className="table__td">{row[2].length}</td>
+                    </tr>
+                )
+            });
+        };
+
         return (
             <table className="table" id="table">
                 <thead className="table__thead">
@@ -39,7 +77,7 @@ class TableCharts extends Component {
                     </tr>
                 </thead>
                 <tbody className="table__tbody">
-                   {this.chartNames()}
+                    {table}
                 </tbody>
             </table>
         );
