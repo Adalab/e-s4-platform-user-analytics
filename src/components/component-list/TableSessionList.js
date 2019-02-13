@@ -13,6 +13,7 @@ class TableSessionList extends Component {
 
     mapResults(list) {
         const row = list.map((item, index) => {
+            console.log(this.props.renderTime);
             return (
                 <tr className="table__tr" key={index}>
                     <td className="table__td table__td--user">{item.user__username}</td>

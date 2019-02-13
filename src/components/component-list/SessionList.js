@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import UserFilter from './UserFilter';
 import TableSessionList from "./TableSessionList";
+import Pagination from "./Pagination";
 import { requestSessions } from '../../services/SessionsService';
 
 class SessionList extends Component {
@@ -282,15 +283,18 @@ class SessionList extends Component {
                     </div>
                     <UserFilter getQueryUsername={this.getQueryUsername} resultsNumber={resultsNumber} />
                     <div className="table__container">
-                        {(duplicatedArray.length !== 0)
-                            ? (<TableSessionList
+                        {(duplicatedArray === true)
+                            ? (
+                            <Pagination
                                 renderTime={this.renderTime}
                                 orderResultsUsername={this.orderResultsUsername}
                                 orderResultsTimeStarted={this.orderResultsTimeStarted}
                                 orderResultsDuration={this.orderResultsDuration}
                                 orderResultsRequestCount={this.orderResultsRequestCount}
-                                sessionsList={sessionsList} />)
-                            : (<p>Looking for data...</p>)}
+                                sessionsList={sessionsList} >
+                                <TableSessionList />
+                            </Pagination>                                
+                            ) : (<p>Looking for data...</p>)}
                     </div>
                 </main>
             </div>
