@@ -27,17 +27,11 @@ class TableCharts extends Component {
     chartNames() {
         const matrix = this.props.chartList.reduce((acc, item, index) => {
 
-                if (this.props.chartList.includes(item.details.chart_name)) {
-                    console.log('hola');
-                } else {
-                    console.log(acc.length);
-                    const timesPercentage = (this.renderTimesUsed(item) / this.props.chartList.length * 100).toFixed(1);
+                if (acc.findIndex(chart => chart[0] === item.details.chart_name) === -1) {
+                    console.log('if', acc);
 
                     const tableRow = (<tr className="table__tr" key={index}>
-                        <td className="table__td">{item}</td>
-                        <td className="table__td">{this.renderTimesUsed(item)}</td>
-                        <td className="table__td">{timesPercentage}</td>
-                        <td className="table__td">{this.renderChartUsers(item)}</td>
+                        <td className="table__td">{item.details.chart_name}</td>
                     </tr>)
 
                     const accMatrix = [];
@@ -46,12 +40,22 @@ class TableCharts extends Component {
                     accMatrix.push(tableRow);
 
                     acc.push(accMatrix);
+
+                } else {
+                    console.log('else', item);
+                    //this.props.chartList.includes(item.details.chart_name)
+                    //const timesPercentage = (this.renderTimesUsed(item) / this.props.chartList.length * 100).toFixed(1);
+                    /*<td className="table__td">{this.renderTimesUsed(item)}</td>
+                    <td className="table__td">{timesPercentage}</td>
+                        <td className="table__td">{this.renderChartUsers(item)}</td>*/
                 }
 
                 return acc;
             }, [[]]);
 
-        const table = matrix.map(arr => arr[0]);
+        const table = matrix.map(arr => arr[1]);
+
+        console.log(table);
 
         return table;
     }
