@@ -10,7 +10,7 @@ class TableCharts extends Component {
     }
 
     chartNames() {
-        const matrix = this.props.chartList.reduce((acc, item, index) => {
+        const matrix = this.props.chartList.reduce((acc, item) => {
             const matrixIndex = acc.findIndex(chart => chart[0] === item.details.chart_name)
 
             if (matrixIndex === -1) {
