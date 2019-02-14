@@ -10,17 +10,22 @@ class ChartsUsage extends Component {
         this.state = {
             userData: [],
             chartList: [],
-            chartNames: [],
-            allGroupsList: [],
+            allGroupsList: [
+                'Die Antwoord',
+                'Explosions in the Sky',
+                'Justice',
+                'Radical Face',
+                'Ratatat',
+                'RHCP',
+                'Stromae'
+            ],
             groupsList: [],
             filterOptionsChecked: true,
             timelapse: 7,
             fromDate: new Date(),
             toDate: new Date(),
-            userGroupsInputs: null
         }
 
-        this.filterOptions = this.filterOptions.bind(this);
         this.handleOptions = this.handleOptions.bind(this);
 
         this.handleChangeDate = this.handleChangeDate.bind(this);
@@ -32,6 +37,11 @@ class ChartsUsage extends Component {
 
     componentDidMount() {
         this.fetchCharts(this.state.timelapse);
+
+        const groups = this.state.allGroupsList;
+        this.setState({
+            groupsList: groups
+        });
     }
 
     fetchCharts(timelapse) {
@@ -48,83 +58,17 @@ class ChartsUsage extends Component {
                     userData: data
                 });
 
-                this.filterOptions(this.state.filterOptionsChecked, data.open_chart_events);
-                this.renderChartList(data.open_chart_events);
                 this.renderUserGroups(data.open_chart_events);
+                this.filterAll();
             });
-    }
-
-    renderChartList(chartList) {
-        const mappedChartList = chartList
-            .map(chart => {
-            return chart.details.chart_name;
-            });
-
-        this.setState({
-            chartNames: [...new Set(mappedChartList)]
-        })
-    }
-
-    renderUserGroups(chartList) {
-        const mappedGroups = chartList.map(item => item.request.user__group__name);
-        const usersSet = [...new Set(mappedGroups)];
-
-        const sortedSet = usersSet
-            .sort((a, b) => {
-                const groupA = a.toLowerCase();
-                const groupB = b.toLowerCase();
-
-                if (groupA > groupB) {
-                    return 1;
-                } else if (groupA < groupB) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            });
-
-        const userGroupsInputs = sortedSet.map((item, index) => {
-            return (
-                <li key={index}>
-                    <label htmlFor={item}>
-                        <input onChange={this.handleUserGroups} id={item} type="checkbox" value={item} name={item} defaultChecked={true} />
-                        {item}
-                    </label>
-                </li>
-            );
-        });
-
-        this.setState({
-            allGroupsList: usersSet,
-            groupsList: usersSet,
-            userGroupsInputs: userGroupsInputs
-        });
-    }
-
-    filterOptions(checked, originalCharts) {
-
-        const removedStyleUser = originalCharts.filter(item => {
-            if (checked) {
-                return !item.request.user__username.includes('stylesage');
-            } else {
-                return item;
-            }
-        });
-
-        this.setState({
-            chartList: removedStyleUser
-        });
     }
 
     handleOptions(e) {
         const optionsTarget = e.currentTarget.checked;
-        const chartsToFilter = this.state.userData.open_chart_events;
 
         this.setState({
             filterOptionsChecked: optionsTarget
-        });
-
-        this.filterOptions(optionsTarget, chartsToFilter);
+        }, () => this.filterAll());
     }
 
     handleDateTo(e) {
@@ -187,7 +131,7 @@ class ChartsUsage extends Component {
 
         const groupsList = this.state.groupsList;
 
-        if (e.currentTarget.checked) {
+        if (groupsList.indexOf(e.currentTarget.value) === -1) {
             groupsList.push(userGroupsTarget);
 
         } else {
@@ -196,16 +140,42 @@ class ChartsUsage extends Component {
 
         this.setState({
             groupsList: groupsList
-        });
-
-        this.filterUserGroups(groupsList);
+        }, () => this.filterAll());
     }
 
-    filterUserGroups(groupsList) {
-        const originalCharts = this.state.userData.open_chart_events;
+    //Este es bien
+    renderUserGroups() {
+        const sortedSet = this.state.allGroupsList;
+        const userGroupsInputs = sortedSet.map((item, index) => {
+            return (
+                <li key={index}>
+                    <label htmlFor={item}>
+                        <input onChange={this.handleUserGroups} id={item} type="checkbox" value={item} name={item} defaultChecked={true} />
+                        {item}
+                    </label>
+                </li>
+            );
+        });
 
-        const filteredCharts = originalCharts.filter(chart => {
-            const isGroupPresent = groupsList.map(group => {
+        this.setState({
+            userGroupsInputs: userGroupsInputs
+        });
+    }
+
+    filterAll() {
+        const originalCharts = this.state.userData.open_chart_events;
+        const supportChecked = this.state.filterOptionsChecked;
+
+        const removedStyleUser = originalCharts.filter(item => {
+            if (supportChecked) {
+                return !item.request.user__username.includes('stylesage');
+            } else {
+                return item;
+            }
+        });
+
+        const filteredCharts = removedStyleUser.filter(chart => {
+            const isGroupPresent = this.state.allGroupsList.map(group => {
                 if (chart.request.user__group__name === group) {
                     return true;
                 } else {
@@ -227,12 +197,11 @@ class ChartsUsage extends Component {
         this.setState({
             chartList: filteredCharts
         });
-
-        this.filterOptions(this.state.filterOptionsChecked, filteredCharts);
     }
 
     render() {
-        const { chartNames, userGroupsInputs, chartList } = this.state;
+        const { chartList } = this.state;
+        const userGroupsInputs = this.state.userGroupsInputs;
 
         return (
             <div className="app__container">
@@ -249,7 +218,7 @@ class ChartsUsage extends Component {
                     </div>
                     <div className="charts__container">
                         <div className="table__container">
-                            <TableCharts chartList={chartList} chartNames={chartNames} renderTimesUsed={this.renderTimesUsed} renderTimesPercentage={this.renderTimesPercentage} renderChartUsers={this.renderChartUsers} />
+                            <TableCharts chartList={chartList} />
                         </div>
                         <div className="chart__filters">
                             <div className="chart__filter chart__filter-options">
@@ -272,13 +241,13 @@ class ChartsUsage extends Component {
                                     <p> From: | To:</p>
                                     <div>
                                         <label htmlFor="last-week" >
-                                            <input defaultChecked={true} onClick={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" className="input__type-radio"/>
+                                            <input defaultChecked={true} onClick={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" className="input__type-radio" />
                                             last week
                                         </label>
                                     </div>
                                     <div >
                                         <label htmlFor="last-month">
-                                            <input onClick={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" className="input__type-radio"/>
+                                            <input onClick={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" className="input__type-radio" />
                                             last month
                                         </label>
                                     </div>
@@ -297,7 +266,7 @@ class ChartsUsage extends Component {
                                     <div>
                                         <label htmlFor="from-date">
                                             <input onChange={this.handleDateFrom} id="from-date" type="date" name="date??" />
-                                        from date
+                                            from date
                                         </label>
                                     </div>
                                     <div>
@@ -308,7 +277,7 @@ class ChartsUsage extends Component {
                                     </div>
                                     <div>
                                         <label htmlFor="always">
-                                            <input onClick={this.handleChangeDate} type="radio" id="always" name="date" value="always" className="input__type-radio"/>
+                                            <input onClick={this.handleChangeDate} type="radio" id="always" name="date" value="always" className="input__type-radio" />
                                             always
                                         </label>
                                     </div>
@@ -322,7 +291,13 @@ class ChartsUsage extends Component {
                                 <div className="chart__filter-content">
                                     <p>select all | select active | clear all</p>
                                     <ul className="chart__filter-listgroups">
-                                        {(userGroupsInputs) ? userGroupsInputs : ""}
+                                        {userGroupsInputs}
+                                        {/* <li key={index}>
+                                            <label htmlFor={item}>
+                                                <input onChange={this.handleUserGroups} id={item} type="checkbox" value={item} name={item} defaultChecked={true} />
+                                                {item}
+                                            </label>
+                                        </li> */}
                                     </ul>
                                 </div>
                             </div>
