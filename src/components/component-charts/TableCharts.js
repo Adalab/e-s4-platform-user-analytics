@@ -46,7 +46,12 @@ class TableCharts extends Component {
         let table;
 
         if (matrix.length !== 0) {
-            table = matrix.map((row, index) => {
+            table = matrix
+            .sort(function (a, b) {
+                
+                return b[1] - a[1];
+            })
+            .map((row, index) => {
                 return (
                     <tr className="table__tr" key={index}>
                         <td className="table__td">{row[0]}</td>
