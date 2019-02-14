@@ -138,12 +138,12 @@ class SessionList extends Component {
                 orderedList = filteredList;
                 break;
         };
-
+        
         this.calculateResultsNumber(orderedList);
         this.setState({
             queryUsername: userName,
             sessionsList: orderedList
-        }, () => this.refs.child.getButtons())
+        },() => this.refs.child.getButtons())
     }
 
     orderUsername(list) {

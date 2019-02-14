@@ -5,7 +5,6 @@ class Pagination extends Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
-			sessionsList: this.props.sessionsList,
 			currentPage: 1,
 			pageCount: 1,
 			pageSize: 5,
@@ -52,7 +51,7 @@ class Pagination extends Component {
 
 	getButtons() {
 		const startingPage = 1;
-		const { sessionsList } = this.state;
+		const { sessionsList } = this.props;
 		const pageSize = this.state.pageSize;
 
 		let pageCount = parseInt(sessionsList.length / pageSize);
@@ -105,7 +104,7 @@ class Pagination extends Component {
 
 	setCurrentPage(num) {
 
-		const { sessionsList } = this.state;
+		const { sessionsList } = this.props;
 		const pageSize = this.state.pageSize;
 		const currentPage = num;
 		const upperLimit = currentPage * pageSize;
@@ -118,7 +117,8 @@ class Pagination extends Component {
 	}
 
 	render() {
-		const { sessionsList, controls, matrixControls, dataSlice, currentPage } = this.state;
+		const { controls, matrixControls, dataSlice, currentPage } = this.state;
+		const {sessionsList} = this.props;
 
 		const baseClassName = 'pagination-controls__button';
 
