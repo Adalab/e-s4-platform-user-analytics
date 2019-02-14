@@ -8,6 +8,7 @@ class Sidebar extends Component {
         const hiddenClass = (this.props.hiddenButton === true) ? 'hidden' : 'NO-hidden';
         return hiddenClass;
     }
+    
     render() {
         return (
             <aside className={`app__aside ${this.visibility()}`}>

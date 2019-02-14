@@ -272,11 +272,16 @@ class ChartsUsage extends Component {
         this.filterOptions(this.state.filterOptionsChecked, filteredCharts);
     }
 
+    visibility() {
+        const displace = (this.props.hiddenButton === true) ? '' : 'displace';
+        return displace;
+    }
+
     render() {
         const { chartNames, userGroupsInputs } = this.state;
 
         return (
-            <div className="app__container">
+            <div className={`app__container  ${this.visibility()}`}>
                 <main className="app__main">
                     <div className="breadcrumb__container">
                         <ul className="breadcrumb__container-list">

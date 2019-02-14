@@ -2,11 +2,15 @@
   display: none;
 }
 
+.displace {
+    position: absolute;
+}
+
 .app__aside {
   margin-top: 50px;
   height: 100vh;
   background-color: $violet;
-  // position: fixed;
+  position: fixed;
     @media all and(min-width:768px){
       width: 190px;
       margin-top: 76px;
