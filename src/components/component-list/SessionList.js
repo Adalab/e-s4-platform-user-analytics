@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import UserFilter from './UserFilter';
-import TableSessionList from "./TableSessionList";
 import Pagination from "./Pagination";
 import { requestSessions } from '../../services/SessionsService';
 
@@ -144,7 +143,7 @@ class SessionList extends Component {
         this.setState({
             queryUsername: userName,
             sessionsList: orderedList
-        })
+        }, () => this.refs.child.getButtons())
     }
 
     orderUsername(list) {
@@ -169,18 +168,19 @@ class SessionList extends Component {
 
     orderResultsUsername(e) {
         const sortedList = this.orderUsername(this.state.sessionsList);
-
+        console.log('justicia por el mundo', this.state.sessionsList);
+        console.log(e.currentTarget.getAttribute('data-arrow'));
         if (e.currentTarget.getAttribute('data-arrow') === 'down') {
             this.setState({
                 sessionsList: sortedList.reverse(),
                 filter: 'Username-down'
-            });
+            }, () => this.refs.child.getButtons());
 
         } else {
             this.setState({
                 sessionsList: sortedList,
                 filter: 'Username-up'
-            });
+            }, () => this.refs.child.getButtons());
         }
     }
 
@@ -201,13 +201,13 @@ class SessionList extends Component {
             this.setState({
                 sessionsList: sortedList.reverse(),
                 filter: 'TimeStarted-down'
-            });
+            }, () => this.refs.child.getButtons());
 
         } else {
             this.setState({
                 sessionsList: sortedList,
                 filter: 'TimeStarted-up'
-            });
+            }, () => this.refs.child.getButtons());
         }
     }
 
@@ -226,13 +226,13 @@ class SessionList extends Component {
             this.setState({
                 sessionsList: sortedList.reverse(),
                 filter: 'Duration-down'
-            });
+            }, () => this.refs.child.getButtons());
 
         } else {
             this.setState({
                 sessionsList: sortedList,
                 filter: 'Duration-up'
-            });
+            }, () => this.refs.child.getButtons());
         }
     }
 
@@ -251,13 +251,13 @@ class SessionList extends Component {
             this.setState({
                 sessionsList: sortedList.reverse(),
                 filter: 'RequestCount-down'
-            });
+            }, () => this.refs.child.getButtons());
 
         } else {
             this.setState({
                 sessionsList: sortedList,
                 filter: 'RequestCount-up'
-            });
+            }, () => this.refs.child.getButtons());
         }
     }
 
@@ -285,14 +285,13 @@ class SessionList extends Component {
                     <div className="table__container">
                         {(duplicatedArray === true)
                             ? (
-                            <Pagination
+                            <Pagination ref="child"
                                 renderTime={this.renderTime}
                                 orderResultsUsername={this.orderResultsUsername}
                                 orderResultsTimeStarted={this.orderResultsTimeStarted}
                                 orderResultsDuration={this.orderResultsDuration}
                                 orderResultsRequestCount={this.orderResultsRequestCount}
                                 sessionsList={sessionsList} >
-                                <TableSessionList />
                             </Pagination>                                
                             ) : (<p>Looking for data...</p>)}
                     </div>

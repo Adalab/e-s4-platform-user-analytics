@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import TableSessionList from "./TableSessionList";
 
 class Pagination extends Component {
 	constructor(props, context) {
 		super(props, context);
 		this.state = {
+			sessionsList: this.props.sessionsList,
 			currentPage: 1,
 			pageCount: 1,
 			pageSize: 5,
@@ -19,6 +21,13 @@ class Pagination extends Component {
 
 	componentDidMount() {
 		this.getButtons();
+	}
+
+	componentUpdate() {
+		this.setState((prevState)=>{
+			const {sessionsList} = prevState;
+			return {sessionsList:sessionsList};
+		});
 	}
 
 	createButtons(matrixControls, page) {
@@ -43,7 +52,7 @@ class Pagination extends Component {
 
 	getButtons() {
 		const startingPage = 1;
-		const { sessionsList } = this.props;
+		const { sessionsList } = this.state;
 		const pageSize = this.state.pageSize;
 
 		let pageCount = parseInt(sessionsList.length / pageSize);
@@ -96,7 +105,7 @@ class Pagination extends Component {
 
 	setCurrentPage(num) {
 
-		const { sessionsList } = this.props;
+		const { sessionsList } = this.state;
 		const pageSize = this.state.pageSize;
 		const currentPage = num;
 		const upperLimit = currentPage * pageSize;
@@ -109,7 +118,7 @@ class Pagination extends Component {
 	}
 
 	render() {
-		const { controls, matrixControls, dataSlice, currentPage } = this.state;
+		const { sessionsList, controls, matrixControls, dataSlice, currentPage } = this.state;
 
 		const baseClassName = 'pagination-controls__button';
 
@@ -136,15 +145,18 @@ class Pagination extends Component {
 						{arEnd}
 					</div>
 					<div className='pagination-results'>
-                        {((dataSlice) ? (React.cloneElement(this.props.children, { 
-                            sessionsList: dataSlice,
-                            renderTime: this.props.renderTime,
-                            orderResultsUsername: this.props.orderResultsUsername,
-                            orderResultsTimeStarted: this.props.orderResultsTimeStarted,
-                            orderResultsDuration: this.props.orderResultsDuration,
-                            orderResultsRequestCount: this.props.orderResultsRequestCount
-                        
-                        })) : ('looking for data'))}
+						{
+						(dataSlice)?
+                        <TableSessionList 
+						sessionsList= {dataSlice}
+						renderTime= {this.props.renderTime}
+						orderResultsUsername= {this.props.orderResultsUsername}
+						orderResultsTimeStarted= {this.props.orderResultsTimeStarted}
+						orderResultsDuration= {this.props.orderResultsDuration}
+						orderResultsRequestCount= {this.props.orderResultsRequestCount}
+						/> : 'no results'
+						}
+						
 					</div>
 				</div>
 			</React.Fragment>
