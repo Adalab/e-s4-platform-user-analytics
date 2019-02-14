@@ -289,7 +289,7 @@ class ChartsUsage extends Component {
                         </ul>
                     </div>
                     <div className="charts__container">
-                        <div className="table__container">
+                        <div className="table__container-chart">
                             <TableCharts chartNames={chartNames} renderTimesUsed={this.renderTimesUsed} renderTimesPercentage={this.renderTimesPercentage} renderChartUsers={this.renderChartUsers} />
                         </div>
                         <div className="chart__filters">

@@ -1,12 +1,15 @@
 .table__container {
   display: flex;
+  flex-direction: column-reverse;
 }
 .table {
-  width: 100%;
-  table-layout: fixed;
   background-color:$white;
   margin:0;
   padding: 0;
+    @media screen and (max-width: 320px) {
+        display: block;
+        overflow-x: auto; 
+    }
 }
 #table tr:nth-child(odd) {
 	color:#7F7679;
@@ -19,7 +22,6 @@
 
 .table__tr{
   background-color: $violet263;
-  width: 325px;
 }
 .table__thead {
   margin:0;
@@ -30,7 +32,18 @@
 // .table__th {
 
 // }
-
+.table__th-col1{
+  width: 300px;
+}
+.table__th-col2{
+  width: 300px;
+}
+.table__th-col3{
+  width: 200px;
+}
+.table__th-col4{
+  width: 200px;
+}
 .table__content {
   display: flex;
   flex-direction: row;
@@ -38,13 +51,19 @@
   align-items: center;
 }
 .table__title {
+  font-size: 12px;
   margin-left: 10px;
   color: $purple;
   font-weight: bold;
+    @media all and(min-width:768px){
+      font-size: 14px;
+    }
+    @media all and(min-width:1020px){
+      font-size: 16px;
+    }
 }
 
 .table__icons {
-  
   color: $purple;
   width: 20px;
   display: flex;
@@ -61,7 +80,14 @@
 // .table__tbody {}
 
 .table__td { 
+  font-size: 12px;
   margin:0;
   padding: 0;
   padding: 10px; 
+    @media all and(min-width:768px){
+      font-size: 14px;
+    }
+    @media all and(min-width:1020px){
+      font-size: 16px;
+    }
 }

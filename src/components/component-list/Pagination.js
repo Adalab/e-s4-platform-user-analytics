@@ -22,7 +22,8 @@ class Pagination extends Component {
 	}
 
 	createButtons(matrixControls, page) {
-		const baseClassName = 'pagination-controls__button';
+		const baseClassName = "footer__button-page";
+			
 
 		const arrayPage = matrixControls.filter(arr => arr.indexOf(page) !== -1)[0]
 
@@ -111,7 +112,7 @@ class Pagination extends Component {
 	render() {
 		const { controls, matrixControls, dataSlice, currentPage } = this.state;
 
-		const baseClassName = 'pagination-controls__button';
+		const baseClassName = "footer__button-page";
 
 		const arIni = [
 			(<li className={`${baseClassName}`} key="First" onClick={() => { this.setCurrentPage(1) }}>First</li>),
@@ -119,34 +120,40 @@ class Pagination extends Component {
 		];
 
 		const arEnd = [
-			(<div className={`${baseClassName}`} key="Next" onClick={() => { (this.state.currentPage === (controls.length)) ? this.setCurrentPage(controls.length) : this.setCurrentPage(this.state.currentPage + 1) }}>Next</div>),
+			(<div className={`${baseClassName}`} key="Next" onClick={() => { (this.state.currentPage === (controls.length)) 
+				? this.setCurrentPage(controls.length) : this.setCurrentPage(this.state.currentPage + 1) }}>Next</div>),
 			(<div className={`${baseClassName}`} key="Last" onClick={() => { this.setCurrentPage(controls.length) }}>Last</div>)];
 		
 		return (
 			<React.Fragment>
-				<select onChange={this.handleSelect}>
-					<option value="5">5</option>
-					<option value="10">10</option>
-					<option value="20">20</option>
-				</select>
-				<div className='pagination'>
-					<div className='pagination-controls'>
+				<footer className="app__footer">
+					<div className="footer__select-page">
+						<p>Show
+							<select onChange={this.handleSelect} className="select__content-page">
+								<option value="5">5</option>
+								<option value="10">10</option>
+								<option value="20">20</option>
+							</select>
+							entries per page
+						</p>
+					</div>
+					<div className="footer__button">
 						{arIni}
 						{this.createButtons(matrixControls, currentPage)}
 						{arEnd}
 					</div>
+				</footer>
 					<div className='pagination-results'>
-                        {((dataSlice) ? (React.cloneElement(this.props.children, { 
-                            sessionsList: dataSlice,
-                            renderTime: this.props.renderTime,
-                            orderResultsUsername: this.props.orderResultsUsername,
-                            orderResultsTimeStarted: this.props.orderResultsTimeStarted,
-                            orderResultsDuration: this.props.orderResultsDuration,
-                            orderResultsRequestCount: this.props.orderResultsRequestCount
-                        
-                        })) : ('looking for data'))}
+						{((dataSlice) ? (React.cloneElement(this.props.children, { 
+								sessionsList: dataSlice,
+								renderTime: this.props.renderTime,
+								orderResultsUsername: this.props.orderResultsUsername,
+								orderResultsTimeStarted: this.props.orderResultsTimeStarted,
+								orderResultsDuration: this.props.orderResultsDuration,
+								orderResultsRequestCount: this.props.orderResultsRequestCount
+						
+						})) : ('looking for data'))}
 					</div>
-				</div>
 			</React.Fragment>
 		);
 	}
