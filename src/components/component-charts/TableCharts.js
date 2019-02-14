@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 class TableCharts extends Component {
   constructor(props) {
@@ -10,7 +11,9 @@ class TableCharts extends Component {
   }
 
   chartNames() {
-    const matrix = this.props.chartList.reduce((acc, item) => {
+    const { chartList } = this.props;
+
+    const matrix = chartList.reduce((acc, item) => {
       const matrixIndex = acc.findIndex(chart => chart[0] === item.details.chart_name)
 
       if (matrixIndex === -1) {
@@ -41,6 +44,8 @@ class TableCharts extends Component {
   }
 
   render() {
+    const { chartList } = this.props;
+
     const matrix = this.chartNames();
 
     let table;
@@ -56,7 +61,7 @@ class TableCharts extends Component {
             <tr className="table__tr" key={index}>
               <td className="table__td">{row[0]}</td>
               <td className="table__td">{row[1]}</td>
-              <td className="table__td">{(row[1] / this.props.chartList.length * 100).toFixed(1)}</td>
+              <td className="table__td">{(row[1] / chartList.length * 100).toFixed(1)}</td>
               <td className="table__td">{row[2].length}</td>
             </tr>
           )
@@ -87,6 +92,10 @@ class TableCharts extends Component {
       </table>
     );
   }
+}
+
+TableCharts.propTypes = {
+  chartList: PropTypes.array.isRequired
 }
 
 export default TableCharts;
