@@ -158,7 +158,6 @@ class ChartsUsage extends Component {
         groupsList.splice(groupsList.indexOf(userGroupsTarget), 1);
       }
 
-      console.log(groupsList);
       return { groupsList: groupsList }
     }, () => this.filterAll());
   }
@@ -167,7 +166,7 @@ class ChartsUsage extends Component {
     const originalCharts = this.state.userData.open_chart_events;
     const supportChecked = this.state.filterOptionsChecked;
 
-    const removedStyleUser = originalCharts.filter(item => {
+    const removedSupport = originalCharts.filter(item => {
       if (supportChecked) {
         return !item.request.user__username.includes('stylesage');
       } else {
@@ -175,7 +174,7 @@ class ChartsUsage extends Component {
       }
     });
 
-    const filteredCharts = removedStyleUser.filter(chart => {
+    const removedGroups = removedSupport.filter(chart => {
       const isGroupPresent = this.state.allGroupsList.map(group => {
         if (chart.request.user__group__name === group) {
           return true;
@@ -196,7 +195,7 @@ class ChartsUsage extends Component {
     });
 
     this.setState({
-      chartList: filteredCharts
+      chartList: removedGroups
     });
   }
 
@@ -211,8 +210,8 @@ class ChartsUsage extends Component {
             <ul className="breadcrumb__container-list">
               <li className="breadcrumb__container-item">
                 <Link to="/" className="breadcrumb__link">Overview</Link>
-              </li>>
-                            <li className="breadcrumb__container-item">
+              </li>
+              <li className="breadcrumb__container-item">
                 <span>ChartsUsage</span>
               </li>
             </ul>
@@ -230,7 +229,7 @@ class ChartsUsage extends Component {
                 <div className="chart__filter-content">
                   <label>
                     <input type="checkbox" onClick={this.handleOptions} defaultChecked={false} /> exclude support users (x@stylesage.com)
-                                    </label>
+                  </label>
                 </div>
               </div>
               <div className="chart__filter chart__filter-range">
@@ -244,43 +243,43 @@ class ChartsUsage extends Component {
                     <label htmlFor="last-week" >
                       <input defaultChecked={true} onClick={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" className="input__type-radio" />
                       last week
-                                        </label>
+                    </label>
                   </div>
                   <div >
                     <label htmlFor="last-month">
                       <input onClick={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" className="input__type-radio" />
                       last month
-                                        </label>
+                    </label>
                   </div>
                   <div>
                     <label htmlFor="last-two-months">
                       <input onClick={this.handleChangeDate} type="radio" id="last-two-months" name="date" value="last-two-months" className="input__type-radio" />
                       last 2 months
-                                        </label>
+                    </label>
                   </div>
                   <div>
                     <label htmlFor="last-two-months">
                       <input onClick={this.handleChangeDate} type="radio" id="set-date" name="date" value="set-date" className="input__type-radio" />
                       set date
-                                        </label>
+                    </label>
                   </div>
                   <div>
                     <label htmlFor="from-date">
                       <input onChange={this.handleDateFrom} id="from-date" type="date" name="date??" />
                       from date
-                                        </label>
+                    </label>
                   </div>
                   <div>
                     <label htmlFor="to-date">
                       <input onChange={this.handleDateTo} id="to-date" type="date" name="date??" />
                       to date
-                                        </label>
+                    </label>
                   </div>
                   <div>
                     <label htmlFor="always">
                       <input onClick={this.handleChangeDate} type="radio" id="always" name="date" value="always" className="input__type-radio" />
                       always
-                                        </label>
+                    </label>
                   </div>
                 </div>
               </div>
