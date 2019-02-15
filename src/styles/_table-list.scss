@@ -71,6 +71,15 @@
       width: 200px ;
     }
 }
+.small-col{
+  width: 70px;
+  @media all and(min-width:768px){
+    width: 100px ;
+  }
+  @media all and(min-width:1020px){
+    width: 150px ;
+  }
+}
 
 .table__content {
   table-layout: fixed;
@@ -99,16 +108,12 @@
   display: flex;
   flex-direction: column;
   i:hover {
-    background-color: $violet;
+    transform:scale(1.25);
     font-weight: bold;
-    height: 20px;
-    width: 20px;
+
     }
 
 }
-
-// .table__tbody {}
-
 .table__td {
   font-size: 12px;
   margin:0;

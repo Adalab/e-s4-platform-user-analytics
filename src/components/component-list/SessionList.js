@@ -260,8 +260,7 @@ class SessionList extends Component {
     }
   }
   visibility() {
-      const { hiddenButton } = this.props;
-
+    const { hiddenButton } = this.props;
     const displace = (hiddenButton === true) ? '' : 'displace';
     return displace;
   }

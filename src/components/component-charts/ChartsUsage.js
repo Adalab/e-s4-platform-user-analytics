@@ -200,9 +200,8 @@ class ChartsUsage extends Component {
   }
   visibility() {
     const { hiddenButton } = this.props;
-
-  const displace = (hiddenButton === true) ? '' : 'displace';
-  return displace;
+    const displace = (hiddenButton === true) ? '' : 'displace';
+    return displace;
   }
 
   render() {
@@ -210,7 +209,7 @@ class ChartsUsage extends Component {
     const userGroupsInputs = this.state.userGroupsInputs;
 
     return (
-      <div className={`app__container  ${this.visibility()}`}>
+      <div className={`app__container ${this.visibility()}`}>
         <main className="app__main">
           <div className="breadcrumb__container">
             <ul className="breadcrumb__container-list">

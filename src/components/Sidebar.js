@@ -7,7 +7,6 @@ class Sidebar extends Component {
 
   visibility() {
     const { hiddenButton } = this.props;
-
     const hiddenClass = (hiddenButton === true) ? 'hidden' : 'NO-hidden';
     return hiddenClass;
   }
