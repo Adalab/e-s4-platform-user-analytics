@@ -55,7 +55,7 @@ class TableSessionList extends Component {
       <table className="table" id="table">
         <thead className="table__thead">
           <tr className="table__tr-title">
-            <th className="table__th">
+            <th className="table__th table__th-col1">
               <div className="table__content">
                 <p className="table__title">Username</p>
                 <div className="table__icons">
@@ -64,7 +64,7 @@ class TableSessionList extends Component {
                 </div>
               </div>
             </th>
-            <th className="table__th">
+            <th className="table__th table__th-col2">
               <div className="table__content">
                 <p className="table__title">Times Started (local TZ)</p>
                 <div className="table__icons">
@@ -73,7 +73,7 @@ class TableSessionList extends Component {
                 </div>
               </div>
             </th>
-            <th className="table__th">
+            <th className="table__th table__th-col3">
               <div className="table__content">
                 <p className="table__title">Duration</p>
                 <div className="table__icons">
@@ -82,7 +82,7 @@ class TableSessionList extends Component {
                 </div>
               </div>
             </th>
-            <th className="table__th">
+            <th className="table__th table__th-col4">
               <div className="table__content">
                 <p className="table__title">Request Count</p>
                 <div className="table__icons">
