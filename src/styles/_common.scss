@@ -18,5 +18,10 @@ html,body {
 .app__container {
   display: flex;
   flex-direction: column;
-  left: 190px;
+  left: 170px;
+  padding-left: 20px;
+  @media all and(min-width:768px){
+    left: 190px;
+    padding-left: 40px;
+  }
 }

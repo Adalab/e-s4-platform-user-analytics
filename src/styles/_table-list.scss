@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: column-reverse;
 }
+
 .table {
   background-color:$white;
   margin:0;
@@ -11,6 +12,7 @@
         overflow-x: auto; 
     }
 }
+
 #table tr:nth-child(odd) {
 	color:#7F7679;
 }
@@ -23,33 +25,35 @@
 .table__tr{
   background-color: $violet263;
 }
+
 .table__thead {
   margin:0;
   padding: 0;
   color: $purple;
 }
 
-// .table__th {
-
-// }
 .table__th-col1{
   width: 300px;
 }
+
 .table__th-col2{
   width: 300px;
 }
+
 .table__th-col3{
   width: 200px;
 }
 .table__th-col4{
   width: 200px;
 }
+
 .table__content {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
+
 .table__title {
   font-size: 12px;
   margin-left: 10px;

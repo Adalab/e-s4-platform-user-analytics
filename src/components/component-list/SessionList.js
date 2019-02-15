@@ -285,7 +285,7 @@ class SessionList extends Component {
                         </ul>
                     </div>
                     <div className="panel__session">
-                        <i className="zmdi zmdi-apps"></i>  
+                        <i className="zmdi zmdi-apps panel__session-icon"></i>  
                         <h2 className="panel__session-title">Sessions between {resultsDate}</h2>
                     </div>
                     <UserFilter getQueryUsername={this.getQueryUsername} resultsNumber={resultsNumber} />
