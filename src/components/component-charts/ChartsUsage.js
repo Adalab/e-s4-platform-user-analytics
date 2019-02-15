@@ -216,7 +216,7 @@ class ChartsUsage extends Component {
             <ul className="breadcrumb__container-list">
               <li className="breadcrumb__container-item">
                 <Link to="/" className="breadcrumb__link">Overview</Link>
-              </li>
+              </li>  >
               <li className="breadcrumb__container-item">
                 <span>ChartsUsage</span>
               </li>
