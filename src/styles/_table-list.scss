@@ -7,7 +7,7 @@
 
 .table {
   background-color:$white;
-  margin:0;
+  margin-right:30px;
   padding: 0;
     @media screen and (max-width: 320px) {
         display: block;
@@ -34,22 +34,46 @@
   color: $purple;
 }
 
-.table__th-col1{
-  width: 300px;
+.table__content-col1{
+  width: 250px ;
+    @media all and(min-width:768px){
+      width: 300px ;
+    }
+    @media all and(min-width:1020px){
+      width: 350px ;
+    }
+}
+.table__content-col2{
+  width: 200px;
+    @media all and(min-width:768px){
+      width: 250px ;
+    }
+    @media all and(min-width:1020px){
+      width: 300px ;
+    }
 }
 
-.table__th-col2{
-  width: 300px;
+.table__content-col3{
+  width: 150px;
+    @media all and(min-width:768px){
+      width: 200px ;
+    }
+    @media all and(min-width:1020px){
+      width: 250px ;
+    }
 }
-
-.table__th-col3{
-  width: 200px;
-}
-.table__th-col4{
-  width: 200px;
+.table__content-col4{
+  width: 100px;
+    @media all and(min-width:768px){
+      width: 150px ;
+    }
+    @media all and(min-width:1020px){
+      width: 200px ;
+    }
 }
 
 .table__content {
+  table-layout: fixed;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
