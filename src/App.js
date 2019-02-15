@@ -16,15 +16,14 @@ class App extends Component {
     }
     this.handleClick = this.handleClick.bind(this);
   }
-  
-  handleClick(){
-      const { hiddenButton } = this.state;
-      const hiddenStatus = (hiddenButton === true)? false : true;
-          this.setState({
-              hiddenButton: hiddenStatus 
-      });
-  } 
-  
+
+  handleClick() {
+    const hiddenStatus = (this.state.hiddenButton === true) ? false : true;
+    this.setState({
+      hiddenButton: hiddenStatus
+    });
+  }
+
   render() {
     return (
       <div className="app">
