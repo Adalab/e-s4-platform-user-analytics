@@ -199,6 +199,8 @@ class ChartsUsage extends Component {
     });
   }
 
+  
+
   render() {
     const { chartList } = this.state;
     const userGroupsInputs = this.state.userGroupsInputs;

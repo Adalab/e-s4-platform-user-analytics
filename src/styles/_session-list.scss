@@ -1,11 +1,8 @@
-// .app__main {
-//   position: static;
-// }
 .panel__session {
   display: flex;
   align-items: center;
-  margin-left: 20px;
-  }
+  padding-top: 10px;
+}
 
 .icon {
   font-size: 14px;
@@ -15,10 +12,16 @@
     @media all and(min-width:1020px){
       font-size: 18px;
     }
-  }
+}
+
+.panel__session-icon {
+  align-self: flex-start;
+}
+
 .panel__session-title {
   font-size:13px;
   padding-left: 10px;
+  margin-top: 0px;
   width: 300px;
     @media all and(min-width:768px){
       width: 500px;
@@ -27,4 +30,4 @@
     @media all and(min-width:1020px){
       font-size: 16px;
     }
-  }
+}

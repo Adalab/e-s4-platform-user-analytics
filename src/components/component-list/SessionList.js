@@ -260,12 +260,19 @@ class SessionList extends Component {
             });
         }
     }
+    
+    visibility() {
+        const { hiddenButton } = this.props;
+
+        const displace = (hiddenButton === true) ? '' : 'displace';
+        return displace;
+    }
 
     render() {
         const { sessionsList, duplicatedArray, resultsDate, resultsNumber } = this.state;
 
         return (
-            <div className="app__container">
+            <div className={`app__container  ${this.visibility()}`}>
                 <main className="app__main">
                     <div className="breadcrumb__container">
                         <ul className="breadcrumb__container-list">
@@ -278,7 +285,7 @@ class SessionList extends Component {
                         </ul>
                     </div>
                     <div className="panel__session">
-                        <i className="zmdi zmdi-apps"></i>  
+                        <i className="zmdi zmdi-apps panel__session-icon"></i>  
                         <h2 className="panel__session-title">Sessions between {resultsDate}</h2>
                     </div>
                     <UserFilter getQueryUsername={this.getQueryUsername} resultsNumber={resultsNumber} />
