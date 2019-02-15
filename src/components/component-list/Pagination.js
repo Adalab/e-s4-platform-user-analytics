@@ -1,4 +1,5 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
+import TableSessionList from "./TableSessionList";
 import PropTypes from "prop-types";
 
 class Pagination extends Component {
@@ -94,7 +95,6 @@ class Pagination extends Component {
   }
 
   setCurrentPage(num) {
-
     const { sessionsList } = this.props;
     const pageSize = this.state.pageSize;
     const currentPage = num;
@@ -104,12 +104,11 @@ class Pagination extends Component {
     this.setState({
       dataSlice: dataSlice,
       currentPage: num
-    })
+    });
   }
 
   render() {
     const { controls, matrixControls, dataSlice, currentPage } = this.state;
-    const { children, renderTime, orderResultsUsername, orderResultsTimeStarted, orderResultsDuration, orderResultsRequestCount } = this.props;
 
     const baseClassName = 'pagination-controls__button';
 
@@ -124,7 +123,7 @@ class Pagination extends Component {
     ];
 
     return (
-      <React.Fragment>
+      <Fragment>
         <select onChange={this.handleSelect}>
           <option value="5">5</option>
           <option value="10">10</option>
@@ -137,17 +136,18 @@ class Pagination extends Component {
             {arEnd}
           </div>
           <div className='pagination-results'>
-            {((dataSlice) ? (React.cloneElement(children, {
-              sessionsList: dataSlice,
-              renderTime: renderTime,
-              orderResultsUsername: orderResultsUsername,
-              orderResultsTimeStarted: orderResultsTimeStarted,
-              orderResultsDuration: orderResultsDuration,
-              orderResultsRequestCount: orderResultsRequestCount
-            })) : ('looking for data'))}
+            {(dataSlice) ?
+              <TableSessionList
+                sessionsList={dataSlice}
+                renderTime={this.props.renderTime}
+                orderResultsUsername={this.props.orderResultsUsername}
+                orderResultsTimeStarted={this.props.orderResultsTimeStarted}
+                orderResultsDuration={this.props.orderResultsDuration}
+                orderResultsRequestCount={this.props.orderResultsRequestCount}
+              /> : 'no results'}
           </div>
         </div>
-      </React.Fragment>
+      </Fragment>
     );
   }
 }
