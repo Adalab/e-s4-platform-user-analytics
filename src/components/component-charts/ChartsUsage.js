@@ -198,13 +198,19 @@ class ChartsUsage extends Component {
       chartList: removedGroups
     });
   }
+  visibility() {
+    const { hiddenButton } = this.props;
+
+  const displace = (hiddenButton === true) ? '' : 'displace';
+  return displace;
+  }
 
   render() {
     const { chartList } = this.state;
     const userGroupsInputs = this.state.userGroupsInputs;
 
     return (
-      <div className="app__container">
+      <div className={`app__container  ${this.visibility()}`}>
         <main className="app__main">
           <div className="breadcrumb__container">
             <ul className="breadcrumb__container-list">

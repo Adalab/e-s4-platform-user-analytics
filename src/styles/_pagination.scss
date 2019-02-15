@@ -1,56 +1,62 @@
-.pagination-controls {
-    display: flex;
+.app__footer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0px 30px 50px;
+  padding-left: 20px;
+    @media all and(min-width:768px){
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    @media all and(min-width:1020px){
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+}
+// .footer__select-page{
+//   background-color: pink;
+// }
+.select__content-page{
+  margin: 0 5px;
+  height: 30px;
+  border: 1px solid $purple;
+}
+.footer__button{
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  
+}
+.footer__button-page {
+  text-align: center;
+  background-color: $white;
+  border-radius: 0.15em;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  cursor: default;
+  margin: 0 0.25em;
+  padding: 0.5em 0.75em;
+  list-style: none;
+  
+  &:first-child {
+    margin-left: 0;
   }
   
-  .pagination-controls__button {
-    background-color: white;
-    border-radius: 0.15em;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    cursor: default;
-    margin: 0 0.25em;
-    padding: 0.5em 0.75em;
-    list-style: none;
-    
-    &:first-child {
-      margin-left: 0;
-    }
-    
-    &:last-child {
-      margin-right: 0;
-    }
-    
-    &:hover:not(:active) {
-      transition: transform 0.15s;
-      transform: translateY(-1px);
-    }
+  &:last-child {
+    margin-right: 0;
   }
   
-  .pagination-controls__button--active {
-    background-color: #4D7EA8;
-    color: white;
-    
-    &:hover,
-    &:hover:not(:active) {
-      transform: none;
-    }
+  &:hover:not(:active) {
+    transition: transform 0.15s;
+    transform: translateY(-1px);
   }
-  
-  .example {
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 0.15em;
-    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-    margin: 1em 0;
-    padding: 0.75em 1em;
+}
+.footer__button-page--active {
+  background-color: $purple;
+  color: white;
+  &:hover,
+  &:hover:not(:active) {
+    transform: none;
   }
-  
-  .example__item {
-    margin: 0.5em 0;
-    
-    &:first-child {
-      margin-top: 0;
-    }
-    
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
+}

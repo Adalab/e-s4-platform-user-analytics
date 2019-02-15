@@ -32,8 +32,8 @@ class App extends Component {
           <Sidebar hiddenButton={this.state.hiddenButton} />
           <Switch>
             <Route exact path="/" render={() => <Overview />} />
-            <Route path="/session-list" render={() => <SessionList />} />
-            <Route path="/charts-usage" render={() => <ChartsUsage />} />
+            <Route path="/session-list" render={() => <SessionList hiddenButton={this.state.hiddenButton} />} />
+            <Route path="/charts-usage" render={() => <ChartsUsage hiddenButton={this.state.hiddenButton} />} />
           </Switch>
         </div>
       </div>
