@@ -19,7 +19,6 @@ class ChartsUsage extends Component {
       toDate: new Date(),
     }
 
-    this.getGroups = this.getGroups.bind(this);
     this.handleOptions = this.handleOptions.bind(this);
 
     this.handleChangeDate = this.handleChangeDate.bind(this);
@@ -36,13 +35,14 @@ class ChartsUsage extends Component {
     this.fetchGroups();
     this.renderUserGroups();
     this.fetchCharts(this.state.timelapse);
+    console.log('componentDidMount ');
   }
 
   getGroups(groups) {
     const groupsList = groups.map(item => {
       return item.name;
     });
-
+    console.log('getGtoups ', groupsList);
     return groupsList;
   }
 
@@ -50,6 +50,8 @@ class ChartsUsage extends Component {
     this.setState((prevState) => {
 
       const sortedSet = prevState.allGroupsList;
+      console.log('rendeUserGroups ', sortedSet);
+
       const userGroupsInputs = sortedSet.map((item, index) => {
         return (
           <li key={index}>
@@ -73,6 +75,8 @@ class ChartsUsage extends Component {
           groupsList: groupData
         }, () => this.renderUserGroups());
       });
+    console.log('fetch ', this.state.groupsList);
+
   }
 
   fetchCharts(timelapse) {
@@ -209,17 +213,18 @@ class ChartsUsage extends Component {
       chartList: removedGroups
     });
   }
-
+//!!
   selectAllGroups() {
     this.setState((prevState) => {
       const groups = prevState.allGroupsList;
-      console.log(groups);
+      console.log('selectAllGroups, groups: ', groups);
       return {
         userGroups: groups,
         userGroupsInputs: ''
       }
-
     }, () => this.renderUserGroups());
+    console.log('selectAllGroups ');
+
   }
 
   render() {
