@@ -36,6 +36,7 @@
     }
 }
 .chart__filter-header{
+  font-family: $roboto;
   font-size: 12px;
   height: 30px;
   padding-left: 10px;
@@ -71,5 +72,5 @@
   list-style: none;
 }
 .input__type-radio{
-  cursor: pointer; 
+  cursor: pointer;
   }

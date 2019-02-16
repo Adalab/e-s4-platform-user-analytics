@@ -10,16 +10,17 @@
   width: 165px;
   margin-top: 50px;
   height: 100vh;
+  font-family: $roboto;
   background-color: $violet;
   position: fixed;
   z-index: 1;
     @media all and(min-width:768px){
       width: 200px;
-      margin-top: 76px;
+      margin-top: 60px;
     }
     @media all and(min-width:1020px){
       width: 205px;
-      margin-top: 82px;
+      margin-top: 72px;
     }
  }
  .app__aside-header{
@@ -55,7 +56,8 @@
   width: 165px;
   padding: 0;
   font-size: 12px;
-  color: $violet263;
+  // color: $violet263;
+
   list-style: none;
   text-decoration: none;
   line-height: 18px;
@@ -71,16 +73,20 @@
     }
  }
  .aside__item-link {
-   text-decoration: none;
-   color: $purple;
-   font-weight: bold;
-
- }
+  color: $purple;
+  text-decoration: none;
+    &:hover {
+      color: $purple02;
+    }
+    transition: color ease 1s;
+}
  .aside__item {
   padding: 0 20px;
     &:hover {
-      background-color: rgb(245, 217, 245);
+      font-weight: bold;
+      background-color: $thistle;
     }
     transition: background-color ease 1s;
+    transition: color ease 1s;
  }
 

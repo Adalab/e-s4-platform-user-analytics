@@ -17,30 +17,30 @@ class Overview extends Component {
           <div className="overview__buttons">
           <Link to="/session-list" className="aside__item-link">
             <div type="button" className="frame-btn frame-btn-left">View list of last sessions on the platform.
-              <span class="frame-btn__outline frame-btn__outline--tall">
-                  <span class="frame-btn__line frame-btn__line--tall"></span>
-                  <span class="frame-btn__line frame-btn__line--flat"></span>
+              <span className="frame-btn__outline frame-btn__outline--tall">
+                  <span className="frame-btn__line frame-btn__line--tall"></span>
+                  <span className="frame-btn__line frame-btn__line--flat"></span>
               </span>
-              <span class="frame-btn__outline frame-btn__outline--flat">
-                  <span class="frame-btn__line frame-btn__line--tall"></span>
-                  <span class="frame-btn__line frame-btn__line--flat"></span>
+              <span className="frame-btn__outline frame-btn__outline--flat">
+                  <span className="frame-btn__line frame-btn__line--tall"></span>
+                  <span className="frame-btn__line frame-btn__line--flat"></span>
               </span>
-              <span class="frame-btn__solid"></span>
-              <span class="frame-btn__text"></span>
+              <span className="frame-btn__solid"></span>
+              <span className="frame-btn__text"></span>
             </div>
           </Link>
           <Link to="/charts-usage" className="aside__item-link">
             <div type="button" className="frame-btn"> View the use of the charts in the platform.
-              <span class="frame-btn__outline frame-btn__outline--tall">
-                <span class="frame-btn__line frame-btn__line--tall"></span>
-                <span class="frame-btn__line frame-btn__line--flat"></span>
+              <span className="frame-btn__outline frame-btn__outline--tall">
+                <span className="frame-btn__line frame-btn__line--tall"></span>
+                <span className="frame-btn__line frame-btn__line--flat"></span>
                   </span>
-                <span class="frame-btn__outline frame-btn__outline--flat">
-                    <span class="frame-btn__line frame-btn__line--tall"></span>
-                    <span class="frame-btn__line frame-btn__line--flat"></span>
+                <span className="frame-btn__outline frame-btn__outline--flat">
+                    <span className="frame-btn__line frame-btn__line--tall"></span>
+                    <span className="frame-btn__line frame-btn__line--flat"></span>
                 </span>
-                <span class="frame-btn__solid"></span>
-                <span class="frame-btn__text"></span>
+                <span className="frame-btn__solid"></span>
+                <span className="frame-btn__text"></span>
             </div>
           </Link>
           </div>

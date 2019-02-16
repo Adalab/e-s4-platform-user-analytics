@@ -93,6 +93,7 @@
   font-size: 12px;
   margin-left: 10px;
   color: $purple;
+  font-family: $roboto;
   font-weight: bold;
     @media all and(min-width:768px){
       font-size: 14px;
@@ -110,11 +111,11 @@
   i:hover {
     transform:scale(1.25);
     font-weight: bold;
-
     }
 
 }
 .table__td {
+  font-family: $roboto;
   font-size: 12px;
   margin:0;
   padding: 0;
