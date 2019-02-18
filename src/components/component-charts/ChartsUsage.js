@@ -172,7 +172,6 @@ class ChartsUsage extends Component {
         groupsList.splice(groupsList.indexOf(userGroupsTarget), 1);
       }
 
-      console.log(groupsList);
       return { groupsList: groupsList }
     }, () => this.filterAll());
   }
