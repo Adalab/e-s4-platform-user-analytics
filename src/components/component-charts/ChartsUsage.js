@@ -339,7 +339,6 @@ class ChartsUsage extends Component {
                 <div className="chart__filter-content">
                   <div className="chart__filter-select">
                     <button type="button" onClick={this.selectAllGroups} data-select="select all">select all</button>
-                    <button type="button" data-select="select active">select active</button>
                     <button type="button" onClick={this.clearAllGroups} data-select="clear all">clear all</button>
                   </div>
                   <ul className="chart__filter-listgroups">
