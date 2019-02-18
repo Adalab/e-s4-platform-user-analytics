@@ -14,7 +14,7 @@ class Header extends Component {
               <i className="zmdi zmdi-menu"></i>
             </div>
           </div>
-          <h1 className="app__header-title"> <span className="span-style">Style</span><span className="span-sage">Sage</span></h1>
+          <h1 className="app__header-title"><span className="span-style">Style</span><span className="span-sage">Sage</span></h1>
         </header>
       </React.Fragment>
     );

@@ -81,18 +81,26 @@ class TableCharts extends Component {
     return (
       <table className="table" id="table">
         <thead className="table__thead">
-          <tr className="table__tr-title">
-            <th className="table__th table__th-col1">
-              <p className="table__title">Chart</p>
+          <tr className="table__tr-title ">
+            <th className="table__th ">
+              <div className="table__content table__content-col2">
+                <p className="table__title">Chart</p>
+              </div>
             </th>
-            <th className="table__th table__th-col1">
-              <p className="table__title">Times Used</p>
+            <th className="table__th small-col">
+              <div className="table__content small-col">
+                <p className="table__title">Times Used</p>
+              </div>
             </th>
-            <th className="table__th table__th-col1">
-              <p className="table__title">%</p>
+            <th className="table__th">
+              <div className="table__content small-col">
+                <p className="table__title">%</p>
+              </div>
             </th>
-            <th className="table__th table__th-col1">
-              <p className="table__title">Users</p>
+            <th className="table__th">
+              <div className="table__content small-col">
+                <p className="table__title">Users</p>
+              </div>
             </th>
           </tr>
         </thead>

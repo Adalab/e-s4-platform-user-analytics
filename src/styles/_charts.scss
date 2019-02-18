@@ -1,41 +1,48 @@
 .table__container-chart {
   display: flex;
 }
-.charts__container{
-  display:flex;
-}
-// .table__container{}
-// .chart__filters{
 
-// }
-.chart__filter-title{
+.charts__container {
+  display:flex;
+  flex-direction: row;
+}
+
+.chart__filter-title {
   margin-left: 10px;
 }
-.chart__filter-content{
+
+.chart__filter-content {
+  display: flex;
+  flex-direction: column;
+  margin-top:1em;
   font-size: 12px;
   margin: 0px;
   padding: 5px 10px 10px;
-    @media all and(min-width:768px){
+    @media all and(min-width:768px) {
       font-size: 14px;
     }
-    @media all and(min-width:1020px){
+    @media all and(min-width:1020px) {
       font-size: 16px;
     }
 }
-.chart__filter{
+
+.chart__filters {
   font-family: $roboto;
   background-color: $white;
   border: 1px solid $violet;
   margin: 20px;
   width: 200px;
-    @media all and(min-width:768px){
+    @media all and(min-width:768px) {
       width: 250px;
+
     }
-    @media all and(min-width:1020px){
+    @media all and(min-width:1020px) {
       width: 270px;
     }
 }
-.chart__filter-header{
+
+.chart__filter-header {
+  font-family: $roboto;
   font-size: 12px;
   height: 30px;
   padding-left: 10px;
@@ -43,44 +50,94 @@
   background-color: $violet;
   display: flex;
   align-items: center;
-    @media all and(min-width:768px){
+
+    @media all and(min-width:768px) {
       font-size: 14px;
       height: 50px;
     }
 }
-.chart__filter-options{
+
+.chart__filter-options {
   height: 80px;
-    @media all and(min-width:768px){
+
+    @media all and(min-width:768px) {
       height: 100px;
     }
 }
-.chart__filter-range{
+
+.chart__filter-range {
   line-height: 22px;
+  input[type=radio]{
+    display:none;
+    ~span{
+      width:100%;
+      padding-right: 10px;
+      font-weight:initial;
+      &:hover{
+        &:before{
+          transform:scale(1.25);
+        }
+      }
+      &:after{
+        content:'';
+        display:inline-block;
+        width: 10px;
+        height: 10px;
+        border: solid 1px $purple;
+        background-clip: content-box;
+        border-radius:50%;
+        transition:0.3s;
+
+      }
+    }
+    &:checked{
+      ~span{
+        &:after{
+          background-color: $amethyst;
+          padding: 1px;
+        }
+      }
+    }
+
     @media all and(min-width:768px){
       line-height: 32px;
     }
+  }
 }
-.chart__filter-groups{
+
+.chart__filter-groups {
   line-height: 22px;
-    @media all and(min-width:768px){
+
+    @media all and(min-width:768px) {
       line-height: 32px;
     }
 }
-.chart__filter-listgroups{
+
+.btn-select {
+  border: none;
+  background-color: $white;
+  outline: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.chart__filter-listgroups {
   padding: 0;
   list-style: none;
 }
-.input__type-radio{
-  cursor: pointer;
-  }
 
-.table__bar-container{
+.input__type-radio {
+  cursor: pointer;
+}
+
+.table__bar-container {
   width: 80px;
   height: 8px;
   background-color: $lightgrey;
 }
 
-.table__bar{
+.table__bar {
   width: 40px;
   height: 8px;
   background-color:$purple02;

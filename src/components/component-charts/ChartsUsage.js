@@ -245,8 +245,8 @@ class ChartsUsage extends Component {
     const groups = [];
 
     this.setState({
-        userGroupsInputs: '',
-        groupsList: groups
+      userGroupsInputs: '',
+      groupsList: groups
     }, () => {
       this.renderUserGroups(false);
       this.filterAll();
@@ -292,29 +292,28 @@ class ChartsUsage extends Component {
                   <h3 className="chart__filter-title">DATE RANGE</h3>
                 </div>
                 <div className="chart__filter-content">
-                  <p> From: | To:</p>
                   <div>
                     <label htmlFor="last-week" >
                       <input defaultChecked={true} onClick={this.visibilitySetDate} onChange={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" className="input__type-radio" />
-                      last week
+                      <span></span>last week
                     </label>
                   </div>
                   <div >
                     <label htmlFor="last-month">
                       <input onClick={this.visibilitySetDate} onChange={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" className="input__type-radio" />
-                      last month
+                      <span></span>last month
                     </label>
                   </div>
                   <div>
                     <label htmlFor="last-two-months">
                       <input onClick={this.visibilitySetDate} onChange={this.handleChangeDate} type="radio" id="last-two-months" name="date" value="last-two-months" className="input__type-radio" />
-                      last 2 months
+                      <span></span>last 2 months
                     </label>
                   </div>
                   <div>
                     <label htmlFor="set-date">
                       <input onClick={this.visibilitySetDate} type="radio" id="set-date" name="date" value="set-date" className="input__type-radio" />
-                      set date
+                      <span></span>set date
                     </label>
                   </div>
                   <div className={`contentSetDate ${display}`}>
@@ -334,7 +333,7 @@ class ChartsUsage extends Component {
                   <div>
                     <label htmlFor="always">
                       <input onClick={this.visibilitySetDate} onChange={this.handleChangeDate} type="radio" id="always" name="date" value="always" className="input__type-radio" />
-                      always
+                      <span></span>always
                     </label>
                   </div>
                 </div>
@@ -346,13 +345,14 @@ class ChartsUsage extends Component {
                 </div>
                 <div className="chart__filter-content">
                   <div className="chart__filter-select">
-                    <button type="button" onClick={this.selectAllGroups} data-select="select all">select all</button>
-                    <button type="button" onClick={this.clearAllGroups} data-select="clear all">clear all</button>
+                    <button type="button" className="btn-select" onClick={this.selectAllGroups} data-select="select all">select all</button>
+                    <button type="button" className="btn-select" onClick={this.clearAllGroups} data-select="clear all">clear all</button>
                   </div>
                   <ul className="chart__filter-listgroups">
                     {userGroupsInputs}
                   </ul>
                 </div>
+
               </div>
             </div>
           </div>

@@ -8,25 +8,28 @@
   background-color: $white;
   color: $coral;
   box-shadow: 0 0 1em grey;
-    @media all and(min-width:768px){
-      height: 80px;
+
+    @media all and(min-width:768px) {
+      height: 50px;
     }
-    @media all and(min-width:1020px){
-      height: 80px;
+    @media all and(min-width:1020px) {
+      height: 60px;
     }
 }
-.button__container{
+
+.button__container {
   transition: all 1s;
-  padding: 0 30px;
+  padding-left: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.div__btn{
+
+.div__btn {
   border:0px;
   cursor: pointer;
 }
-  
+
 .zmdi-menu{
   padding: 10px;
   font-size: 22px;
@@ -38,36 +41,47 @@
       background-color: rgb(245, 217, 245);
       transition: 1s all;
     }
-    @media all and(min-width:768px){
-      font-size: 24px;
-    }
-    @media all and(min-width:1020px){
-      font-size: 26px;
-    }
 
+      @media all and(min-width:768px) {
+        font-size: 24px;
+      }
+      @media all and(min-width:1020px) {
+        font-size: 28px;
+      }
 }
-.span-style{
+
+.span-style {
+  font-family: $roboto;
   color: $eggplant2;
 }
-.span-sage{
+
+.span-sage {
+  font-family: $roboto;
+  font-weight: 500;
   color: $eggplant;
 }
-.app__header-title{
-  margin:0;
-  padding: 10px 0 ;
-  font-family: $roboto-condensed;
-  font-weight: 300;
+
+.app__header-title {
+  padding: 10px 5px;
   font-size: 24px;
-    @media all and(min-width:768px){
+  text-transform: uppercase;
+  transform:scaleY(1.5);
+  transform:scaleX(0.6);
+  font-weight: 400;
+  margin:0;
+
+    @media all and(min-width:768px) {
+      padding: 10px 0;
+      height: 70px;
+      font-size: 25px;
+    }
+    @media all and(min-width:1020px) {
+      padding: 10px 0;
       height: 80px;
-      padding: 20px 0 ;
       font-size: 30px;
     }
-    @media all and(min-width:1020px){
-      height: 80px;
-      font-size: 34px;
-    }
 }
+
 
 
 
