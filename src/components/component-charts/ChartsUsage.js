@@ -198,6 +198,7 @@ class ChartsUsage extends Component {
       chartList: removedGroups
     });
   }
+
   visibility() {
     const { hiddenButton } = this.props;
     const displace = (hiddenButton === true) ? '' : 'displace';
@@ -247,46 +248,48 @@ class ChartsUsage extends Component {
                   <div>
                     <label htmlFor="last-week" >
                       <input defaultChecked={true} onClick={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" className="input__type-radio" />
-                      last week
+                      <span></span>last week
                     </label>
                   </div>
                   <div >
                     <label htmlFor="last-month">
                       <input onClick={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" className="input__type-radio" />
-                      last month
+                      <span></span>last month
                     </label>
                   </div>
                   <div>
                     <label htmlFor="last-two-months">
                       <input onClick={this.handleChangeDate} type="radio" id="last-two-months" name="date" value="last-two-months" className="input__type-radio" />
-                      last 2 months
+                      <span></span>last 2 months
                     </label>
                   </div>
                   <div>
                     <label htmlFor="last-two-months">
                       <input onClick={this.handleChangeDate} type="radio" id="set-date" name="date" value="set-date" className="input__type-radio" />
-                      set date
+                      <span></span>set date
                     </label>
                   </div>
-                  <div>
-                    <label htmlFor="from-date">
-                      <input onChange={this.handleDateFrom} id="from-date" type="date" name="date??" />
-                      from date
-                    </label>
+                      <div>
+                          <div> 
+                            <label htmlFor="from-date">
+                              <input onChange={this.handleDateFrom} id="from-date" type="date" name="date??" />
+                              from date
+                            </label>
+                          </div>
+                          <div>
+                            <label htmlFor="to-date">
+                              <input onChange={this.handleDateTo} id="to-date" type="date" name="date??" />
+                              to date
+                            </label>
+                          </div>
+                      </div>
                   </div>
-                  <div>
-                    <label htmlFor="to-date">
-                      <input onChange={this.handleDateTo} id="to-date" type="date" name="date??" />
-                      to date
-                    </label>
-                  </div>
-                  <div>
+                  <div className="filter__always">
                     <label htmlFor="always">
                       <input onClick={this.handleChangeDate} type="radio" id="always" name="date" value="always" className="input__type-radio" />
-                      always
+                      <span></span>always
                     </label>
                   </div>
-                </div>
               </div>
               <div className="chart__filter chart__filter-groups">
                 <div className="chart__filter-header">

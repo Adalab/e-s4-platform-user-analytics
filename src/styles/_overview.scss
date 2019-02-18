@@ -55,6 +55,7 @@
 
 .frame-btn{
   display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
   text-decoration: none;
@@ -63,7 +64,6 @@
   font-size: 14px;
   width: 150px;
   height: 100px;
-  font-weight: bold;
 	padding: (5px * 5) (5px * 6);
   position: relative;
     @media all and(min-width:768px){
@@ -171,4 +171,18 @@
 			}
 		}
 	}
+}
+.aside__item-title{
+  text-transform: uppercase;
+  margin:0;
+  padding-bottom: 10px;
+  @media all and(min-width:768px){
+    margin: 10px;
+  }
+  @media all and(min-width:1020px){
+    margin: 20px;
+  }
+}
+.aside__item-text{
+  margin:0;
 }
