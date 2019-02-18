@@ -1,49 +1,56 @@
-.hidden{
+.hidden {
   display: none;
 }
 
 .displace {
-    position: absolute;
+  position: absolute;
 }
 
 .app__aside {
   width: 165px;
   margin-top: 50px;
+  padding-top: 10px;
   height: 100vh;
   font-family: $roboto;
   background-color: $violet;
   position: fixed;
   z-index: 1;
+
     @media all and(min-width:768px){
       width: 200px;
-      margin-top: 60px;
+      padding-top: 30px;
     }
     @media all and(min-width:1020px){
       width: 205px;
-      margin-top: 72px;
+      padding-top: 40px;
     }
- }
- .app__aside-header{
-   padding-left: 5px;
-   display: flex;
-   align-items: center;
- }
- .zmdi-chart{
+}
+
+.app__aside-header {
+  padding-left: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.zmdi-chart {
   padding: 5px 10px;
   font-size: 20px;
   color: $purple02;
+
     @media all and(min-width:768px){
       font-size: 25px;
     }
     @media all and(min-width:1020px){
       font-size: 30px;
     }
- }
- .app__aside-title{
+}
+
+.app__aside-title {
   color: $purple02;
   font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
+
     @media all and(min-width:768px){
       font-size: 14px;
       margin-left: 5px;
@@ -51,16 +58,16 @@
     @media all and(min-width:1020px){
       font-size: 16px;
     }
- }
- .aside__list {
+}
+
+.aside__list {
   width: 165px;
   padding: 0;
   font-size: 12px;
-  // color: $violet263;
-
   list-style: none;
   text-decoration: none;
   line-height: 18px;
+
     @media all and(min-width:768px){
       width: 200px;
       font-size: 16px;
@@ -71,8 +78,9 @@
       font-size: 18px;
       line-height: 24px;
     }
- }
- .aside__item-link {
+}
+
+.aside__item-link {
   color: $purple;
   text-decoration: none;
     &:hover {
@@ -80,7 +88,8 @@
     }
     transition: color ease 1s;
 }
- .aside__item {
+
+.aside__item {
   padding: 0 20px;
     &:hover {
       font-weight: bold;
@@ -88,5 +97,5 @@
     }
     transition: background-color ease 1s;
     transition: color ease 1s;
- }
+}
 

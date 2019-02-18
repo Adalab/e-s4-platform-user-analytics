@@ -14,7 +14,7 @@ class TableCharts extends Component {
     const { chartList } = this.props;
 
     const matrix = chartList.reduce((acc, item) => {
-      const matrixIndex = acc.findIndex(chart => chart[0] === item.details.chart_name)
+      const matrixIndex = acc.findIndex(chart => chart[0] === item.details.chart_name);
 
       if (matrixIndex === -1) {
 
@@ -67,7 +67,11 @@ class TableCharts extends Component {
             <tr className="table__tr" key={index}>
               <td className="table__td">{row[0]}</td>
               <td className="table__td">{row[1]}</td>
-              <td className="table__td">{(row[1] / chartList.length * 100).toFixed(1)}</td>
+              <td className="table__td">{(row[1] / chartList.length * 100).toFixed(1)}%
+                <div className="table__bar-container">
+                    <div className="table__bar" style={{width: `${(row[1] / chartList.length * 100).toFixed(1)}%`}}></div>
+                </div>
+              </td>
               <td className="table__td">{row[2].length}</td>
             </tr>
           )

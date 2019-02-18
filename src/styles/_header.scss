@@ -8,21 +8,24 @@
   background-color: $white;
   color: $coral;
   box-shadow: 0 0 1em grey;
-    @media all and(min-width:768px){
+
+    @media all and(min-width:768px) {
+      height: 50px;
+    }
+    @media all and(min-width:1020px) {
       height: 60px;
     }
-    @media all and(min-width:1020px){
-      height: 70px;
-    }
 }
-.button__container{
+
+.button__container {
   transition: all 1s;
   padding-left: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-.div__btn{
+
+.div__btn {
   border:0px;
   cursor: pointer;
 }
@@ -38,24 +41,27 @@
       background-color: rgb(245, 217, 245);
       transition: 1s all;
     }
-    @media all and(min-width:768px){
-      font-size: 24px;
-    }
-    @media all and(min-width:1020px){
-      font-size: 28px;
-    }
 
+      @media all and(min-width:768px) {
+        font-size: 24px;
+      }
+      @media all and(min-width:1020px) {
+        font-size: 28px;
+      }
 }
-.span-style{
+
+.span-style {
   font-family: $roboto;
   color: $eggplant2;
 }
-.span-sage{
+
+.span-sage {
   font-family: $roboto;
   font-weight: 500;
   color: $eggplant;
 }
-.app__header-title{
+
+.app__header-title {
   padding: 10px 5px;
   font-size: 24px;
   text-transform: uppercase;
@@ -63,15 +69,16 @@
   transform:scaleX(0.6);
   font-weight: 400;
   margin:0;
-    @media all and(min-width:768px){
+
+    @media all and(min-width:768px) {
       padding: 10px 0;
       height: 70px;
-      font-size: 35px;
+      font-size: 25px;
     }
-    @media all and(min-width:1020px){
+    @media all and(min-width:1020px) {
       padding: 10px 0;
       height: 80px;
-      font-size: 40px;
+      font-size: 30px;
     }
 }
 

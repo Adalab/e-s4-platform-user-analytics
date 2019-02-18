@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { requestCharts } from './../../services/ChartsService';
+import { requestGroups } from './../../services/GroupsService';
 import TableCharts from './TableCharts';
 
 class ChartsUsage extends Component {
@@ -10,18 +11,12 @@ class ChartsUsage extends Component {
     this.state = {
       userData: [],
       chartList: [],
-      allGroupsList: [
-        'Die Antwoord',
-        'Explosions in the Sky',
-        'Justice',
-        'Radical Face',
-        'Ratatat',
-        'RHCP',
-        'Stromae'
-      ],
+      allGroupsList: [],
       groupsList: [],
       filterOptionsChecked: false,
       timelapse: 7,
+      display: 'hidden',
+      displace: '',
       fromDate: new Date(),
       toDate: new Date(),
     }
@@ -31,37 +26,60 @@ class ChartsUsage extends Component {
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleDateFrom = this.handleDateFrom.bind(this);
     this.handleDateTo = this.handleDateTo.bind(this);
+    this.visibilitySetDate = this.visibilitySetDate.bind(this);
 
     this.handleUserGroups = this.handleUserGroups.bind(this);
+    this.selectAllGroups = this.selectAllGroups.bind(this);
+    this.clearAllGroups = this.clearAllGroups.bind(this);
+
+    this.filterAll = this.filterAll.bind(this);
   }
 
   componentDidMount() {
-    const groups = this.state.allGroupsList;
-
+    this.fetchGroups();
+    this.renderUserGroups(true);
     this.fetchCharts(this.state.timelapse);
-    this.renderUserGroups();
+  }
 
-    this.setState({
-      groupsList: groups
+  getGroups(groups) {
+    const groupsList = groups.map(item => {
+      return item.name;
+    });
+
+    return groupsList;
+  }
+
+  renderUserGroups(check) {
+    this.setState((prevState) => {
+
+      const sortedSet = prevState.allGroupsList;
+
+      const userGroupsInputs = sortedSet.map((item, index) => {
+        return (
+          <li key={index}>
+            <label htmlFor={item}>
+              <input onChange={this.handleUserGroups} id={item} type="checkbox" value={item} name={item} defaultChecked={check} />
+              {item}
+            </label>
+          </li>
+        );
+      });
+
+      return { userGroupsInputs: userGroupsInputs };
     });
   }
 
-  renderUserGroups() {
-    const sortedSet = this.state.allGroupsList;
-    const userGroupsInputs = sortedSet.map((item, index) => {
-      return (
-        <li key={index}>
-          <label htmlFor={item}>
-            <input onChange={this.handleUserGroups} id={item} type="checkbox" value={item} name={item} defaultChecked={true} />
-            {item}
-          </label>
-        </li>
-      );
-    });
+  fetchGroups() {
+    requestGroups()
+      .then(data => {
+        const groupData = this.getGroups(data.groups);
+        const allGroups = groupData.slice();
 
-    this.setState({
-      userGroupsInputs: userGroupsInputs
-    });
+        this.setState({
+          allGroupsList: allGroups,
+          groupsList: groupData
+        }, () => this.renderUserGroups(true));
+      });
   }
 
   fetchCharts(timelapse) {
@@ -169,15 +187,17 @@ class ChartsUsage extends Component {
     const removedSupport = originalCharts.filter(item => {
       if (supportChecked) {
         return !item.request.user__username.includes('stylesage');
+
       } else {
         return item;
       }
     });
 
     const removedGroups = removedSupport.filter(chart => {
-      const isGroupPresent = this.state.allGroupsList.map(group => {
+      const isGroupPresent = this.state.groupsList.map(group => {
         if (chart.request.user__group__name === group) {
           return true;
+
         } else {
           return false;
         }
@@ -199,18 +219,46 @@ class ChartsUsage extends Component {
     });
   }
 
-  visibility() {
-    const { hiddenButton } = this.props;
-    const displace = (hiddenButton === true) ? '' : 'displace';
-    return displace;
+  visibilitySetDate(e) {
+    const hiddenClassSetDate = (this.state.display === 'hidden' && e.currentTarget.value === 'set-date') ? '' : 'hidden';
+
+    this.setState({
+      display: hiddenClassSetDate
+    });
+  }
+
+  selectAllGroups() {
+    this.setState((prevState) => {
+      const groups = prevState.allGroupsList.slice();
+
+      return {
+        userGroupsInputs: '',
+        groupsList: groups
+      }
+    }, () => {
+      this.renderUserGroups(true);
+      this.filterAll();
+    });
+  }
+
+  clearAllGroups() {
+    const groups = [];
+
+    this.setState({
+      userGroupsInputs: '',
+      groupsList: groups
+    }, () => {
+      this.renderUserGroups(false);
+      this.filterAll();
+    });
   }
 
   render() {
-    const { chartList } = this.state;
+    const { chartList, display, displace } = this.state;
     const userGroupsInputs = this.state.userGroupsInputs;
 
     return (
-      <div className={`app__container ${this.visibility()}`}>
+      <div className={`app__container  ${this.props.hiddenButton}`}>
         <main className="app__main">
           <div className="breadcrumb__container">
             <ul className="breadcrumb__container-list">
@@ -244,52 +292,51 @@ class ChartsUsage extends Component {
                   <h3 className="chart__filter-title">DATE RANGE</h3>
                 </div>
                 <div className="chart__filter-content">
-                  <p> From: | To:</p>
                   <div>
                     <label htmlFor="last-week" >
-                      <input defaultChecked={true} onClick={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" className="input__type-radio" />
+                      <input defaultChecked={true} onClick={this.visibilitySetDate} onChange={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" className="input__type-radio" />
                       <span></span>last week
                     </label>
                   </div>
                   <div >
                     <label htmlFor="last-month">
-                      <input onClick={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" className="input__type-radio" />
+                      <input onClick={this.visibilitySetDate} onChange={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" className="input__type-radio" />
                       <span></span>last month
                     </label>
                   </div>
                   <div>
                     <label htmlFor="last-two-months">
-                      <input onClick={this.handleChangeDate} type="radio" id="last-two-months" name="date" value="last-two-months" className="input__type-radio" />
+                      <input onClick={this.visibilitySetDate} onChange={this.handleChangeDate} type="radio" id="last-two-months" name="date" value="last-two-months" className="input__type-radio" />
                       <span></span>last 2 months
                     </label>
                   </div>
                   <div>
-                    <label htmlFor="last-two-months">
-                      <input onClick={this.handleChangeDate} type="radio" id="set-date" name="date" value="set-date" className="input__type-radio" />
+                    <label htmlFor="set-date">
+                      <input onClick={this.visibilitySetDate} type="radio" id="set-date" name="date" value="set-date" className="input__type-radio" />
                       <span></span>set date
                     </label>
                   </div>
-                      <div>
-                          <div> 
-                            <label htmlFor="from-date">
-                              <input onChange={this.handleDateFrom} id="from-date" type="date" name="date??" />
-                              from date
-                            </label>
-                          </div>
-                          <div>
-                            <label htmlFor="to-date">
-                              <input onChange={this.handleDateTo} id="to-date" type="date" name="date??" />
-                              to date
-                            </label>
-                          </div>
-                      </div>
+                  <div className={`contentSetDate ${display}`}>
+                    <div>
+                      <label htmlFor="from-date">
+                        <input onChange={this.handleDateFrom} id="from-date" type="date" name="date??" />
+                        from date
+                    </label>
+                    </div>
+                    <div>
+                      <label htmlFor="to-date">
+                        <input onChange={this.handleDateTo} id="to-date" type="date" name="date??" />
+                        to date
+                    </label>
+                    </div>
                   </div>
-                  <div className="filter__always">
+                  <div>
                     <label htmlFor="always">
-                      <input onClick={this.handleChangeDate} type="radio" id="always" name="date" value="always" className="input__type-radio" />
+                      <input onClick={this.visibilitySetDate} onChange={this.handleChangeDate} type="radio" id="always" name="date" value="always" className="input__type-radio" />
                       <span></span>always
                     </label>
                   </div>
+                </div>
               </div>
               <div className="chart__filter chart__filter-groups">
                 <div className="chart__filter-header">
@@ -297,11 +344,15 @@ class ChartsUsage extends Component {
                   <h3 className="chart__filter-title">USER GROUPS</h3>
                 </div>
                 <div className="chart__filter-content">
-                  <p>select all | select active | clear all</p>
+                  <div className="chart__filter-select">
+                    <button type="button" className="btn-select" onClick={this.selectAllGroups} data-select="select all">select all</button>
+                    <button type="button" className="btn-select" onClick={this.clearAllGroups} data-select="clear all">clear all</button>
+                  </div>
                   <ul className="chart__filter-listgroups">
                     {userGroupsInputs}
                   </ul>
                 </div>
+
               </div>
             </div>
           </div>

@@ -9,7 +9,8 @@
 .search__input-container {
   margin: 0;
 }
-.icon__search{
+
+.icon__search {
   color: #4f5b66;
 }
 
@@ -19,7 +20,6 @@
   height: 10px;
   border: none;
   font-size: 12px;
-  // float: left;
   color: #63717f;
   outline: none;
   border-bottom: 1px solid $lightgrey;
@@ -28,25 +28,25 @@
     border-bottom: 2px solid $purple;
     border-width: 2px;
   }
-  @media all and(min-width:768px){
+  @media all and(min-width:768px) {
     padding: 20px 10px;
     width: 300px;
     height: 20px;
     font-size: 16px;
   }
-  @media all and(min-width:1020px){
-
+  @media all and(min-width:1020px) {
     width: 300px;
     height: 50px;
   }
 }
+
 .search__info-total {
   font-size: 12px;
   padding-left: 20px;
-    @media all and(min-width:768px){
+    @media all and(min-width:768px) {
       font-size: 14px;
     }
-    @media all and(min-width:1020px){
+    @media all and(min-width:1020px) {
       font-size: 16px;
     }
 }

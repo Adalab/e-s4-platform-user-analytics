@@ -1,4 +1,4 @@
-.table__container {
+.table__container-session {
   margin:0;
   padding: 0;
   display: flex;
@@ -9,9 +9,10 @@
   background-color:$white;
   margin-right:30px;
   padding: 0;
+
     @media screen and (max-width: 320px) {
-        display: block;
-        overflow-x: auto;
+      display: block;
+      overflow-x: auto;
     }
 }
 
@@ -24,7 +25,7 @@
 	color: $eggplant2;
 }
 
-.table__tr{
+.table__tr {
   background-color: $violet263;
 }
 
@@ -32,52 +33,60 @@
   margin:0;
   padding: 0;
   color: $purple;
+  background-color: $white;
 }
 
-.table__content-col1{
-  width: 250px ;
-    @media all and(min-width:768px){
-      width: 300px ;
+.table__content-col1 {
+  width: 250px;
+
+    @media all and(min-width:768px) {
+      width: 300px;
     }
-    @media all and(min-width:1020px){
-      width: 350px ;
+    @media all and(min-width:1020px) {
+      width: 350px;
     }
 }
-.table__content-col2{
+.table__content-col2 {
   width: 200px;
-    @media all and(min-width:768px){
-      width: 250px ;
+
+    @media all and(min-width:768px) {
+      width: 250px;
     }
-    @media all and(min-width:1020px){
-      width: 300px ;
+    @media all and(min-width:1020px) {
+      width: 300px;
     }
 }
 
-.table__content-col3{
+.table__content-col3 {
   width: 150px;
-    @media all and(min-width:768px){
-      width: 200px ;
+
+    @media all and(min-width:768px) {
+      width: 200px;
     }
-    @media all and(min-width:1020px){
-      width: 250px ;
+    @media all and(min-width:1020px) {
+      width: 250px;
     }
 }
-.table__content-col4{
+
+.table__content-col4 {
   width: 100px;
-    @media all and(min-width:768px){
-      width: 150px ;
+
+    @media all and(min-width:768px) {
+      width: 150px;
     }
-    @media all and(min-width:1020px){
-      width: 200px ;
+    @media all and(min-width:1020px) {
+      width: 200px;
     }
 }
-.small-col{
+
+.small-col {
   width: 70px;
-  @media all and(min-width:768px){
-    width: 100px ;
+
+  @media all and(min-width:768px) {
+    width: 100px;
   }
-  @media all and(min-width:1020px){
-    width: 150px ;
+  @media all and(min-width:1020px) {
+    width: 150px;
   }
 }
 
@@ -95,10 +104,11 @@
   color: $purple;
   font-family: $roboto;
   font-weight: bold;
-    @media all and(min-width:768px){
+
+    @media all and(min-width:768px) {
       font-size: 14px;
     }
-    @media all and(min-width:1020px){
+    @media all and(min-width:1020px) {
       font-size: 16px;
     }
 }
@@ -108,22 +118,23 @@
   width: 20px;
   display: flex;
   flex-direction: column;
-  i:hover {
-    transform:scale(1.25);
-    font-weight: bold;
-    }
-
+    i:hover {
+      transform:scale(1.25);
+      font-weight: bold;
+      }
 }
+
 .table__td {
   font-family: $roboto;
   font-size: 12px;
   margin:0;
   padding: 0;
   padding: 10px;
-    @media all and(min-width:768px){
+
+    @media all and(min-width:768px) {
       font-size: 14px;
     }
-    @media all and(min-width:1020px){
+    @media all and(min-width:1020px) {
       font-size: 16px;
     }
 }
