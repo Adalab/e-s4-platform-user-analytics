@@ -16,7 +16,6 @@ class ChartsUsage extends Component {
       filterOptionsChecked: false,
       timelapse: 7,
       display: 'hidden',
-      displace: '',
       fromDate: new Date(),
       toDate: new Date(),
     }
@@ -254,7 +253,7 @@ class ChartsUsage extends Component {
   }
 
   render() {
-    const { chartList, display, displace } = this.state;
+    const { chartList, display } = this.state;
     const userGroupsInputs = this.state.userGroupsInputs;
 
     return (
