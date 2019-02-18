@@ -27,13 +27,14 @@ class ChartsUsage extends Component {
 
     this.handleUserGroups = this.handleUserGroups.bind(this);
     this.selectAllGroups = this.selectAllGroups.bind(this);
+    this.clearAllGroups = this.clearAllGroups.bind(this);
 
     this.filterAll = this.filterAll.bind(this);
   }
 
   componentDidMount() {
     this.fetchGroups();
-    this.renderUserGroups();
+    this.renderUserGroups(true);
     this.fetchCharts(this.state.timelapse);
   }
 
@@ -45,7 +46,7 @@ class ChartsUsage extends Component {
     return groupsList;
   }
 
-  renderUserGroups() {
+  renderUserGroups(check) {
     this.setState((prevState) => {
 
       const sortedSet = prevState.allGroupsList;
@@ -54,7 +55,7 @@ class ChartsUsage extends Component {
         return (
           <li key={index}>
             <label htmlFor={item}>
-              <input onChange={this.handleUserGroups} id={item} type="checkbox" value={item} name={item} defaultChecked={true} />
+              <input onChange={this.handleUserGroups} id={item} type="checkbox" value={item} name={item} defaultChecked={check} />
               {item}
             </label>
           </li>
@@ -74,7 +75,7 @@ class ChartsUsage extends Component {
         this.setState({
           allGroupsList: allGroups,
           groupsList: groupData
-        }, () => this.renderUserGroups());
+        }, () => this.renderUserGroups(true));
       });
   }
 
@@ -229,7 +230,19 @@ class ChartsUsage extends Component {
         groupsList: groups
       }
     }, () => {
-      this.renderUserGroups();
+      this.renderUserGroups(true);
+      this.filterAll();
+    });
+  }
+
+  clearAllGroups() {
+    const groups = [];
+
+    this.setState({
+        userGroupsInputs: '',
+        groupsList: groups
+    }, () => {
+      this.renderUserGroups(false);
       this.filterAll();
     });
   }
@@ -327,7 +340,7 @@ class ChartsUsage extends Component {
                   <div className="chart__filter-select">
                     <button type="button" onClick={this.selectAllGroups} data-select="select all">select all</button>
                     <button type="button" data-select="select active">select active</button>
-                    <button type="button" data-select="clear all">clear all</button>
+                    <button type="button" onClick={this.clearAllGroups} data-select="clear all">clear all</button>
                   </div>
                   <ul className="chart__filter-listgroups">
                     {userGroupsInputs}
