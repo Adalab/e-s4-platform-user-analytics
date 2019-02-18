@@ -70,8 +70,10 @@ class ChartsUsage extends Component {
     requestGroups()
       .then(data => {
         const groupData = this.getGroups(data.groups);
+        const allGroups = groupData.splice(0);
+
         this.setState({
-          allGroupsList: groupData,
+          allGroupsList: allGroups,
           groupsList: groupData
         }, () => this.renderUserGroups());
       });
