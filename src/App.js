@@ -10,15 +10,18 @@ import './styles.scss';
 
 class App extends Component {
   constructor(props) {
-    super(props)
+    super(props);
+
     this.state = {
-      hiddenButton: true
+      hiddenButton: ''
     }
+
     this.handleClick = this.handleClick.bind(this);
   }
 
   handleClick() {
-    const hiddenStatus = (this.state.hiddenButton === true) ? false : true;
+    const hiddenStatus = (this.state.hiddenButton === 'displace') ? '' : 'displace';
+
     this.setState({
       hiddenButton: hiddenStatus
     });
@@ -29,7 +32,7 @@ class App extends Component {
       <div className="app">
         <Header onClick={this.handleClick} />
         <div className="page__wrapper">
-          <Sidebar hiddenButton={this.state.hiddenButton} />
+          <Sidebar hiddenButton={this.state.hiddenButton === 'displace' ? false : true} />
           <Switch>
             <Route exact path="/" render={() => <Overview />} />
             <Route path="/session-list" render={() => <SessionList hiddenButton={this.state.hiddenButton} />} />

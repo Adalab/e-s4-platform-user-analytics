@@ -16,6 +16,7 @@ class ChartsUsage extends Component {
       filterOptionsChecked: false,
       timelapse: 7,
       display: 'hidden',
+      displace: '',
       fromDate: new Date(),
       toDate: new Date(),
     }
@@ -186,6 +187,7 @@ class ChartsUsage extends Component {
     const removedSupport = originalCharts.filter(item => {
       if (supportChecked) {
         return !item.request.user__username.includes('stylesage');
+
       } else {
         return item;
       }
@@ -195,6 +197,7 @@ class ChartsUsage extends Component {
       const isGroupPresent = this.state.groupsList.map(group => {
         if (chart.request.user__group__name === group) {
           return true;
+
         } else {
           return false;
         }
@@ -224,14 +227,6 @@ class ChartsUsage extends Component {
     });
   }
 
-  visibility() {
-    const { hiddenButton } = this.props;
-
-    const displace = (hiddenButton === true) ? '' : 'displace';
-
-    return displace;
-  }
-
   selectAllGroups() {
     this.setState((prevState) => {
       const groups = prevState.allGroupsList.slice();
@@ -259,11 +254,11 @@ class ChartsUsage extends Component {
   }
 
   render() {
-    const { chartList, display } = this.state;
+    const { chartList, display, displace } = this.state;
     const userGroupsInputs = this.state.userGroupsInputs;
 
     return (
-      <div className={`app__container  ${this.visibility()}`}>
+      <div className={`app__container  ${this.props.hiddenButton}`}>
         <main className="app__main">
           <div className="breadcrumb__container">
             <ul className="breadcrumb__container-list">

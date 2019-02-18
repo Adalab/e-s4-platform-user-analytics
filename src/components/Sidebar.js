@@ -8,12 +8,15 @@ class Sidebar extends Component {
   visibility() {
     const { hiddenButton } = this.props;
 
-    const hiddenClass = (hiddenButton === true) ? 'hidden' : 'NO-hidden';
+    const hiddenClass = (hiddenButton === true) ? 'hidden' : '';
     return hiddenClass;
   }
+
   render() {
+    const hiddenClass = this.visibility();
+
     return (
-      <aside className={`app__aside ${this.visibility()}`}>
+      <aside className={`app__aside ${hiddenClass}`}>
         <div className="app__aside-header">
           <i className="zmdi zmdi-chart"></i>
           <p className="app__aside-title">User analytics</p>

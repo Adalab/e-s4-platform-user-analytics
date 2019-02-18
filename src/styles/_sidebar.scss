@@ -22,11 +22,13 @@
       margin-top: 82px;
     }
  }
+
  .app__aside-header{
    padding-left: 5px;
    display: flex;
    align-items: center;
  }
+
  .zmdi-chart{
   padding: 5px 10px;
   font-size: 20px;
@@ -38,6 +40,7 @@
       font-size: 30px;
     }
  }
+
  .app__aside-title{
   color: $purple02;
   font-size: 12px;
@@ -51,6 +54,7 @@
       font-size: 16px;
     }
  }
+
  .aside__list {
   width: 165px;
   padding: 0;
@@ -70,12 +74,13 @@
       line-height: 24px;
     }
  }
+
  .aside__item-link {
    text-decoration: none;
    color: $purple;
    font-weight: bold;
-
  }
+
  .aside__item {
   padding: 0 20px;
     &:hover {
