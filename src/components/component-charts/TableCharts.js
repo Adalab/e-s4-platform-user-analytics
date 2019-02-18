@@ -67,7 +67,11 @@ class TableCharts extends Component {
             <tr className="table__tr" key={index}>
               <td className="table__td">{row[0]}</td>
               <td className="table__td">{row[1]}</td>
-              <td className="table__td">{(row[1] / chartList.length * 100).toFixed(1)}</td>
+              <td className="table__td">{(row[1] / chartList.length * 100).toFixed(1)}%
+                <div className="table__bar-container">
+                    <div className="table__bar" style={{width: `${(row[1] / chartList.length * 100).toFixed(1)}%`}}></div>
+                </div>
+              </td>
               <td className="table__td">{row[2].length}</td>
             </tr>
           )
