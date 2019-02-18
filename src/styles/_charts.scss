@@ -88,7 +88,6 @@
         background-clip: content-box; /* support: IE9+ */
         border-radius:50%;
         transition:0.3s;
-
       }
     }
     &:checked{
@@ -96,7 +95,7 @@
         // background:lightgreen;
         &:after{
           background-color: $amethyst;
-          padding: 0.3em;
+          padding: 1px;
         }
         //color:pink;
       }

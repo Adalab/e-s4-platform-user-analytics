@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from 'react-router-dom';
 import { requestCharts } from './../../services/ChartsService';
+import { requestGroups } from './../../services/GroupsService';
 import TableCharts from './TableCharts';
 
 class ChartsUsage extends Component {
@@ -10,15 +11,7 @@ class ChartsUsage extends Component {
     this.state = {
       userData: [],
       chartList: [],
-      allGroupsList: [
-        'Die Antwoord',
-        'Explosions in the Sky',
-        'Justice',
-        'Radical Face',
-        'Ratatat',
-        'RHCP',
-        'Stromae'
-      ],
+      allGroupsList: [],
       groupsList: [],
       filterOptionsChecked: false,
       timelapse: 7,
@@ -33,35 +26,57 @@ class ChartsUsage extends Component {
     this.handleDateTo = this.handleDateTo.bind(this);
 
     this.handleUserGroups = this.handleUserGroups.bind(this);
+    this.selectAllGroups = this.selectAllGroups.bind(this);
+    this.clearAllGroups = this.clearAllGroups.bind(this);
+
+    this.filterAll = this.filterAll.bind(this);
   }
 
   componentDidMount() {
-    const groups = this.state.allGroupsList;
-
+    this.fetchGroups();
+    this.renderUserGroups(true);
     this.fetchCharts(this.state.timelapse);
-    this.renderUserGroups();
+  }
 
-    this.setState({
-      groupsList: groups
+  getGroups(groups) {
+    const groupsList = groups.map(item => {
+      return item.name;
+    });
+
+    return groupsList;
+  }
+
+  renderUserGroups(check) {
+    this.setState((prevState) => {
+
+      const sortedSet = prevState.allGroupsList;
+
+      const userGroupsInputs = sortedSet.map((item, index) => {
+        return (
+          <li key={index}>
+            <label htmlFor={item}>
+              <input onChange={this.handleUserGroups} id={item} type="checkbox" value={item} name={item} defaultChecked={check} />
+              {item}
+            </label>
+          </li>
+        );
+      });
+
+      return { userGroupsInputs: userGroupsInputs };
     });
   }
 
-  renderUserGroups() {
-    const sortedSet = this.state.allGroupsList;
-    const userGroupsInputs = sortedSet.map((item, index) => {
-      return (
-        <li key={index}>
-          <label htmlFor={item}>
-            <input onChange={this.handleUserGroups} id={item} type="checkbox" value={item} name={item} defaultChecked={true} />
-            {item}
-          </label>
-        </li>
-      );
-    });
+  fetchGroups() {
+    requestGroups()
+      .then(data => {
+        const groupData = this.getGroups(data.groups);
+        const allGroups = groupData.slice();
 
-    this.setState({
-      userGroupsInputs: userGroupsInputs
-    });
+        this.setState({
+          allGroupsList: allGroups,
+          groupsList: groupData
+        }, () => this.renderUserGroups(true));
+      });
   }
 
   fetchCharts(timelapse) {
@@ -175,7 +190,7 @@ class ChartsUsage extends Component {
     });
 
     const removedGroups = removedSupport.filter(chart => {
-      const isGroupPresent = this.state.allGroupsList.map(group => {
+      const isGroupPresent = this.state.groupsList.map(group => {
         if (chart.request.user__group__name === group) {
           return true;
         } else {
@@ -201,8 +216,36 @@ class ChartsUsage extends Component {
 
   visibility() {
     const { hiddenButton } = this.props;
+
     const displace = (hiddenButton === true) ? '' : 'displace';
+
     return displace;
+  }
+
+  selectAllGroups() {
+    this.setState((prevState) => {
+      const groups = prevState.allGroupsList.slice();
+
+      return {
+        userGroupsInputs: '',
+        groupsList: groups
+      }
+    }, () => {
+      this.renderUserGroups(true);
+      this.filterAll();
+    });
+  }
+
+  clearAllGroups() {
+    const groups = [];
+
+    this.setState({
+        userGroupsInputs: '',
+        groupsList: groups
+    }, () => {
+      this.renderUserGroups(false);
+      this.filterAll();
+    });
   }
 
   render() {
@@ -297,7 +340,10 @@ class ChartsUsage extends Component {
                   <h3 className="chart__filter-title">USER GROUPS</h3>
                 </div>
                 <div className="chart__filter-content">
-                  <p>select all | select active | clear all</p>
+                  <div className="chart__filter-select">
+                    <button type="button" onClick={this.selectAllGroups} data-select="select all">select all</button>
+                    <button type="button" onClick={this.clearAllGroups} data-select="clear all">clear all</button>
+                  </div>
                   <ul className="chart__filter-listgroups">
                     {userGroupsInputs}
                   </ul>
