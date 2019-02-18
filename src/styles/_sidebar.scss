@@ -1,50 +1,101 @@
-.hidden{
+.hidden {
   display: none;
 }
 
+.displace {
+  position: absolute;
+}
+
 .app__aside {
-  width: 270px;
+  width: 165px;
+  margin-top: 50px;
+  padding-top: 10px;
   height: 100vh;
-  background: $violet;
-  bottom:0;
-  transition: bottom ease 2s;
-  position: relative;
- }
- .app__aside-header{
-   display: flex;
-   align-items: center;
- }
- .zmdi-chart{
-  padding: 10px;
-  font-size: 30px;
+  font-family: $roboto;
+  background-color: $violet;
+  position: fixed;
+  z-index: 1;
+
+    @media all and(min-width:768px){
+      width: 200px;
+      padding-top: 30px;
+    }
+    @media all and(min-width:1020px){
+      width: 205px;
+      padding-top: 40px;
+    }
+}
+
+.app__aside-header {
+  padding-left: 5px;
+  display: flex;
+  align-items: center;
+}
+
+.zmdi-chart {
+  padding: 5px 10px;
+  font-size: 20px;
   color: $purple02;
- }
- .app__aside-title{
+
+    @media all and(min-width:768px){
+      font-size: 25px;
+    }
+    @media all and(min-width:1020px){
+      font-size: 30px;
+    }
+}
+
+.app__aside-title {
   color: $purple02;
-  margin-left: 10px;
-  font-size: 18px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
- }
- .aside__list {
+
+    @media all and(min-width:768px){
+      font-size: 14px;
+      margin-left: 5px;
+    }
+    @media all and(min-width:1020px){
+      font-size: 16px;
+    }
+}
+
+.aside__list {
+  width: 165px;
   padding: 0;
-  background-color: $violet;
-  color: $violet263;
+  font-size: 12px;
   list-style: none;
   text-decoration: none;
-  line-height: 24px;
- }
- .aside__item-link {
-   text-decoration: none;
-   color: $purple;
-   font-weight: bold;
-    
- }
- .aside__item {
+  line-height: 18px;
+
+    @media all and(min-width:768px){
+      width: 200px;
+      font-size: 16px;
+      line-height: 22px;
+    }
+    @media all and(min-width:1020px){
+      width: 205px;
+      font-size: 18px;
+      line-height: 24px;
+    }
+}
+
+.aside__item-link {
+  color: $purple;
+  text-decoration: none;
     &:hover {
-  
-      background-color: rgb(245, 217, 245);
+      color: $purple02;
+    }
+    transition: color ease 1s;
+}
+
+.aside__item {
+  padding: 0 20px;
+    &:hover {
+      font-weight: bold;
+      background-color: $thistle;
     }
     transition: background-color ease 1s;
- }
+    transition: color ease 1s;
+}
 

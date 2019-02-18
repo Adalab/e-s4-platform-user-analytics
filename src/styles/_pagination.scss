@@ -1,0 +1,71 @@
+.app__footer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+//     @media all and(min-width:1020px){
+//       display: flex;
+//       flex-direction: row;
+//       justify-content: space-between;
+//     }
+}
+.footer__select-page{
+  font-size: 12px;
+    @media all and(min-width:768px){
+      font-size: 14px;
+    }
+    @media all and(min-width:1020px){
+      font-size: 16px;
+    }
+}
+.select__content-page{
+  margin: 0 5px;
+  height: 30px;
+  border: 1px solid $purple;
+}
+.footer__button{
+  margin: 15px 30px;
+  font-size: 12px;
+  height: 25px;
+  display: flex;
+  flex-direction: row;
+    @media all and(min-width:768px){
+      font-size: 14px;
+      height: 30px;
+    }
+    @media all and(min-width:1020px){
+      margin: 40px 50px;
+      font-size: 16px;
+      margin: 20px 30px;
+    }
+}
+.footer__button-page {
+  text-align: center;
+  background-color: $white;
+  border-radius: 0.15em;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+  cursor: default;
+  margin: 0 0.25em;
+  padding: 0.5em 0.75em;
+  list-style: none;
+
+  &:first-child {
+    margin-left: 0;
+  }
+
+  &:last-child {
+    margin-right: 0;
+  }
+
+  &:hover:not(:active) {
+    transition: transform 0.15s;
+    transform: translateY(-1px);
+  }
+}
+.footer__button-page--active {
+  background-color: $purple;
+  color: white;
+  &:hover,
+  &:hover:not(:active) {
+    transform: none;
+  }
+}

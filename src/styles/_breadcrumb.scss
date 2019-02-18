@@ -1,13 +1,29 @@
 .breadcrumb__container {
   text-align: center;
+  margin-top: 70px;
+    @media all and(min-width:768px){
+      margin-top: 90px;
+    }
+    @media all and(min-width:1020px){
+      margin-top: 100px;
+    }
 }
 
 .breadcrumb__container-list {
-  padding: 0 10px;
+  font-size: 12px;
+  padding-left: 0;
   display: flex;
   flex-direction: row;
   list-style: none;
-}
+    @media all and(min-width:768px){
+      font-size: 14px;
+      padding-top: 5px;
+      padding-left: 10px;
+    }
+    @media all and(min-width:1020px){
+      font-size: 16px;
+    }
+  }
 
 .breadcrumb__container-item {
   padding: 0 10px;

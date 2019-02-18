@@ -1,13 +1,21 @@
-.table__container {
-  display: flex;
-}
-.table {
-  width: 100%;
-  table-layout: fixed;
-  background-color:$white;
+.table__container-session {
   margin:0;
   padding: 0;
+  display: flex;
+  flex-direction: column-reverse;
 }
+
+.table {
+  background-color:$white;
+  margin-right:30px;
+  padding: 0;
+
+    @media screen and (max-width: 320px) {
+      display: block;
+      overflow-x: auto;
+    }
+}
+
 #table tr:nth-child(odd) {
 	color:#7F7679;
 }
@@ -17,51 +25,116 @@
 	color: $eggplant2;
 }
 
-.table__tr{
+.table__tr {
   background-color: $violet263;
-  width: 325px;
 }
+
 .table__thead {
   margin:0;
   padding: 0;
   color: $purple;
+  background-color: $white;
 }
 
-// .table__th {
+.table__content-col1 {
+  width: 250px;
 
-// }
+    @media all and(min-width:768px) {
+      width: 300px;
+    }
+    @media all and(min-width:1020px) {
+      width: 350px;
+    }
+}
+.table__content-col2 {
+  width: 200px;
+
+    @media all and(min-width:768px) {
+      width: 250px;
+    }
+    @media all and(min-width:1020px) {
+      width: 300px;
+    }
+}
+
+.table__content-col3 {
+  width: 150px;
+
+    @media all and(min-width:768px) {
+      width: 200px;
+    }
+    @media all and(min-width:1020px) {
+      width: 250px;
+    }
+}
+
+.table__content-col4 {
+  width: 100px;
+
+    @media all and(min-width:768px) {
+      width: 150px;
+    }
+    @media all and(min-width:1020px) {
+      width: 200px;
+    }
+}
+
+.small-col {
+  width: 70px;
+
+  @media all and(min-width:768px) {
+    width: 100px;
+  }
+  @media all and(min-width:1020px) {
+    width: 150px;
+  }
+}
 
 .table__content {
+  table-layout: fixed;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
+
 .table__title {
+  font-size: 12px;
   margin-left: 10px;
   color: $purple;
+  font-family: $roboto;
   font-weight: bold;
+
+    @media all and(min-width:768px) {
+      font-size: 14px;
+    }
+    @media all and(min-width:1020px) {
+      font-size: 16px;
+    }
 }
 
 .table__icons {
-  
   color: $purple;
   width: 20px;
   display: flex;
   flex-direction: column;
-  i:hover {
-    background-color: $violet;
-    font-weight: bold;
-    height: 20px;
-    width: 20px;
-    }
-    
+    i:hover {
+      transform:scale(1.25);
+      font-weight: bold;
+      }
 }
 
-// .table__tbody {}
-
-.table__td { 
+.table__td {
+  font-family: $roboto;
+  font-size: 12px;
   margin:0;
   padding: 0;
-  padding: 10px; 
+  padding: 10px;
+
+    @media all and(min-width:768px) {
+      font-size: 14px;
+    }
+    @media all and(min-width:1020px) {
+      font-size: 16px;
+    }
 }
