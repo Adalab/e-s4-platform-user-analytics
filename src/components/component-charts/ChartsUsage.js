@@ -25,10 +25,10 @@ class ChartsUsage extends Component {
     this.handleDateFrom = this.handleDateFrom.bind(this);
     this.handleDateTo = this.handleDateTo.bind(this);
 
-    this.filterAll = this.filterAll.bind(this);
     this.handleUserGroups = this.handleUserGroups.bind(this);
-
     this.selectAllGroups = this.selectAllGroups.bind(this);
+
+    this.filterAll = this.filterAll.bind(this);
   }
 
   componentDidMount() {
@@ -215,8 +215,9 @@ class ChartsUsage extends Component {
   visibility() {
     const { hiddenButton } = this.props;
 
-  const displace = (hiddenButton === true) ? '' : 'displace';
-  return displace;
+    const displace = (hiddenButton === true) ? '' : 'displace';
+
+    return displace;
   }
 
   selectAllGroups() {
