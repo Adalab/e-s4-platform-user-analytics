@@ -35,14 +35,13 @@ class ChartsUsage extends Component {
     this.fetchGroups();
     this.renderUserGroups();
     this.fetchCharts(this.state.timelapse);
-    console.log('componentDidMount ');
   }
 
   getGroups(groups) {
     const groupsList = groups.map(item => {
       return item.name;
     });
-    console.log('getGtoups ', groupsList);
+
     return groupsList;
   }
 
@@ -50,7 +49,6 @@ class ChartsUsage extends Component {
     this.setState((prevState) => {
 
       const sortedSet = prevState.allGroupsList;
-      console.log('rendeUserGroups ', sortedSet);
 
       const userGroupsInputs = sortedSet.map((item, index) => {
         return (
@@ -62,6 +60,7 @@ class ChartsUsage extends Component {
           </li>
         );
       });
+
       return { userGroupsInputs: userGroupsInputs };
     });
   }
@@ -70,15 +69,13 @@ class ChartsUsage extends Component {
     requestGroups()
       .then(data => {
         const groupData = this.getGroups(data.groups);
-        const allGroups = groupData.splice(0);
+        const allGroups = groupData.slice();
 
         this.setState({
           allGroupsList: allGroups,
           groupsList: groupData
         }, () => this.renderUserGroups());
       });
-    console.log('fetch ', this.state.groupsList);
-
   }
 
   fetchCharts(timelapse) {
@@ -175,6 +172,7 @@ class ChartsUsage extends Component {
         groupsList.splice(groupsList.indexOf(userGroupsTarget), 1);
       }
 
+      console.log(groupsList);
       return { groupsList: groupsList }
     }, () => this.filterAll());
   }
@@ -192,7 +190,7 @@ class ChartsUsage extends Component {
     });
 
     const removedGroups = removedSupport.filter(chart => {
-      const isGroupPresent = this.state.allGroupsList.map(group => {
+      const isGroupPresent = this.state.groupsList.map(group => {
         if (chart.request.user__group__name === group) {
           return true;
         } else {
@@ -215,18 +213,19 @@ class ChartsUsage extends Component {
       chartList: removedGroups
     });
   }
-//!!
+
   selectAllGroups() {
     this.setState((prevState) => {
-      const groups = prevState.allGroupsList;
-      console.log('selectAllGroups, groups: ', groups);
-      return {
-        userGroups: groups,
-        userGroupsInputs: ''
-      }
-    }, () => this.renderUserGroups());
-    console.log('selectAllGroups ');
+      const groups = prevState.allGroupsList.slice();
 
+      return {
+        userGroupsInputs: '',
+        groupsList: groups
+      }
+    }, () => {
+      this.renderUserGroups();
+      this.filterAll();
+    });
   }
 
   render() {
