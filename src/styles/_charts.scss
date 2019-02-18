@@ -71,5 +71,17 @@
   list-style: none;
 }
 .input__type-radio{
-  cursor: pointer; 
+  cursor: pointer;
   }
+
+.table__bar-container{
+  width: 80px;
+  height: 8px;
+  background-color: $lightgrey;
+}
+
+.table__bar{
+  width: 40px;
+  height: 8px;
+  background-color:$purple02;
+}

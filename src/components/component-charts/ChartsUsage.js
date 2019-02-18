@@ -22,6 +22,7 @@ class ChartsUsage extends Component {
       groupsList: [],
       filterOptionsChecked: false,
       timelapse: 7,
+      display: 'hidden',
       fromDate: new Date(),
       toDate: new Date(),
     }
@@ -31,6 +32,7 @@ class ChartsUsage extends Component {
     this.handleChangeDate = this.handleChangeDate.bind(this);
     this.handleDateFrom = this.handleDateFrom.bind(this);
     this.handleDateTo = this.handleDateTo.bind(this);
+    this.visibilitySetDate = this.visibilitySetDate.bind(this);
 
     this.handleUserGroups = this.handleUserGroups.bind(this);
   }
@@ -198,15 +200,24 @@ class ChartsUsage extends Component {
       chartList: removedGroups
     });
   }
+
+  visibilitySetDate(e) {
+    const hiddenClassSetDate = (this.state.display === 'hidden' && e.currentTarget.value === 'set-date') ? '' : 'hidden';
+
+    this.setState({
+      display: hiddenClassSetDate
+    });
+  }
+
   visibility() {
     const { hiddenButton } = this.props;
 
-  const displace = (hiddenButton === true) ? '' : 'displace';
-  return displace;
+    const displace = (hiddenButton === true) ? '' : 'displace';
+    return displace;
   }
 
   render() {
-    const { chartList } = this.state;
+    const { chartList, display } = this.state;
     const userGroupsInputs = this.state.userGroupsInputs;
 
     return (
@@ -247,43 +258,45 @@ class ChartsUsage extends Component {
                   <p> From: | To:</p>
                   <div>
                     <label htmlFor="last-week" >
-                      <input defaultChecked={true} onClick={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" className="input__type-radio" />
+                      <input defaultChecked={true} onClick={this.visibilitySetDate} onChange={this.handleChangeDate} type="radio" id="last-week" name="date" value="last-week" className="input__type-radio" />
                       last week
                     </label>
                   </div>
                   <div >
                     <label htmlFor="last-month">
-                      <input onClick={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" className="input__type-radio" />
+                      <input onClick={this.visibilitySetDate} onChange={this.handleChangeDate} type="radio" id="last-month" name="date" value="last-month" className="input__type-radio" />
                       last month
                     </label>
                   </div>
                   <div>
                     <label htmlFor="last-two-months">
-                      <input onClick={this.handleChangeDate} type="radio" id="last-two-months" name="date" value="last-two-months" className="input__type-radio" />
+                      <input onClick={this.visibilitySetDate} onChange={this.handleChangeDate} type="radio" id="last-two-months" name="date" value="last-two-months" className="input__type-radio" />
                       last 2 months
                     </label>
                   </div>
                   <div>
-                    <label htmlFor="last-two-months">
-                      <input onClick={this.handleChangeDate} type="radio" id="set-date" name="date" value="set-date" className="input__type-radio" />
+                    <label htmlFor="set-date">
+                      <input onClick={this.visibilitySetDate} type="radio" id="set-date" name="date" value="set-date" className="input__type-radio" />
                       set date
                     </label>
                   </div>
-                  <div>
-                    <label htmlFor="from-date">
-                      <input onChange={this.handleDateFrom} id="from-date" type="date" name="date??" />
-                      from date
+                  <div className={`contentSetDate ${display}`}>
+                    <div>
+                      <label htmlFor="from-date">
+                        <input onChange={this.handleDateFrom} id="from-date" type="date" name="date??" />
+                        from date
                     </label>
-                  </div>
-                  <div>
-                    <label htmlFor="to-date">
-                      <input onChange={this.handleDateTo} id="to-date" type="date" name="date??" />
-                      to date
+                    </div>
+                    <div>
+                      <label htmlFor="to-date">
+                        <input onChange={this.handleDateTo} id="to-date" type="date" name="date??" />
+                        to date
                     </label>
+                    </div>
                   </div>
                   <div>
                     <label htmlFor="always">
-                      <input onClick={this.handleChangeDate} type="radio" id="always" name="date" value="always" className="input__type-radio" />
+                      <input onClick={this.visibilitySetDate} onChange={this.handleChangeDate} type="radio" id="always" name="date" value="always" className="input__type-radio" />
                       always
                     </label>
                   </div>
