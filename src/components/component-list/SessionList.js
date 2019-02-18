@@ -285,7 +285,7 @@ class SessionList extends Component {
             <h2 className="panel__session-title">Sessions between {resultsDate}</h2>
           </div>
           <UserFilter getQueryUsername={this.getQueryUsername} resultsNumber={resultsNumber} />
-          <div className="table__container">
+          <div className="table__container-session">
             {(duplicatedArray === true)
               ? (
                 <Pagination ref="child"
