@@ -212,6 +212,12 @@ class ChartsUsage extends Component {
       chartList: removedGroups
     });
   }
+  visibility() {
+    const { hiddenButton } = this.props;
+
+  const displace = (hiddenButton === true) ? '' : 'displace';
+  return displace;
+  }
 
   selectAllGroups() {
     this.setState((prevState) => {
@@ -232,13 +238,13 @@ class ChartsUsage extends Component {
     const userGroupsInputs = this.state.userGroupsInputs;
 
     return (
-      <div className="app__container">
+      <div className={`app__container  ${this.visibility()}`}>
         <main className="app__main">
           <div className="breadcrumb__container">
             <ul className="breadcrumb__container-list">
               <li className="breadcrumb__container-item">
                 <Link to="/" className="breadcrumb__link">Overview</Link>
-              </li>
+              </li>  >
               <li className="breadcrumb__container-item">
                 <span>ChartsUsage</span>
               </li>

@@ -55,8 +55,8 @@ class TableSessionList extends Component {
       <table className="table" id="table">
         <thead className="table__thead">
           <tr className="table__tr-title">
-            <th className="table__th">
-              <div className="table__content">
+            <th className="table__th table__th-col1">
+              <div className="table__content table__content-col1">
                 <p className="table__title">Username</p>
                 <div className="table__icons">
                   <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsUsername}></i>
@@ -64,8 +64,8 @@ class TableSessionList extends Component {
                 </div>
               </div>
             </th>
-            <th className="table__th">
-              <div className="table__content">
+            <th className="table__th table__th-col2">
+              <div className="table__content table__content-col2">
                 <p className="table__title">Times Started (local TZ)</p>
                 <div className="table__icons">
                   <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsTimeStarted}></i>
@@ -73,8 +73,8 @@ class TableSessionList extends Component {
                 </div>
               </div>
             </th>
-            <th className="table__th">
-              <div className="table__content">
+            <th className="table__th table__th-col3">
+              <div className="table__content table__content-col3">
                 <p className="table__title">Duration</p>
                 <div className="table__icons">
                   <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsDuration}></i>
@@ -82,8 +82,8 @@ class TableSessionList extends Component {
                 </div>
               </div>
             </th>
-            <th className="table__th">
-              <div className="table__content">
+            <th className="table__th table__th-col4">
+              <div className="table__content table__content-col4">
                 <p className="table__title">Request Count</p>
                 <div className="table__icons">
                   <i className="zmdi zmdi-chevron-up" data-arrow="up" onClick={orderResultsRequestCount}></i>

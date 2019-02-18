@@ -24,7 +24,7 @@ class Pagination extends Component {
   }
 
   createButtons(matrixControls, page) {
-    const baseClassName = 'pagination-controls__button';
+    const baseClassName = "footer__button-page";
 
     const arrayPage = matrixControls.filter(arr => arr.indexOf(page) !== -1)[0]
 
@@ -110,7 +110,7 @@ class Pagination extends Component {
   render() {
     const { controls, matrixControls, dataSlice, currentPage } = this.state;
 
-    const baseClassName = 'pagination-controls__button';
+    const baseClassName = "footer__button-page";
 
     const arIni = [
       (<li className={`${baseClassName}`} key="First" onClick={() => { this.setCurrentPage(1) }}>First</li>),
@@ -124,17 +124,23 @@ class Pagination extends Component {
 
     return (
       <Fragment>
-        <select onChange={this.handleSelect}>
-          <option value="5">5</option>
-          <option value="10">10</option>
-          <option value="20">20</option>
-        </select>
-        <div className='pagination'>
-          <div className='pagination-controls'>
-            {arIni}
-            {this.createButtons(matrixControls, currentPage)}
-            {arEnd}
-          </div>
+        <footer className="app__footer">
+					<div className="footer__select-page">
+						<p>Show
+							<select onChange={this.handleSelect} className="select__content-page">
+								<option value="5">5</option>
+								<option value="10">10</option>
+								<option value="20">20</option>
+							</select>
+							entries per page
+						</p>
+					</div>
+					<div className="footer__button">
+						{arIni}
+						{this.createButtons(matrixControls, currentPage)}
+						{arEnd}
+					</div>
+				</footer>
           <div className='pagination-results'>
             {(dataSlice) ?
               <TableSessionList
@@ -146,7 +152,6 @@ class Pagination extends Component {
                 orderResultsRequestCount={this.props.orderResultsRequestCount}
               /> : 'no results'}
           </div>
-        </div>
       </Fragment>
     );
   }

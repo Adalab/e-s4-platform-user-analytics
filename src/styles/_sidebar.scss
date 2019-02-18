@@ -2,47 +2,83 @@
   display: none;
 }
 
+.displace {
+    position: absolute;
+}
+
 .app__aside {
-  width: 270px;
+  width: 165px;
+  margin-top: 50px;
   height: 100vh;
-  background: $violet;
-  bottom:0;
-  transition: bottom ease 2s;
-  position: relative;
+  background-color: $violet;
+  position: fixed;
+  z-index: 1;
+    @media all and(min-width:768px){
+      width: 200px;
+      margin-top: 76px;
+    }
+    @media all and(min-width:1020px){
+      width: 205px;
+      margin-top: 82px;
+    }
  }
  .app__aside-header{
+   padding-left: 5px;
    display: flex;
    align-items: center;
  }
  .zmdi-chart{
-  padding: 10px;
-  font-size: 30px;
+  padding: 5px 10px;
+  font-size: 20px;
   color: $purple02;
+    @media all and(min-width:768px){
+      font-size: 25px;
+    }
+    @media all and(min-width:1020px){
+      font-size: 30px;
+    }
  }
  .app__aside-title{
   color: $purple02;
-  margin-left: 10px;
-  font-size: 18px;
+  font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
+    @media all and(min-width:768px){
+      font-size: 14px;
+      margin-left: 5px;
+    }
+    @media all and(min-width:1020px){
+      font-size: 16px;
+    }
  }
  .aside__list {
+  width: 165px;
   padding: 0;
-  background-color: $violet;
+  font-size: 12px;
   color: $violet263;
   list-style: none;
   text-decoration: none;
-  line-height: 24px;
+  line-height: 18px;
+    @media all and(min-width:768px){
+      width: 200px;
+      font-size: 16px;
+      line-height: 22px;
+    }
+    @media all and(min-width:1020px){
+      width: 205px;
+      font-size: 18px;
+      line-height: 24px;
+    }
  }
  .aside__item-link {
    text-decoration: none;
    color: $purple;
    font-weight: bold;
-    
+
  }
  .aside__item {
+  padding: 0 20px;
     &:hover {
-  
       background-color: rgb(245, 217, 245);
     }
     transition: background-color ease 1s;

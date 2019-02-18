@@ -42,6 +42,12 @@ class TableCharts extends Component {
 
     return table;
   }
+  visibility() {
+    const { hiddenButton } = this.props;
+
+  const displace = (hiddenButton === true) ? '' : 'displace';
+  return displace;
+  }
 
   render() {
     const { chartList } = this.props;
@@ -72,16 +78,16 @@ class TableCharts extends Component {
       <table className="table" id="table">
         <thead className="table__thead">
           <tr className="table__tr-title">
-            <th className="table__th">
+            <th className="table__th table__th-col1">
               <p className="table__title">Chart</p>
             </th>
-            <th className="table__th">
+            <th className="table__th table__th-col1">
               <p className="table__title">Times Used</p>
             </th>
-            <th className="table__th">
+            <th className="table__th table__th-col1">
               <p className="table__title">%</p>
             </th>
-            <th className="table__th">
+            <th className="table__th table__th-col1">
               <p className="table__title">Users</p>
             </th>
           </tr>

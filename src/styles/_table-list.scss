@@ -1,13 +1,20 @@
 .table__container {
   display: flex;
-}
-.table {
-  width: 100%;
-  table-layout: fixed;
-  background-color:$white;
+  flex-direction: column-reverse;
   margin:0;
   padding: 0;
 }
+
+.table {
+  background-color:$white;
+  margin-right:30px;
+  padding: 0;
+    @media screen and (max-width: 320px) {
+        display: block;
+        overflow-x: auto;
+    }
+}
+
 #table tr:nth-child(odd) {
 	color:#7F7679;
 }
@@ -19,32 +26,74 @@
 
 .table__tr{
   background-color: $violet263;
-  width: 325px;
 }
+
 .table__thead {
   margin:0;
   padding: 0;
   color: $purple;
 }
 
-// .table__th {
+.table__content-col1{
+  width: 250px ;
+    @media all and(min-width:768px){
+      width: 300px ;
+    }
+    @media all and(min-width:1020px){
+      width: 350px ;
+    }
+}
+.table__content-col2{
+  width: 200px;
+    @media all and(min-width:768px){
+      width: 250px ;
+    }
+    @media all and(min-width:1020px){
+      width: 300px ;
+    }
+}
 
-// }
+.table__content-col3{
+  width: 150px;
+    @media all and(min-width:768px){
+      width: 200px ;
+    }
+    @media all and(min-width:1020px){
+      width: 250px ;
+    }
+}
+.table__content-col4{
+  width: 100px;
+    @media all and(min-width:768px){
+      width: 150px ;
+    }
+    @media all and(min-width:1020px){
+      width: 200px ;
+    }
+}
 
 .table__content {
+  table-layout: fixed;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
+
 .table__title {
+  font-size: 12px;
   margin-left: 10px;
   color: $purple;
   font-weight: bold;
+    @media all and(min-width:768px){
+      font-size: 14px;
+    }
+    @media all and(min-width:1020px){
+      font-size: 16px;
+    }
 }
 
 .table__icons {
-  
   color: $purple;
   width: 20px;
   display: flex;
@@ -55,13 +104,20 @@
     height: 20px;
     width: 20px;
     }
-    
+
 }
 
 // .table__tbody {}
 
-.table__td { 
+.table__td {
+  font-size: 12px;
   margin:0;
   padding: 0;
-  padding: 10px; 
+  padding: 10px;
+    @media all and(min-width:768px){
+      font-size: 14px;
+    }
+    @media all and(min-width:1020px){
+      font-size: 16px;
+    }
 }

@@ -1,4 +1,6 @@
-
+.table__container-chart {
+  display: flex;
+}
 .charts__container{
   display:flex;
 }
@@ -8,34 +10,61 @@
 // }
 .chart__filter-title{
   margin-left: 10px;
-  color: $purple02;
 }
 .chart__filter-content{
+  font-size: 12px;
   margin: 0px;
-  padding: 10px 20px 20px;
+  padding: 5px 10px 10px;
+    @media all and(min-width:768px){
+      font-size: 14px;
+    }
+    @media all and(min-width:1020px){
+      font-size: 16px;
+    }
 }
 .chart__filter{
   font-family: $roboto;
   background-color: $white;
   border: 1px solid $violet;
   margin: 20px;
-  width: 400px;
+  width: 200px;
+    @media all and(min-width:768px){
+      width: 250px;
+    }
+    @media all and(min-width:1020px){
+      width: 270px;
+    }
 }
 .chart__filter-header{
-  background-color: $violet;
+  font-size: 12px;
+  height: 30px;
   padding-left: 10px;
+  color: $purple02;
+  background-color: $violet;
   display: flex;
   align-items: center;
+    @media all and(min-width:768px){
+      font-size: 14px;
+      height: 50px;
+    }
 }
 .chart__filter-options{
-  height: 100px;
+  height: 80px;
+    @media all and(min-width:768px){
+      height: 100px;
+    }
 }
 .chart__filter-range{
-  line-height: 32px;
+  line-height: 22px;
+    @media all and(min-width:768px){
+      line-height: 32px;
+    }
 }
 .chart__filter-groups{
-  
-  line-height: 32px;
+  line-height: 22px;
+    @media all and(min-width:768px){
+      line-height: 32px;
+    }
 }
 .chart__filter-listgroups{
   padding: 0;
